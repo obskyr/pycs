@@ -1,0 +1,54 @@
+
+ ####################################################
+## How to make PYCS compatible with your log format ##
+ ####################################################
+
+
+It is quite easy to create a new log format for PYCS - it does require some knowledge, though.
+
+Create a file named "[your IRC program name].cfg" (eg. "xchat.cfg", "mirc.cfg"), all lowercase and without brackets or quotes. In this file, each line should contain the name of the pattern, an equals sign and the Python compliant regex pattern with parentheses around the particular part to match - nothing else.
+
+Example:
+
+username	=	^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s<([A-Za-z_-\|]+)>
+
+(The tabs are there for readability, whitespace is irrelevant)
+
+
+####
+
+IMPORTANT:
+
+If you do make your own format file and you're interested in making it a part of the default PYCS format collection, please contact me either at powpowd@gmail.com or @LpSamuelm on Twitter. I'll be happy to include it!
+
+####
+
+
+ #########################################
+## The patterns you need to fill in are: ##
+ #########################################
+
+-- username --
+A regex where the content in parentheses should match usernames in spoken lines.
+
+-- action username --
+A regex where the content in parentheses should match usernames in lines spoken with a /me command - AKA actions.
+
+-- said words --
+A regex where the content in parentheses should match the actual words in a spoken line, excluding time, username and such. Typically, this isn't too different from "username".
+
+-- action words --
+A regex where the content in parentheses should match the actual words in an action line, excluding time, username and such.
+
+-- time --
+A regex where the content in parentheses should match the time the line was posted (in 24-hour format), with the groups (ie content in parentheses) matching in whatever order your time format declares.
+
+-- time format --
+A "[l]" succeeded by a comma-separated ordered list of which groups in the "time" regex match what. Must contain "hour", "minute" and "second", in whatever order your format uses. This one is optional to add, as it defaults to [hour, minute, second].
+
+Example:
+time order	=	[l] second, minute, hour
+
+####
+
+After filling in these and putting this file in /resources/formats, it will be possible to change the "log format" value in settings.cfg to the name of your format in order to use it.

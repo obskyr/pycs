@@ -15,7 +15,7 @@ try:
     try:
         ircdir = ircpaths[ircapp]
     except IndexError:
-        print "Invalid IRC app. Check help.txt for allowed programs."
+        print "Invalid IRC app."
         raw_input()
         quit
 except IOError:

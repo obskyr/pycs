@@ -14,6 +14,17 @@ aliases         =   startops.aliases
 ignore          =   startops.ignore
 minlength       =   startops.minlength
 ignored_words   =   startops.ignored_words
+logformat       =   startops.logformat
+
+pattern_username    =   startops.pattern_username
+pattern_useraction  =   startops.pattern_useraction
+pattern_saidwords   =   startops.pattern_saidwords
+pattern_actionwords =   startops.pattern_actionwords
+pattern_time        =   startops.pattern_time
+
+hnum            =   startops.hnum
+mnum            =   startops.mnum
+snum            =   startops.snum
 
 ## ------------------------------------------------ ##
 
@@ -73,39 +84,64 @@ class Logs(object):
         else:
             self.paths = [directory + log]
         self.genEverything()
-    linenums = {}
-    uactions = {}
+
+    ## --- Dummy variable section
+    
+    linenums    = {}
+    uactions    = {}
     actionsonly = {}
-    userlines = {}
+    userlines   = {}
     randomlines = {}
-    wordnums = {}
-    swears = {}
+    wordnums    = {}
+    swears      = {}
+    times       = {
+                     0: 0,  1: 0,  2: 0,  3: 0,  4: 0,  5: 0,
+                     6: 0,  7: 0,  8: 0,  9: 0, 10: 0, 11: 0,
+                    12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0,
+                    18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0
+                  }
     wordlist = [[None, 0]]
     totallines = 0
-    findusername = re.compile("^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s<([A-Za-z]+)>")
-    finduseraction = re.compile("^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s\*\s+([A-Za-z]+)\s")
-    findsaidwords = re.compile("^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s<[A-Za-z]+>(.+)")
-    findactionwords = re.compile("^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s\*\s+[A-Za-z]+\s(.+)")
+
+    ## ---
+
+    find_username       =   re.compile(pattern_username     )
+    find_useraction     =   re.compile(pattern_useraction   )
+    find_saidwords      =   re.compile(pattern_saidwords    )
+    find_actionwords    =   re.compile(pattern_actionwords  )
+    find_time           =   re.compile(pattern_time         )
+
     def countLines(self, special=nofunc):
         for log in self.paths:
             infile = open(log, 'r')
             for line in infile:
+                
                 self.totallines += 1
-                un = re.search(self.findusername, line)
-                ua = re.search(self.finduseraction, line)
-                unw = re.search(self.findsaidwords, line)
-                uaw = re.search(self.findactionwords, line)
+                
+                un          =   re.search(self.find_username, line      )
+                ua          =   re.search(self.find_useraction, line    )
+                unw         =   re.search(self.find_saidwords, line     )
+                uaw         =   re.search(self.find_actionwords, line   )
+
+                linetime    =   re.search(self.find_time, line          )
+                if linetime:
+                    linetime    =   (
+                                        linetime.group(hnum),
+                                        linetime.group(mnum),
+                                        linetime.group(snum)
+                                    )
+                
                 if un and un.group(1).lower().strip() not in [x.lower() for x in ignore]:
                     u = compareAndAlias(un.group(1), self.linenums)
                     if not u:
                         u = un.group(1)
-                    special(u, unw.group(1), '')
+                    special(u, unw.group(1), '', linetime)
                     self.linenums = addUn(un.group(1), self.linenums)
                 elif ua and ua.group(1).lower().strip() not in [x.lower() for x in ignore]:
                     u = compareAndAlias(ua.group(1), self.linenums)
                     if not u:
                         u = ua.group(1)
-                    special(u, uaw.group(1), ua.group(1) + ' ')
+                    special(u, uaw.group(1), ua.group(1) + ' ', linetime)
                     self.uactions = addUn(ua.group(1), self.uactions)
             uactions_org = self.uactions.copy()
             for comparison in uactions_org:
@@ -168,17 +204,22 @@ class Logs(object):
                     break
             else:
                 self.wordlist.append([w, self.wordnums[w]])
+        del self.wordlist[-1]
+
+    def timeCount(self, time):
+        self.times[int(time[0])] += 1
 
     def returnWords(self, username, line):
         if line[:len(username)].lower() != username.lower():
             return re.split("[;:\(\)@\.\s\!\?\",]+", line)
         return re.split("[;:\(\)@\.\s\!\?\",]+", line[len(username):])
 
-    def specialFuncs(self, username, line, t):
+    def specialFuncs(self, username, line, prefix, time):
         words = self.returnWords(username, line)
-        self.countWords(username, words, t)
+        self.countWords(username, words, prefix)
         self.countSwears(username, words)
-        self.listLines(username, line, t)
+        self.listLines(username, line, prefix)
+        self.timeCount(time)
     
     def randLines(self):
         for user in self.userlines:
@@ -197,15 +238,15 @@ print "Total number of lines:", check.totallines
 
 print "\nTotal number of lines by user:"
 for u in check.linenums:
-    print u + ': ' + str(check.linenums[u]) + ',',
+    print u + ': ' + str(check.linenums[u]) + " lines,",
 
 print "\n\nUsers that never spoke, only used actions (and their number of lines):"
 for u in check.actionsonly:
-    print u + ': ' + str(check.actionsonly[u]) + ',',
+    print u + ': ' + str(check.actionsonly[u]) + " lines,",
 
 print "\n\nTotal number of actions by user:"
 for u in check.uactions:
-    print u + ': ' + str(check.uactions[u]) + ',',
+    print u + ': ' + str(check.uactions[u]) + " actions,",
 
 print "\n\nRandom lines from each user:"
 for user in check.randomlines:
@@ -213,8 +254,12 @@ for user in check.randomlines:
 
 print "\nMost common words in the channel, and how often they were used:"
 for word in check.wordlist[:15]:
-    print word[0] + ': ' + str(word[1]) + ',',
+    print word[0] + ': ' + str(word[1]) + " times, ",
 
 print "\n\nHow often people swore with each swear:"
 for u in check.swears:
-    print u + ': ' + str(check.swears[u]) + ',',
+    print u + ': ' + str(check.swears[u]) + " times,",
+
+print "\n\nHow often people spoke during each hour:"
+for time in check.times:
+    print str(time) + " o' clock: " + str(check.times[time]) + " lines, ",
