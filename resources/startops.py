@@ -17,8 +17,9 @@ try:            ## Setting config variables from config file
     swears          = config['Swears']
     logformat       = config['Log format']
     pathoverride    = config['Path override']
-    logsdirectory   = config['Logs directory']
+    logdirs   = config['Logs parent directories']
     lognames        = config['Logs']
+    printprogress   = confutil.stringToBool(config['Print progress'])
 
     for n, swear in enumerate(swears):
         swears[n] = swear.lower().replace(r'*', r'.*')
@@ -30,8 +31,9 @@ except IOError: ## Creating config file
               'Swears': ['swear1', 'swear2'],
               'Log format': 'hexchat',
               'Path override': '',
-              'Logs directory': 'HexChat',
-              'Logs': ['Network-#Channel.log', 'Another-#Sample.log']
+              'Logs parent directories': ['HexChat', 'AnotherIRCdir'],
+              'Logs': ['Network-#Channel.log', 'Another-#Sample.log'],
+              'Print progress': "True"
               }
 
     ignore          = config['Ignored nicks']
@@ -40,8 +42,9 @@ except IOError: ## Creating config file
     swears          = config['Swears']
     logformat       = config['Log format']
     pathoverride    = config['Path override']
-    logsdirectory   = config['Logs directory']
+    logdirs         = config['Logs parent directories']
     lognames        = config['Logs']
+    printprogress   = confutil.stringToBool(config['Print progress'])
 
     confutil.createConfig(config, pycspath + '\\settings\\settings.cfg', comments.configcomment)
 

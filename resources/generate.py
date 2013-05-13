@@ -16,6 +16,9 @@ minlength       =   startops.minlength
 ignored_words   =   startops.ignored_words
 logformat       =   startops.logformat
 pathoverride    =   startops.pathoverride
+logdirs         =   startops.logdirs
+lognames        =   startops.lognames
+printprogress   =   startops.printprogress
 
 pattern_username    =   startops.pattern_username
 pattern_useraction  =   startops.pattern_useraction
@@ -230,17 +233,20 @@ class Logs(object):
             self.randomlines[user] = randtemp
 
     def genEverything(self):
-        if self.printprogress:
-            print "Scanning lines..."
-        self.countLines(self.specialFuncs)
-        if self.printprogress:
-            print "Cleaning up line list..."
-        self.fixListLines()
-        if self.printprogress:
-            print "Choosing random lines..."
-        self.randLines()
-        if self.printprogress:
-            print "Organizing words..."
-        self.commonWords()
-        if self.printprogress:
-            print "Done!"
+        if self.logs:
+            if self.printprogress:
+                print "Scanning lines..."
+            self.countLines(self.specialFuncs)
+            if self.printprogress:
+                print "Cleaning up line list..."
+            self.fixListLines()
+            if self.printprogress:
+                print "Choosing random lines..."
+            self.randLines()
+            if self.printprogress:
+                print "Organizing words..."
+            self.commonWords()
+            if self.printprogress:
+                print "Done!"
+        else:
+            print "No logs."
