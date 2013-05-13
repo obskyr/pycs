@@ -1,5 +1,10 @@
 import os
+import sys
+
+sys.path.insert(0, os.getcwd() + r"\resources")
+
 import confutil
+import generate
 
 userdir = os.path.expanduser('~')
 logpaths = ['logs', 'xchatlogs']
@@ -7,18 +12,7 @@ logpaths = ['logs', 'xchatlogs']
 if not os.path.exists('output'):
     os.makedirs('output')
 
-try:
-    config = confutil.loadConfig('pycs.cfg')
-    ircapp = config['ircapp']
-    outputdir = config['outputdir']
-    ircpaths = config['ircpaths']
-    try:
-        ircdir = ircpaths[ircapp]
-    except IndexError:
-        print "Invalid IRC app."
-        raw_input()
-        quit
-except IOError:
+if not generate.pathoverride.strip():
     ircpaths = {
         'hexchat': ['HexChat'],
         'xchat': ['xchat', 'X-Chat 2'],

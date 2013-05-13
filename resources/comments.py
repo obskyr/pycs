@@ -18,4 +18,13 @@ configcomment = """## Information about each option:
 ##
 ##  Log format:
 ##\tThe name of the program you're using for IRC in lowercase letters. Valid formats can be found in [your PYCS directory]/resources/formats.
+##
+##  Path override:
+##\tIf you fill this in, PYCS wil ignore any path conventions it has and use the one you supplied as the directory to look for logs.
+##
+##  Logs directory:
+##\tThe name of the directory with your logs in it (eg. HexChat, mIRC). Will be overridden by Path override.
+##
+##  Logs:
+##\tEnter the file names of the logs you want to analyze after the '[l]'. PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in.
 """

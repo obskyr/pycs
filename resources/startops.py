@@ -10,11 +10,16 @@ if not os.path.exists(pycspath + '\\settings'): ## Create needed directories
 
 try:            ## Setting config variables from config file
     config = confutil.cVars(pycspath + '\\settings\\settings.cfg') 
-    ignore = config['Ignored nicks']
-    ignored_words = config['Ignored words']
-    minlength = int(config['Minimum word length'])
-    swears = config['Swears']
-    logformat = config['Log format']
+
+    ignore          = config['Ignored nicks']
+    ignored_words   = config['Ignored words']
+    minlength       = int(config['Minimum word length'])
+    swears          = config['Swears']
+    logformat       = config['Log format']
+    pathoverride    = config['Path override']
+    logsdirectory   = config['Logs directory']
+    lognames        = config['Logs']
+
     for n, swear in enumerate(swears):
         swears[n] = swear.lower().replace(r'*', r'.*')
 
@@ -23,10 +28,21 @@ except IOError: ## Creating config file
               'Ignored words': ['ignorethis', 'andthis'],
               'Minimum word length': 4,
               'Swears': ['swear1', 'swear2'],
-              'Log format': 'hexchat'}
-    ignore = config['Ignored nicks']
-    ignored_words = config['Ignored words']
-    minlength = config['Minimum word length']
+              'Log format': 'hexchat',
+              'Path override': '',
+              'Logs directory': 'HexChat',
+              'Logs': ['Network-#Channel.log', 'Another-#Sample.log']
+              }
+
+    ignore          = config['Ignored nicks']
+    ignored_words   = config['Ignored words']
+    minlength       = config['Minimum word length']
+    swears          = config['Swears']
+    logformat       = config['Log format']
+    pathoverride    = config['Path override']
+    logsdirectory   = config['Logs directory']
+    lognames        = config['Logs']
+
     confutil.createConfig(config, pycspath + '\\settings\\settings.cfg', comments.configcomment)
 
 

@@ -3,7 +3,7 @@
 import sys      ## Needed for importing remote modules
 import os       ## Needed for creating directories and loading logs.
 
-sys.path.insert(0, os.getcwd() + r'\resources')
+## sys.path.insert(0, os.getcwd() + r'\resources')
 
 import startops  ## Initializing program with variables and such
 
@@ -15,6 +15,7 @@ ignore          =   startops.ignore
 minlength       =   startops.minlength
 ignored_words   =   startops.ignored_words
 logformat       =   startops.logformat
+pathoverride    =   startops.pathoverride
 
 pattern_username    =   startops.pattern_username
 pattern_useraction  =   startops.pattern_useraction
@@ -33,7 +34,8 @@ import confutil ## Needed for saving configs and such.
 import random   ## Needed for randomly chosen lines, etc.
 
 
-def nofunc(*args):
+def nofunc(*args): ## Here as a placeholder function
+    """Does absolutely nothing."""
     pass
 
 def compareNames(poster, linenums):
@@ -76,13 +78,14 @@ def addUn(poster, linenums):
     return linenums
 
 class Logs(object):
-    def __init__(self, directory, logs):
+    def __init__(self, directory, logs, printprogress=False):
         self.directory = directory
         self.logs = logs
         if type(logs) == list:
             self.paths = [directory + log for log in self.logs]
         else:
             self.paths = [directory + log]
+        self.printprogress = printprogress
         self.genEverything()
 
     ## --- Dummy variable section
@@ -227,39 +230,17 @@ class Logs(object):
             self.randomlines[user] = randtemp
 
     def genEverything(self):
+        if self.printprogress:
+            print "Scanning lines..."
         self.countLines(self.specialFuncs)
+        if self.printprogress:
+            print "Cleaning up line list..."
         self.fixListLines()
+        if self.printprogress:
+            print "Choosing random lines..."
         self.randLines()
+        if self.printprogress:
+            print "Organizing words..."
         self.commonWords()
-
-check = Logs('', ['testlog.log'])
-
-print "Total number of lines:", check.totallines
-
-print "\nTotal number of lines by user:"
-for u in check.linenums:
-    print u + ': ' + str(check.linenums[u]) + " lines,",
-
-print "\n\nUsers that never spoke, only used actions (and their number of lines):"
-for u in check.actionsonly:
-    print u + ': ' + str(check.actionsonly[u]) + " lines,",
-
-print "\n\nTotal number of actions by user:"
-for u in check.uactions:
-    print u + ': ' + str(check.uactions[u]) + " actions,",
-
-print "\n\nRandom lines from each user:"
-for user in check.randomlines:
-    print '\t' + user + ': ' + check.randomlines[user]
-
-print "\nMost common words in the channel, and how often they were used:"
-for word in check.wordlist[:15]:
-    print word[0] + ': ' + str(word[1]) + " times, ",
-
-print "\n\nHow often people swore with each swear:"
-for u in check.swears:
-    print u + ': ' + str(check.swears[u]) + " times,",
-
-print "\n\nHow often people spoke during each hour:"
-for time in check.times:
-    print str(time) + " o' clock: " + str(check.times[time]) + " lines, ",
+        if self.printprogress:
+            print "Done!"
