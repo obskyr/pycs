@@ -44,10 +44,10 @@ A regex where the content in parentheses should match the actual words in an act
 A regex where the content in parentheses should match the time the line was posted (in 24-hour format), with the groups (ie content in parentheses) matching in whatever order your time format declares.
 
 -- time format --
-A "[l]" succeeded by a comma-separated ordered list of which groups in the "time" regex match what. Must contain "hour", "minute" and "second", in whatever order your format uses. This one is optional to add, as it defaults to [hour, minute, second].
+A "[l]" succeeded by a comma-separated ordered list of which groups in the "time" regex match what. Must contain "hour", and "minute", in whatever order your format uses. This one is optional to add, as it defaults to [hour, minute].
 
 Example:
-time order	=	[l] second, minute, hour
+time order	=	[l] minute, hour
 
 ####
 

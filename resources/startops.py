@@ -66,14 +66,14 @@ try:            ## Loading patterns dictionary
 
 except (IOError, ValueError): ## Plain error with incorrect settings
     print "Invalid format file. Using defaults."
-    pattern_username    = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<([A-Za-z]+)>"
-    pattern_useraction  = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+([A-Za-z]+)\s"
-    pattern_saidwords   = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<[A-Za-z]+>(.+)"
-    pattern_actionwords = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+[A-Za-z]+\s(.+)"
-    pattern_time        = "^[a-zA-Z]{3}\s[0-9]+\s([0-9]{2}):([0-9]{2}):([0-9]{2})"
+    pattern_username    = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<([A-Za-z_-\|0-9]+)>"
+    pattern_useraction  = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+([A-Za-z_-\|0-9]+)\s"
+    pattern_saidwords   = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<[A-Za-z_-\|0-9]+>(.+)"
+    pattern_actionwords = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+[A-Za-z_-\|0-9]+\s(.+)"
+    pattern_time        = "^[a-zA-Z]{3}\s[0-9]+\s([0-9]{2}):([0-9]{2}):[0-9]{2}"
 
 try:            ## Setting time format
     timeformat = [x.lower() for x in linepatterns['time format']]
 except (KeyError, NameError): ## Default time format
-    timeformat = ('hour', 'minute', 'second')
-hnum, mnum, snum = timeformat.index('hour') + 1, timeformat.index('minute') + 1, timeformat.index('second') + 1
+    timeformat = ('hour', 'minute')
+hnum, mnum = timeformat.index('hour') + 1, timeformat.index('minute')

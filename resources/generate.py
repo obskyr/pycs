@@ -28,7 +28,6 @@ pattern_time        =   startops.pattern_time
 
 hnum            =   startops.hnum
 mnum            =   startops.mnum
-snum            =   startops.snum
 
 ## ------------------------------------------------ ##
 
@@ -134,7 +133,6 @@ class Logs(object):
                     linetime    =   (
                                         linetime.group(hnum),
                                         linetime.group(mnum),
-                                        linetime.group(snum)
                                     )
                 
                 if un and un.group(1).lower().strip() not in [x.lower() for x in ignore]:
