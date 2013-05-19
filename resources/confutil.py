@@ -1,9 +1,19 @@
-# -*- coding: cp1252 -*-
+# -*- coding: UTF-8 -*-
+
+import codecs ## Encoding is a nightmare that never ends
+
 def cVars(confile):
     """Returns a dictionary with the keys and values specified in a separate config file."""
     configs = open(confile, 'r')
     cf = {}
-    for line in [l for l in configs if l and l[0:2] != '##' and l != '\n']:
+    lines = [l for l in configs if l and l[:2] != '##' and l.strip()]
+    if lines[0].startswith(codecs.BOM_UTF8): ## Byte order marks sometimes are interpreted as characters
+        lines[0] = lines[0][len(codecs.BOM_UTF8):]
+        if lines[0][:2] == '##' or not lines[0].strip():
+            del lines[0]
+        lines = [unicode(line, 'utf-8') for line in lines]
+    for line in lines:
+        print line
         key, value = line.split("=")
         if not value.strip()[0:3] == '[l]':
             cf[key.strip()] = value.strip()
@@ -15,7 +25,7 @@ def cVars(confile):
 
 def createConfig(defdict, filename, beforecomment='', aftercomment=''):
     """Creates a config file 'filename' based on dictionary 'defdict'."""
-    confile = open(filename, 'w') ##vpmgoöe
+    confile = open(filename, 'w') ##vpmgoÃ¶e
     if beforecomment:
         confile.write(str(beforecomment) + '\n')
     for key in defdict.keys():

@@ -58,6 +58,10 @@ except IOError: ## Creating alias file
 
 try:            ## Loading patterns dictionary
     linepatterns        = confutil.cVars(pycspath + '\\resources\\formats\\' + logformat.lower() + '.cfg')
+    try:
+        linepatterns = [unicode(pattern, 'utf-8') for pattern in linepatterns]
+    except TypeError:
+        pass
     pattern_username    = linepatterns['username']
     pattern_useraction  = linepatterns['action username']
     pattern_saidwords   = linepatterns['said words']

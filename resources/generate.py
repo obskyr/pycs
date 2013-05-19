@@ -126,11 +126,8 @@ class Logs(object):
         """Generates stats for number of lines per user, and executes 'special' while it's at it."""
         for log in self.paths: ## Counts things in every supplied log
             infile = open(log, 'r')
-            for line in infile:
-
-                line = unicode(line, "UTF-8")
-                
-                self.totallines += 1 ## Counts every line in the log. Might want to effectivize this somehow
+            linelist = [unicode(line, 'utf-8') for line in infile]
+            for line in linelist:            
 
                 ## -Creates search objects based on earlier patterns- ##
                 un          =   re.search(self.find_username, line      ) ## Username
@@ -139,6 +136,9 @@ class Logs(object):
                 uaw         =   re.search(self.find_actionwords, line   ) ## Action words
                 linetime    =   re.search(self.find_time, line          ) ## Time of line
                 ## -------------------------------------------------- ##
+
+                if un or ua or linetime:
+                    self.totallines += 1 ## Counts every line in the log.
                 
                 if linetime:
                     linetime    =   (
@@ -164,6 +164,9 @@ class Logs(object):
                     ## Special argument format:
                     ## Username, line, prefix, time of line
                     self.uactions = addUn(u, self.uactions)
+
+            infile.close() ## I can't believe it took me this long to add this
+            
             uactions_org = self.uactions.copy() ## Creates iterable dictionary, original will be modified
 
             for comparison in uactions_org: ## Adds user action lines to total line numbers for said user
@@ -197,7 +200,7 @@ class Logs(object):
                 del self.userlines[l]
                 
     def countWords(self, username, words, t):
-        """Counts words and assigns number to user."""
+        """Counts words.""" ## ...That was a very in-depth description.
         for w in words:
             if len(w) >= minlength and\
             w.lower() not in [word.lower() for word in ignored_words] and\
@@ -223,14 +226,14 @@ class Logs(object):
                             self.swears[username] = {w.lower(): 1}
 
     def commonWords(self):
-        """Counts how many times every word was used"""
+        """Sorts words into self.wordlist by number of times used."""
         for w in self.wordnums:
             for number, pair in enumerate(self.wordlist):
                 if self.wordnums[w] >= pair[1]:
                     self.wordlist.insert(number, [w, self.wordnums[w]])
                     break
             else:
-                self.wordlist.append([w, self.wordnums[w]])
+                self.wordlist.append([w, self.wordnums[w]]) ## Appended in format [word, number]
         del self.wordlist[-1]
 
     def timeCount(self, time):
