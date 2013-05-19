@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: UTF-8 -*-
 
 import sys      ## Needed for importing remote modules
 import os       ## Needed for creating directories and loading logs.
@@ -82,6 +82,7 @@ def addUn(poster, linenums, check=False):
                 linenums[poster] = 1 ## Poster has no alias and is new to linenums    return linenums
         else:
             linenums[poster] = 1
+    return linenums
 
 class Logs(object):
     """Handles IRC logs, and the generation of Python-friendly statistics based on them."""
@@ -126,6 +127,8 @@ class Logs(object):
         for log in self.paths: ## Counts things in every supplied log
             infile = open(log, 'r')
             for line in infile:
+
+                line = unicode(line, "UTF-8")
                 
                 self.totallines += 1 ## Counts every line in the log. Might want to effectivize this somehow
 
@@ -151,7 +154,7 @@ class Logs(object):
                     special(u, unw.group(1), '', linetime) ## Executes special functions
                     ## Special argument format:
                     ## Username, line, prefix, time of line
-                    self.linenums = addUn(un.group(1), self.linenums)
+                    self.linenums = addUn(u, self.linenums)
                 elif ua and ua.group(1).lower().strip() not in [x.lower() for x in ignore]:
                     ## Only does anything at all if there's a valid, non-ignored username
                     u = compareAndAlias(ua.group(1), self.linenums)
@@ -160,7 +163,7 @@ class Logs(object):
                     special(u, uaw.group(1), ua.group(1) + ' ', linetime) ## Executes special functions
                     ## Special argument format:
                     ## Username, line, prefix, time of line
-                    self.uactions = addUn(ua.group(1), self.uactions)
+                    self.uactions = addUn(u, self.uactions)
             uactions_org = self.uactions.copy() ## Creates iterable dictionary, original will be modified
 
             for comparison in uactions_org: ## Adds user action lines to total line numbers for said user
