@@ -214,14 +214,7 @@ class Logs(object):
 
     def topUsers(self):
         """Sorts linenums by number of lines per user."""
-        for u in self.linenums:
-            for number, pair in enumerate(self.linenums_top):
-                if self.linenums[u] >= pair[1]:
-                    self.linenums_top.insert(number, [u, self.linenums[u]])
-                    break
-            else:
-                self.linenums_top.append([u, self.linenums[u]])
-        del self.linenums_top[-1]
+        self.linenums_top = sorted(self.linenums.iteritems(), key=lambda pair: pair[1], reverse=True)
 
     def countSwears(self, username, words):
         """Counts swears and assigns number to user."""
@@ -239,14 +232,7 @@ class Logs(object):
 
     def commonWords(self):
         """Sorts words into self.wordlist by number of times used."""
-        for w in self.wordnums:
-            for number, pair in enumerate(self.wordlist):
-                if self.wordnums[w] >= pair[1]:
-                    self.wordlist.insert(number, [w, self.wordnums[w]])
-                    break
-            else:
-                self.wordlist.append([w, self.wordnums[w]]) ## Appended in format [word, number]
-        del self.wordlist[-1]
+        self.wordlist = sorted(self.wordnums.iteritems(), key=lambda pair: pair[1])
 
     def timeCount(self, time):
         """Adds 1 to the time dictionary for every line that was posted during that hour."""
