@@ -111,8 +111,9 @@ class Logs(object):
                     12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0,
                     18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0
                   }
-    wordlist = [[None, 0]]
-    totallines = 0
+    wordlist    = [[None, 0]]
+    linenums_top= [[None, 0]]
+    totallines  = 0
 
     ## ---
 
@@ -211,6 +212,17 @@ class Logs(object):
                 except KeyError:
                     self.wordnums[w.lower()] = 1
 
+    def topUsers(self):
+        """Sorts linenums by number of lines per user."""
+        for u in self.linenums:
+            for number, pair in enumerate(self.linenums_top):
+                if self.linenums[u] >= pair[1]:
+                    self.linenums_top.insert(number, [u, self.linenums[u]])
+                    break
+            else:
+                self.linenums_top.append([u, self.linenums[u]])
+        del self.linenums_top[-1]
+
     def countSwears(self, username, words):
         """Counts swears and assigns number to user."""
         for w in words:
@@ -275,6 +287,7 @@ class Logs(object):
             if self.printprogress:
                 print "Organizing words..."
             self.commonWords()
+            self.topUsers()
             if self.printprogress:
                 print "Done!"
         else:

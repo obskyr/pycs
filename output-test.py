@@ -15,8 +15,8 @@ superfile.close()
 superfile = open('output\\index.html', 'a')
 superfile.write("Total number of lines: " + str(check.totallines))
 superfile.write("<br>\n<br>\nTotal number of lines by user:<br>\n")
-for u in check.linenums:
-    superfile.write(u + ': ' + str(check.linenums[u]) + " lines, ")
+for u in check.linenums_top:
+    superfile.write(u[0] + ': ' + str(u[1]) + " lines, ")
 superfile.write("<br>\n<br>\nUsers that never spoke, only used actions (and their number of lines):<br>\n")
 for u in check.actionsonly:
     superfile.write(u + ': ' + str(check.actionsonly[u]) + " lines, ")
