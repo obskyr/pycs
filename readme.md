@@ -1,7 +1,7 @@
-﻿##Visions of grandeur
+##Visions of grandeur
 PYCS will in the future hopefully be a [PISG](http://pisg.sourceforge.net/)-like Python IRC statistics generator.
 
-It will take log files (in different formats, and you will eventually be able to supply your own) and generate different interesting statistics based on them. It will then, probably, present these statistics in an aesthetically pleasing HTML file.
+It will take log files (in different formats, with the ability to supply your own) and generate different interesting statistics based on them. It will then, probably, present these statistics in an aesthetically pleasing HTML file.
 
 It will not require any specific input past setup, so it will easily be able to be scheduled without complications.
 

@@ -7,13 +7,12 @@ def cVars(confile):
     configs = open(confile, 'r')
     cf = {}
     lines = [l for l in configs if l and l[:2] != '##' and l.strip()]
-    if lines[0].startswith(codecs.BOM_UTF8): ## Byte order marks sometimes are interpreted as characters
+    if lines[0].startswith(codecs.BOM_UTF8): ## Byte order markers sometimes are interpreted as characters
         lines[0] = lines[0][len(codecs.BOM_UTF8):]
         if lines[0][:2] == '##' or not lines[0].strip():
             del lines[0]
         lines = [unicode(line, 'utf-8') for line in lines]
     for line in lines:
-        print line
         key, value = line.split("=")
         if not value.strip()[0:3] == '[l]':
             cf[key.strip()] = value.strip()
@@ -23,20 +22,41 @@ def cVars(confile):
     configs.close()
     return cf
 
-def createConfig(defdict, filename, beforecomment='', aftercomment=''):
-    """Creates a config file 'filename' based on dictionary 'defdict'."""
+def tabCount(key):
+    if   len(key) >= 24:
+        return ''
+    elif len(key) >= 16:
+        return '\t' * 1
+    elif len(key) >=  8:
+        return '\t' * 2
+    else:
+        return '\t' * 3
+
+def createConfig(config, filename):
+    """Creates a config file 'filename' based on a dictionary or tuple/list."""
     confile = open(filename, 'w') ##vpmgoöe
-    if beforecomment:
-        confile.write(str(beforecomment) + '\n')
-    for key in defdict.keys():
-        if not type(defdict[key]) == list:
-            confile.write(str(key) + "\t\t=\t" + str(defdict[key]) + "\n")
-        else:
-            confile.write(str(key) + "\t\t=\t[l] " + ', '.join(defdict[key]).strip() + "\n")
-    if aftercomment:
-        confile.write(str(aftercomment) + '\n')
+    if type(config) == dict:
+        for key in config.keys():
+            tabs = tabCount(key)
+            if not type(config[key]) == list:
+                confile.write(str(key) + tabs + '=\t' + str(config[key]) + '\n')
+            else:
+                confile.write(str(key) + tabs + '=\t[l] ' + ', '.join(config[key]).strip() + "\n")
+        lineSort(filename)
+    else:
+        for pair in config:
+            if type(pair) == str or type(pair) == unicode:
+                confile.write(pair + '\n')
+            else:
+                key = str(pair[0])
+                if type(pair[1]) == list:
+                    value = str(', '.join(pair[1]))
+                    value = '[l] ' + value
+                else:
+                    value = str(pair[1])
+                tabs = tabCount(key)
+                confile.write(key + tabs + '=\t' + value + '\n')
     confile.close()
-    lineSort(filename)
 
 def lineSort(filename):
     """Sorts the lines in file 'filename' alphabetically."""
