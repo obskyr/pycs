@@ -2,9 +2,6 @@
 
 import sys      ## Needed for importing remote modules
 import os       ## Needed for creating directories and loading logs.
-
-## sys.path.insert(0, os.getcwd() + r'\resources')
-
 import startops  ## Initializing program with variables and such
 
 ## -- The next few lines sets startops variables -- ##
