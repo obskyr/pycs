@@ -13,6 +13,8 @@ aliascomment = """## To add aliases for a nickname:
 settings_comment        ="""## Edit this file to customize how PYCS works.
 ## For help with each option, read settings_help.txt.\n"""
 
+channel_name_comment    ="""## Channel name:
+##  Enter the name of the channel you're analyzing (eg. "#Channel")."""
 ignored_nicks_comment   ="""## Ignored nicks:
 ##  Add every nickname you want to ignore in stats after the '[l]' separated by commas."""
 ignored_words_comment   ="""## Ignored words:
@@ -39,7 +41,8 @@ swears_comment          ="""## Swears:
 ##  Enter a comma-separated list of swears after the '[l]' - PYCS will count
 ##  those words as swears. Use '*' as joker character.
 """
-settings_comments = (ignored_nicks_comment + '\n', ignored_words_comment + '\n',
+settings_comments = (channel_name_comment  + '\n',
+                     ignored_nicks_comment + '\n', ignored_words_comment + '\n',
                      minimum_length_comment+ '\n', log_format_comment    + '\n',
                      path_override_comment + '\n', logs_parent_comment   + '\n',
                      logs_comment          + '\n', print_progress_comment+ '\n',

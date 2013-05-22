@@ -19,6 +19,7 @@ pathoverride    =   startops.pathoverride   ##
 logdirs         =   startops.logdirs        ##
 lognames        =   startops.lognames       ##
 printprogress   =   startops.printprogress  ##
+channelname     =   startops.channelname    ##
 
 pattern_username    =   startops.pattern_username       ## Regexes for line matching
 pattern_useraction  =   startops.pattern_useraction     ##
@@ -111,6 +112,7 @@ class Logs(object):
                     12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0,
                     18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0
                   }
+    times_ordered = []
     wordlist    = [[None, 0]]
     linenums_top= [[None, 0]]
     totallines  = 0
@@ -232,7 +234,7 @@ class Logs(object):
 
     def commonWords(self):
         """Sorts words into self.wordlist by number of times used."""
-        self.wordlist = sorted(self.wordnums.iteritems(), key=lambda pair: pair[1])
+        self.wordlist = sorted(self.wordnums.iteritems(), key=lambda pair: pair[1], reverse=True)
 
     def timeCount(self, time):
         """Adds 1 to the time dictionary for every line that was posted during that hour."""
@@ -274,6 +276,7 @@ class Logs(object):
                 print "Organizing words..."
             self.commonWords()
             self.topUsers()
+            self.times_ordered = sorted(self.times.iteritems())
             if self.printprogress:
                 print "Done!"
         else:

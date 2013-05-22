@@ -23,6 +23,7 @@ def cVars(confile):
     return cf
 
 def tabCount(key):
+    """Returns enough tabs to reach the third indent level, based on string 'key'."""
     if   len(key) >= 24:
         return ''
     elif len(key) >= 16:
@@ -35,7 +36,7 @@ def tabCount(key):
 def createConfig(config, filename):
     """Creates a config file 'filename' based on a dictionary or tuple/list."""
     confile = open(filename, 'w') ##vpmgoöe
-    if type(config) == dict:
+    if type(config) == dict: ## Allows for a dictionary to be written to file, sorted alphabetically
         for key in config.keys():
             tabs = tabCount(key)
             if not type(config[key]) == list:
@@ -43,11 +44,13 @@ def createConfig(config, filename):
             else:
                 confile.write(str(key) + tabs + '=\t[l] ' + ', '.join(config[key]).strip() + "\n")
         lineSort(filename)
-    else:
+    else:   ## Allows for tuples or lists to be written to config
+            ## Must be a tuple/list of tuples and/or lists. The second value
+            ## will be used as the value, the first one as the key
         for pair in config:
-            if type(pair) == str or type(pair) == unicode:
+            if type(pair) == str or type(pair) == unicode: ## Allows for comments
                 confile.write(pair + '\n')
-            else:
+            else: ## Writes cVars()-compatible files
                 key = str(pair[0])
                 if type(pair[1]) == list:
                     value = str(', '.join(pair[1]))
@@ -56,32 +59,18 @@ def createConfig(config, filename):
                     value = str(pair[1])
                 tabs = tabCount(key)
                 confile.write(key + tabs + '=\t' + value + '\n')
-    confile.close()
+    confile.close() ## Took me way too long to add this
 
 def lineSort(filename):
     """Sorts the lines in file 'filename' alphabetically."""
     sortfile = open(filename, 'r')
-    lines = sortfile.read().split('\n')
-    nonempty = [line.rstrip() for line in lines if line.strip() and line.strip()[0:2] != '##']
-    beforecomments = []
-    aftercomments = []
-    for line in lines:
-        if line[0:2] == '##':
-            beforecomments.append(line)
-        else:
-            break
-    for line in lines[::-1]:
-        if line[0:2] == '##':
-            aftercomments.append(line)
-        else:
-            break
-    if beforecomments == aftercomments:
-        aftercomments = []
-    nonempty.sort()
+    lines = sortfile.read().split('\n') ## Creates sortable list
     sortfile.close()
+    nonempty = [line.rstrip() for line in lines if line.strip() and line.strip()[0:2] != '##']
+    nonempty.sort()
     sortfile = open(filename, 'w')
     sortfile.write('\n'.join(beforecomments) + '\n\n' + '\n'.join(nonempty) + '\n' + '\n\n'.join(aftercomments) + '\n')
     sortfile.close()
 
 def stringToBool(s):
-    return s.lower() == 'true'
+    return s.lower() == 'true' ## All variations of "True" return True, everything else returns False

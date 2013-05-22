@@ -28,12 +28,14 @@ try:            ## Setting config variables from config file
     logdirs         = config['Logs parent directories'  ]
     lognames        = config['Logs'                     ]
     printprogress   = confutil.stringToBool(config['Print progress'])
+    channelname     = config['Channel name'             ]
 
     for n, swear in enumerate(swears):
         swears[n] = swear.lower().replace(r'*', r'.*') ## Allows joker characters
 
 except IOError: ## Creating config file
     config = (   comments.settings_comment                                   ,
+                ('Channel name', 'Channel'                                  ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),
                 ('Minimum word length', 4,                                  ),
@@ -57,6 +59,7 @@ except IOError: ## Creating config file
     logdirs         = config['Logs parent directories'  ]
     lognames        = config['Logs'                     ]
     printprogress   = confutil.stringToBool(config['Print progress'])
+    channelname     = config['Channel name'             ]
 
 
 
