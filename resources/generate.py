@@ -112,6 +112,7 @@ class Logs(object):
     times_ordered = []
     wordlist    = [[None, 0]]
     linenums_top= [[None, 0]]
+    uactions_top= [[None, 0]]
     totallines  = 0
 
     ## ---
@@ -211,9 +212,9 @@ class Logs(object):
                 except KeyError:
                     self.wordnums[w.lower()] = 1
 
-    def topUsers(self):
+    def topUsers(self, linenums=linenums):
         """Sorts linenums by number of lines per user."""
-        self.linenums_top = sorted(self.linenums.iteritems(), key=lambda pair: pair[1], reverse=True)
+        return sorted(linenums.iteritems(), key=lambda pair: pair[1], reverse=True)
 
     def countSwears(self, username, words):
         """Counts swears and assigns number to user."""
@@ -270,9 +271,12 @@ class Logs(object):
                 print "Choosing random lines..."
             self.randLines()
             if self.printprogress:
-                print "Organizing words..."
+                print "Sorting words..."
             self.commonWords()
-            self.topUsers()
+            if self.printprogress:
+                print "Sorting users..."
+            self.linenums_top = self.topUsers()
+            self.uactions_top = self.topUsers(self.uactions)
             self.times_ordered = sorted(self.times.iteritems())
             if self.printprogress:
                 print "Done!"

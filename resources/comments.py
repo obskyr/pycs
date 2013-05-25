@@ -2,7 +2,7 @@
 ## Comment for aliases.cfg
 aliascomment = """## To add aliases for a nickname:
 ## Write the nickname, an equals sign ('='), a lowercase L in brackets ('[l]')
-## ...and then a list of desired aliases separated by commas.
+## ...and then a list of desired aliases separated by commas. Separate users with newlines.
 
 ## You can, for an example, change the name of a person who isn't represented as
 ## what you want in the output. You can also collect all of a user's different nicknames in a single nickname."""

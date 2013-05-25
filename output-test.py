@@ -26,15 +26,12 @@ for i, u in enumerate(check.actionsonly):
         break
     superfile.write(u + ': ' + str(check.actionsonly[u]) + " lines, ")
 superfile.write("<br>\n<br>\nTotal number of actions by user:<br>\n")
-last = len(check.uactions) - 1
-for i, u in enumerate(check.uactions):
-    if i == last:
-       superfile.write(u + ': ' + str(check.uactions[u]) + " actions")
-       break
-    superfile.write(u + ': ' + str(check.uactions[u]) + " actions, ")
+for u in check.uactions_top[:-1]:
+    superfile.write(u[0] + ': ' + str(u[1]) + " actions, ")
+superfile.write(check.uactions_top[-1][0] + ': ' + str(check.uactions_top[-1][1]) + " actions")
 superfile.write("<br>\n<br>\nRandom lines from each user:")
 for user in check.randomlines:
-    superfile.write("<br>\n  " + user.encode('utf-8') + ": " + check.randomlines[user].encode('utf-8'))
+    superfile.write("<br>\n\t&emsp;" + user.encode('utf-8') + ": " + check.randomlines[user].encode('utf-8'))
 superfile.write("<br>\n<br>\nMost common words in the channel, and how often they were used:<br>\n")
 for word in check.wordlist[:14]:
     superfile.write(word[0] + ': ' + str(word[1]) + " times, ")
