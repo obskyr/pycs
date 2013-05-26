@@ -77,22 +77,12 @@ try:            ## Loading patterns dictionary
             linepatterns[key] = unicode(linepatterns[key], 'utf-8')
     except TypeError:
         pass
-    pattern_username    = linepatterns['username'       ]
-    pattern_useraction  = linepatterns['action username']
-    pattern_saidwords   = linepatterns['said words'     ]
-    pattern_actionwords = linepatterns['action words'   ]
+    pattern_said_line   = linepatterns['said line'      ]
+    pattern_action_line = linepatterns['action line'    ]
     pattern_time        = linepatterns['time'           ]
 
 except (IOError, ValueError): ## Plain error invoked by incorrect settings/filter file
     print "Invalid format file. Using defaults."
-    pattern_username    = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<([A-Za-z_-\|0-9]+)>"
-    pattern_useraction  = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+([A-Za-z_-\|0-9]+)\s"
-    pattern_saidwords   = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<[A-Za-z_-\|0-9]+>(.+)"
-    pattern_actionwords = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+[A-Za-z_-\|0-9]+\s(.+)"
-    pattern_time        = "^[a-zA-Z]{3}\s[0-9]+\s([0-9]{2}):([0-9]{2}):[0-9]{2}"
-
-try:            ## Setting time format
-    timeformat = [x.lower() for x in linepatterns['time format']]
-except (KeyError, NameError): ## Default time format
-    timeformat = ('hour', 'minute')
-hnum, mnum = timeformat.index('hour') + 1, timeformat.index('minute')
+    pattern_said_line   = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s<(?P<nickname>[A-Za-z_-\|0-9]+)>\s(?P<words>.+)"
+    pattern_action_line = "^[a-zA-Z]{3}\s[0-9]+\s[0-9:]{8}\s\*\s+(?P<nickname>[A-Za-z_-\|0-9]+)\s(?P<words>.+)"
+    pattern_time        = "^[a-zA-Z]{3}\s[0-9]+\s(?P<hour>[0-9]{2}):(?P<minute>[0-9]{2}):[0-9]{2}"

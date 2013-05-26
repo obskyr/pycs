@@ -18,14 +18,9 @@ lognames        =   startops.lognames       ##
 printprogress   =   startops.printprogress  ##
 channelname     =   startops.channelname    ##
 
-pattern_username    =   startops.pattern_username       ## Regexes for line matching
-pattern_useraction  =   startops.pattern_useraction     ##
-pattern_saidwords   =   startops.pattern_saidwords      ##
-pattern_actionwords =   startops.pattern_actionwords    ##
+pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matching
+pattern_action_line =   startops.pattern_action_line    ##
 pattern_time        =   startops.pattern_time           ##
-
-hnum            =   startops.hnum   ## Time format help
-mnum            =   startops.mnum   ##
 
 ## ------------------------------------------------ ##
 
@@ -117,10 +112,8 @@ class Logs(object):
 
     ## ---
 
-    find_username       =   re.compile(pattern_username     ) ## Regex patterns
-    find_useraction     =   re.compile(pattern_useraction   ) ##
-    find_saidwords      =   re.compile(pattern_saidwords    ) ##
-    find_actionwords    =   re.compile(pattern_actionwords  ) ##
+    find_said_line      =   re.compile(pattern_said_line    ) ## Regex patterns
+    find_action_line    =   re.compile(pattern_action_line  ) ##
     find_time           =   re.compile(pattern_time         ) ##
 
     def countLines(self, special=nofunc):
@@ -131,10 +124,8 @@ class Logs(object):
             for line in linelist:            
 
                 ## -Creates search objects based on earlier patterns- ##
-                un          =   re.search(self.find_username, line      ) ## Username
-                ua          =   re.search(self.find_useraction, line    ) ## Username in actions
-                unw         =   re.search(self.find_saidwords, line     ) ## Said words
-                uaw         =   re.search(self.find_actionwords, line   ) ## Action words
+                un          =   re.search(self.find_said_line, line     ) ## /say lines
+                ua          =   re.search(self.find_action_line, line   ) ## /me lines
                 linetime    =   re.search(self.find_time, line          ) ## Time of line
                 ## -------------------------------------------------- ##
 
@@ -143,25 +134,25 @@ class Logs(object):
                 
                 if linetime:
                     linetime    =   (
-                                        linetime.group(hnum), ## Allows for different time formats
-                                        linetime.group(mnum), ##
+                                        linetime.group('hour'   ), ## Allows for different time formats
+                                        linetime.group('minute' ), ##
                                     )
                 
                 if un and un.group(1).lower().strip() not in [x.lower() for x in ignore]:
                     ## Only does anything at all if there's a valid, non-ignored username
-                    u = compareAndAlias(un.group(1), self.linenums)
+                    u = compareAndAlias(un.group('nickname'), self.linenums)
                     if not u: ## For users without alias
-                        u = un.group(1)
-                    special(u, unw.group(1), '', linetime) ## Executes special functions
+                        u = un.group('nickname')
+                    special(u, un.group('words'), '', linetime) ## Executes special functions
                     ## Special argument format:
                     ## Username, line, prefix, time of line
                     self.linenums = addUn(u, self.linenums)
                 elif ua and ua.group(1).lower().strip() not in [x.lower() for x in ignore]:
                     ## Only does anything at all if there's a valid, non-ignored username
-                    u = compareAndAlias(ua.group(1), self.linenums)
+                    u = compareAndAlias(ua.group('nickname'), self.linenums)
                     if not u: ## For users without alias
-                        u = ua.group(1)
-                    special(u, uaw.group(1), ua.group(1) + ' ', linetime) ## Executes special functions
+                        u = ua.group('nickname')
+                    special(u, ua.group('words'), ua.group('nickname') + ' ', linetime) ## Executes special functions
                     ## Special argument format:
                     ## Username, line, prefix, time of line
                     self.uactions = addUn(u, self.uactions)
