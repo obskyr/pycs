@@ -99,6 +99,7 @@ class Logs(object):
     randomlines = {}
     wordnums    = {}
     swears      = {}
+    numswears   = {}
     times       = {
                      0: 0,  1: 0,  2: 0,  3: 0,  4: 0,  5: 0,
                      6: 0,  7: 0,  8: 0,  9: 0, 10: 0, 11: 0,
@@ -139,7 +140,7 @@ class Logs(object):
                                         linetime.group('minute' ), ##
                                     )
                 
-                if un and un.group(1).lower().strip() not in [x.lower() for x in ignore]:
+                if un and un.group('nickname').lower().strip() not in [x.lower() for x in ignore]:
                     ## Only does anything at all if there's a valid, non-ignored username
                     u = compareAndAlias(un.group('nickname'), self.linenums)
                     if not u: ## For users without alias
@@ -148,7 +149,7 @@ class Logs(object):
                     ## Special argument format:
                     ## Username, line, prefix, time of line
                     self.linenums = addUn(u, self.linenums)
-                elif ua and ua.group(1).lower().strip() not in [x.lower() for x in ignore]:
+                elif ua and ua.group('nickname').lower().strip() not in [x.lower() for x in ignore]:
                     ## Only does anything at all if there's a valid, non-ignored username
                     u = compareAndAlias(ua.group('nickname'), self.linenums)
                     if not u: ## For users without alias
@@ -221,6 +222,12 @@ class Logs(object):
                             self.swears[username][w.lower()] = 1
                         except KeyError:
                             self.swears[username] = {w.lower(): 1}
+                            
+    def fixNumswears(self):
+        for user in self.swears:
+            self.numswears[user] = sum(self.swears[user].values())
+        for user in [u for u in self.linenums if u not in self.numswears]:
+            self.numswears[user] = 0
 
     def commonWords(self):
         """Sorts words into self.wordlist by number of times used."""
@@ -257,8 +264,9 @@ class Logs(object):
                 print "Scanning lines..."
             self.countLines(self.specialFuncs)
             if self.printprogress:
-                print "Cleaning up line list..."
+                print "Cleaning up..."
             self.fixListLines()
+            self.fixNumswears()
             if self.printprogress:
                 print "Choosing random lines..."
             self.randLines()

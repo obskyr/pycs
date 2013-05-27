@@ -6,18 +6,18 @@ It will take log files (in different formats, with the ability to supply your ow
 It will not require any specific input past setup, so it will easily be able to be scheduled without complications.
 
 ##Usage
-If you'd like to try it, you can supply a log file and see the results in a kind of slightly maybe visually pleasing form using `gen-test.py` or `output-test.py`, if you rename it to `testlog.log` and put it in the PYCS directory. The script doing all the work is `generate.py`.
+If you'd like to try it, you can supply a log file and see the results in text form using `gen-test.py`.
+
+You can also try using what will be the main program - `pycs.py` - with the correct settings. Without using `Path override`, this currently only works on Windows, but if you supply your own paths it should work just fine. `pycs.py` outputs a HTML file - see the HTML output section.
 
 In order to create the config files without generating any stats, run `startops.py` in `resources`. This allows you to modify `settings.cfg` and `aliases.cfg` before the first run.
 
-You can also try using what will be the main program - `pycs.py` - with the correct settings. Without using `Path override`, this currently only works on Windows, but if you supply your own paths it should work just fine. At the moment of writing, `pycs.py` does not output any files.
-
 You can create your own log format parser easily using the instructions in `\resources\formats\creation.txt`.
 
-###`output-test.py`
-This script will output a simple file with the filename `index.html` in the `output` directory, based on the log files you've specified in `settings.cfg`. This is at the moment very rudimentary and doesn't produce a very pretty result at all, but it works!
+###HTML output
+Using `pycs.py` with the correct settings will produce an `index.html` file in the `output` directory. In order to use this on your site, simply put the `index.html` file and `resources` directory (the one located in `output`, not in the main PYCS directory) somewhere on your server (using FTP, SFTP, SCP or what have you) and you're all set to access it.
 
-In order to make use of the output file, you can easily set up a `.bat` or `.sh` to upload it to your site. If you'd like to add some style, you can supply your own `stylesheet.css` in the same directory as the output file.
+To add your own flavor, you can easily make your own `stylesheet.css`, and supply your own resources.
 
 ###Oh, and...
 I'm not really known for how good I am at finishing what I've started. There's always the risk I will abandon this project, and in several years look back on it and cry.
