@@ -5,6 +5,8 @@ sys.path.insert(0, os.getcwd() + r"\resources")
 
 import confutil
 from generate import *
+import htmlout
+import time
 
 userdir = os.path.expanduser('~')
 logpaths = ['logs', 'xchatlogs']
@@ -38,7 +40,7 @@ else:
             print "No logs found in specified directories."
     except IOError:
         print "Please check your path override in settings.cfg."
-
+starttime = time.time()
 check = Logs('', checklogs, printprogress)
 
-print check.totallines
+htmlout.outputLogHTML(check, starttime)

@@ -43,7 +43,7 @@ except IOError: ## Creating config file
                 ('Log format', 'hexchat'                                    ),
                 ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
                 ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
-                ('Path override', ''                                        ),
+                ('Path override', []                                        ),
                 ('Print progress', "True"                                   )
               )
 

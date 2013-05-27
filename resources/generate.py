@@ -17,6 +17,7 @@ logdirs         =   startops.logdirs        ##
 lognames        =   startops.lognames       ##
 printprogress   =   startops.printprogress  ##
 channelname     =   startops.channelname    ##
+pycspath        =   startops.pycspath       ##
 
 pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matching
 pattern_action_line =   startops.pattern_action_line    ##
