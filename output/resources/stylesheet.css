@@ -1,0 +1,17 @@
+﻿@font-face {
+	font-family: OpenSans-Semibold;
+	src: url('fonts/OpenSans/OpenSans-Semibold.ttf');
+}
+@font-face {
+	font-family: OpenSans-Light;
+	src: url('fonts/OpenSans/OpenSans-Light.ttf');
+}
+@font-face {
+	font-family: OpenSans;
+	src: url('fonts/OpenSans/OpenSans-Regular.ttf');
+}
+
+body {background-color: #f9feff; color: #373945; padding-left: 3em; padding-top: 1em; font-family: OpenSans; line-height: 1.2em;}
+#nick {font-family: OpenSans-Semibold;}
+#stat {font-family: OpenSans-Light;}
+#smallBR {margin: 0px; padding:0px; clear: both; height: 6px;}
