@@ -1,23 +1,24 @@
-##Visions of grandeur
-PYCS will in the future hopefully be a [PISG](http://pisg.sourceforge.net/)-like Python IRC statistics generator.
+##What is PYCS?
+PYCS is a PYthon Chat Statistics generator.
 
-It will take log files (in different formats, with the ability to supply your own) and generate different interesting statistics based on them. It will then, probably, present these statistics in an aesthetically pleasing HTML file.
+It takes IRC log files and generates different interesting statistics based on them. It then presents these statistics in a visually pleasing HTML file
 
-It will not require any specific input past setup, so it will easily be able to be scheduled without complications.
+It does not require any specific input past setup, and is as such very easily scheduled.
 
 ##Usage
-If you'd like to try it, you can supply a log file and see the results in text form using `gen-test.py`.
+After installing [Python](http://python.org/) and downloading PYCS, the first thing you'll want to do is run `startops.py`, which is located in the `\resources` directory. Once this is done, a folder named `settings` will be placed in your PYCS directory. Following the instructions in `settings_help.txt`, modify `settings.cfg` and `aliases.cfg` as you see fit.
 
-You can also try using what will be the main program - `pycs.py` - with the correct settings. Without using `Path override`, this currently only works on Windows, but if you supply your own paths it should work just fine. `pycs.py` outputs a HTML file - see the HTML output section.
+Currently, the automatic path detection only works on Windows systems. PYCS is fully able to run, however, by using `Path override` in `settings.cfg` to specify the exact folders where your logs are located - just make sure to enter correct filenames in the `Logs` option.
 
-In order to create the config files without generating any stats, run `startops.py` in `resources`. This allows you to modify `settings.cfg` and `aliases.cfg` before the first run.
+Once you've successfully run PYCS, there will be a file named `index.html` in the `output` directory. Put this file, together with the `\output\resources` directory, in whatever directory you'd like on any web server you have access to. The statistics page is now reachable, and can easily be linked from anywhere!
 
-You can create your own log format parser easily using the instructions in `\resources\formats\creation.txt`.
+##Customization
+You can quite easily, with some CSS knowledge, modify `stylesheet.css` in `\output\resources` in order to customize the resulting web page.
 
-###HTML output
-Using `pycs.py` with the correct settings will produce an `index.html` file in the `output` directory. In order to use this on your site, simply put the `index.html` file and `resources` directory (the one located in `output`, not in the main PYCS directory) somewhere on your server (using FTP, SFTP, SCP or what have you) and you're all set to access it.
+If your IRC program's log format isn't supported by PYCS, there is a way to create your own filter. Following the instructions in `\resources\formats\creation.txt`, create your own config file for your particular IRC log format.
 
-To add your own flavor, you can easily make your own `stylesheet.css`, and supply your own resources.
+If you do make a new format, it would be incredibly nice of you to open an issue, make a pull request or otherwise contact me about your addition and I'll be more than happy to add it to the default formats!
 
-###Oh, and...
-I'm not really known for how good I am at finishing what I've started. There's always the risk I will abandon this project, and in several years look back on it and cry.
+If you have any questions, or anything to say, I can be reached at either [powpowd@gmail.com](mailto:powpowd@gmail.com) or [@LpSamuelm](http://twitter.com/LpSamuelm) on Twitter. To get a fast answer, Twitter is your best bet!
+
+If you have any inquiries about or problems with PYCS, opening an issue here on GitHub is a great way to reach through about that.

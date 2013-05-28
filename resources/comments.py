@@ -39,12 +39,14 @@ print_progress_comment  ="""## Print progress:
 ##  the console. This can be useful if you're scheduling PYCS."""
 swears_comment          ="""## Swears:
 ##  Enter a comma-separated list of swears after the '[l]' - PYCS will count
-##  those words as swears. Use '*' as joker character.
-"""
+##  those words as swears. Use '*' as joker character."""
+detailed_users_comment  ="""## Detailed users:
+##  Enter the number of users you'd like to see detailed in the output.
+##  By default, the top 10 are shown."""
 settings_comments = (channel_name_comment  + '\n',
                      ignored_nicks_comment + '\n', ignored_words_comment + '\n',
                      minimum_length_comment+ '\n', log_format_comment    + '\n',
                      path_override_comment + '\n', logs_parent_comment   + '\n',
                      logs_comment          + '\n', print_progress_comment+ '\n',
-                     swears_comment        + '\n'
+                     swears_comment        + '\n', detailed_users_comment+ '\n'
                      )

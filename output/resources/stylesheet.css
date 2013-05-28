@@ -1,17 +1,98 @@
 ﻿@font-face {
+	font-family: OpenSans;
+	src: url('fonts/OpenSans/OpenSans-Regular.ttf') format('truetype'),
+	     url('fonts/OpenSans/OpenSans-Regular.eot?#iefix') format('embedded-opentype');
+}
+@font-face {
 	font-family: OpenSans-Semibold;
-	src: url('fonts/OpenSans/OpenSans-Semibold.ttf');
+	src: url('fonts/OpenSans/OpenSans-Semibold.ttf') format('truetype'),
+	     url('fonts/OpenSans/OpenSans-Semibold.eot?#iefix') format('embedded-opentype');
+}
+@font-face {
+	font-family: OpenSans-Bold;
+	src: url('fonts/OpenSans/OpenSans-Bold.ttf') format('truetype'),
+	     url('fonts/OpenSans/OpenSans-Bold.eot?#iefix') format('embedded-opentype');
 }
 @font-face {
 	font-family: OpenSans-Light;
-	src: url('fonts/OpenSans/OpenSans-Light.ttf');
-}
-@font-face {
-	font-family: OpenSans;
-	src: url('fonts/OpenSans/OpenSans-Regular.ttf');
+	src: url('fonts/OpenSans/OpenSans-Light.ttf') format('truetype'),
+	     url('fonts/OpenSans/OpenSans-Light.eot?#iefix') format('embedded-opentype');
 }
 
-body {background-color: #f9feff; color: #373945; padding-left: 3em; padding-top: 1em; font-family: OpenSans; line-height: 1.2em;}
-#nick {font-family: OpenSans-Semibold;}
-#stat {font-family: OpenSans-Light;}
-#smallBR {margin: 0px; padding:0px; clear: both; height: 6px;}
+
+body {
+	background-color: #f9feff;
+	color: #373945;
+	padding-top: 1em;
+	font-family: OpenSans;
+	line-height: 1.2em;
+	word-wrap:break-word;
+}
+
+h1 {font-family: OpenSans-Semibold;}
+
+.comment {font-family: OpenSans-Light; color: #c6d3f2; font-size: 12px;}
+
+div.wrap	{width: 100%;}
+
+div.left, div.right {
+	float: left;
+	width: 50%;
+	padding-left: 3em;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+div.right	{
+	float:right;
+	width: 50%;
+	padding-right: 3em;
+	padding-left: 0em;
+}
+
+div.footer	{font-size: 0.5em, font-family: OpenSans-Light; font-size: 80%;}
+div.stat	{font-family: OpenSans-Light;}
+.nick		{font-family: OpenSans-Semibold;}
+
+img.icon	{height: 1.2em; margin-bottom:-0.12em;}
+img.time, img.left, img.right {height: 20px}
+img.left{border-radius: 10px 0px 0px 10px;}
+img.right{border-radius: 0px 10px 10px 0px;}
+
+.timewrap {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.hovertime {
+	text-align: center;
+	white-space: nowrap;
+	word-wrap: normal;
+	font-family: OpenSans-Light;
+	font-size: 10px;
+	position: absolute;
+	top: 100%;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+  	visibility: hidden;
+  	opacity: 0;
+}
+.hovertime.dawn{color: #ffa34a}
+.hovertime.morning{color: #f4ee62}
+.hovertime.day{color: #79a0da}
+.hovertime.night{color: #3e638a}
+.timewrap:hover .hovertime {
+  visibility: visible;
+  opacity: 1;
+}
+
+.smallBR	{margin: 0px; padding:0px; clear: both; height: 6px;}
+.allusers-head	{font-family: OpenSans-Semibold; font-size: 12px}
+.allusers	{font-family: OpenSans-Light; font-size: 12px; text-align: justify;}
+
+a:link		{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
+a:visited	{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
+a:hover		{font-family: OpenSans-Semibold; text-decoration: none;}
+a:active	{font-family: OpenSans-Semibold; text-decoration: none;}

@@ -21,14 +21,15 @@ try:            ## Setting config variables from config file
 
     ignore          = config['Ignored nicks'            ]
     ignored_words   = config['Ignored words'            ]
-    minlength       = int(config['Minimum word length'] )
+    minlength       = abs(int(config['Minimum word length']))
     swears          = config['Swears'                   ]
     logformat       = config['Log format'               ]
     pathoverride    = config['Path override'            ]
     logdirs         = config['Logs parent directories'  ]
     lognames        = config['Logs'                     ]
-    printprogress   = confutil.stringToBool(config['Print progress'])
+    printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
+    detailusers     = abs(int(config['Detailed users']) )
 
     for n, swear in enumerate(swears):
         swears[n] = swear.lower().replace(r'*', r'.*') ## Allows joker characters
@@ -44,7 +45,8 @@ except IOError: ## Creating config file
                 ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
                 ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
                 ('Path override', []                                        ),
-                ('Print progress', "True"                                   )
+                ('Print progress', "True"                                   ),
+                ('Detailed users', 10                                       )
               )
 
     confutil.createConfig(config, pycspath + '\\settings\\settings.cfg')
@@ -52,15 +54,15 @@ except IOError: ## Creating config file
 
     ignore          = config['Ignored nicks'            ]
     ignored_words   = config['Ignored words'            ]
-    minlength       = config['Minimum word length'      ]
+    minlength       = abs(int(config['Minimum word length']))
     swears          = config['Swears'                   ]
     logformat       = config['Log format'               ]
     pathoverride    = config['Path override'            ]
     logdirs         = config['Logs parent directories'  ]
     lognames        = config['Logs'                     ]
-    printprogress   = confutil.stringToBool(config['Print progress'])
+    printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
-
+    detailusers     = abs(int(config['Detailed users']) )
 
 
 try:            ## Loading aliases from alias file

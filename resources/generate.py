@@ -18,6 +18,7 @@ lognames        =   startops.lognames       ##
 printprogress   =   startops.printprogress  ##
 channelname     =   startops.channelname    ##
 pycspath        =   startops.pycspath       ##
+detailusers     =   startops.detailusers    ##
 
 pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matching
 pattern_action_line =   startops.pattern_action_line    ##
@@ -229,6 +230,10 @@ class Logs(object):
         for user in [u for u in self.linenums if u not in self.numswears]:
             self.numswears[user] = 0
 
+    def fixUactions(self):
+        for user in [u for u in self.linenums if u not in self.uactions]:
+            self.uactions[user] = 0
+
     def commonWords(self):
         """Sorts words into self.wordlist by number of times used."""
         self.wordlist = sorted(self.wordnums.iteritems(), key=lambda pair: pair[1], reverse=True)
@@ -267,6 +272,7 @@ class Logs(object):
                 print "Cleaning up..."
             self.fixListLines()
             self.fixNumswears()
+            self.fixUactions()
             if self.printprogress:
                 print "Choosing random lines..."
             self.randLines()
