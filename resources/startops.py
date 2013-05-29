@@ -36,17 +36,19 @@ try:            ## Setting config variables from config file
 
 except IOError: ## Creating config file
     config = (   comments.settings_comment                                   ,
+                 '## Log specifics\n'                                      ,               
+                ('Log format', 'hexchat'                                    ),
+                ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
+                ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
+                ('Path override', []                                        ),
+                 '\n\n## Customization\n'                                      ,
                 ('Channel name', 'Channel'                                  ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),
                 ('Minimum word length', 4,                                  ),
                 ('Swears', ['swear1', 'swear2']                             ),
-                ('Log format', 'hexchat'                                    ),
-                ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
-                ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
-                ('Path override', []                                        ),
-                ('Print progress', "True"                                   ),
-                ('Detailed users', 10                                       )
+                ('Detailed users', 10                                       ),
+                ('Print progress', "True"                                   )
               )
 
     confutil.createConfig(config, pycspath + '\\settings\\settings.cfg')
