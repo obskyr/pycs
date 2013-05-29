@@ -70,7 +70,7 @@ def outputLogHTML(check, x):
         superfile.write('\n\t\t\t<div class="semibold">' + user.encode('utf-8') + '</div>\n\t\t\t<div class="smallBR"></div>\n\t\t\t<div class="stat">\n\t\t\t' + \
         str(lines).encode('utf-8') + ' lines &middot; ' + str(check.uactions[user]).encode('utf-8') +    \
         ' actions &middot; ' + str(check.numswears[user]).encode('utf-8') + ' swears\n<br>' +    \
-        '"' + check.randomlines[user].encode('utf-8') + '"</div>\n\t\t\t<br>')
+        '"' + check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;').encode('utf-8') + '"</div>\n\t\t\t<br>')
     if len(check.linenums_top[detailusers:]) > 0:
         superfile.write("""
             <div class="allusers-head">
