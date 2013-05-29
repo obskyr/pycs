@@ -39,6 +39,7 @@ div.left, div.right {
 	float: left;
 	width: 50%;
 	padding-left: 3em;
+	font-family: OpenSans-Light;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -51,9 +52,13 @@ div.right	{
 	padding-left: 0em;
 }
 
+.commonwords	{text-align: center;}
+
 div.footer	{font-size: 0.5em, font-family: OpenSans-Light; font-size: 80%;}
 div.stat	{font-family: OpenSans-Light;}
-.nick		{font-family: OpenSans-Semibold;}
+.semibold	{font-family: OpenSans-Semibold;}
+
+.totallines	{font-family: OpenSans-Bold; font-size: 2em; vertical-align: -0.14em;}
 
 img.icon	{height: 1.2em; margin-bottom:-0.12em;}
 img.time, img.left, img.right {height: 20px}
