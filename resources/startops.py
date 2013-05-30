@@ -36,7 +36,7 @@ try:            ## Setting config variables from config file
 
 except IOError: ## Creating config file
     config = (   comments.settings_comment                                   ,
-                 '## Log specifics\n'                                      ,               
+                 '## Log specifics\n'                                        ,               
                 ('Log format', 'hexchat'                                    ),
                 ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
                 ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
@@ -66,6 +66,8 @@ except IOError: ## Creating config file
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
 
+    for n, swear in enumerate(swears):
+        swears[n] = swear.lower().replace(r'*', r'.*') ## Allows joker characters
 
 try:            ## Loading aliases from alias file
     aliases = confutil.cVars(pycspath + '\\settings\\aliases.cfg')

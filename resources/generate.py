@@ -2,7 +2,8 @@
 
 import sys      ## Needed for importing remote modules
 import os       ## Needed for creating directories and loading logs.
-import startops  ## Initializing program with variables and such
+import re       ## Needed for matching count objects.
+import startops ## Initializing program with variables and such
 
 ## -- The next few lines sets startops variables -- ##
 
@@ -29,10 +30,10 @@ if not [x for x in swears if x != 'swear1' and x != 'swear2']:
     swearcount = False
 else:
     swearcount = True
+    swearsre = re.compile('|'.join(swears), re.IGNORECASE)
 
 ## ------------------------------------------------ ##
 
-import re       ## Needed for matching count objects.
 import confutil ## Needed for saving configs and such.
 import random   ## Needed for randomly chosen lines, etc.
 
@@ -216,29 +217,17 @@ class Logs(object):
         """Sorts linenums by number of lines per user."""
         return sorted(linenums.iteritems(), key=lambda pair: pair[1], reverse=True)
 
-    def countSwears(self, username, words):
+    def countSwears(self, username, line):
         """Counts swears and assigns number to user."""
-        for w in words:
-            for s in swears:
-                bob = re.compile("^" + s + "$", re.IGNORECASE)  ## Master of variable names
-                if re.search(bob, w.lower()):
-                    try:
-                        self.swears[username][w.lower()] += 1
-                    except KeyError: ## Standard key creation
-                        try:
-                            self.swears[username][w.lower()] = 1
-                        except KeyError:
-                            self.swears[username] = {w.lower(): 1}
-                            
-    def fixNumswears(self):
-        for user in self.swears:
-            self.numswears[user] = sum(self.swears[user].values())
-        for user in [u for u in self.linenums if u not in self.numswears]:
-            self.numswears[user] = 0
+        try:
+            self.numswears[username] += len(re.findall(swearsre, line))
+        except KeyError:
+            self.numswears[username]  = len(re.findall(swearsre, line))
 
-    def fixUactions(self):
-        for user in [u for u in self.linenums if u not in self.uactions]:
-            self.uactions[user] = 0
+    def fillNonfull(self, nonfull):
+        for user in [u for u in self.linenums if u not in nonfull]:
+            nonfull[user] = 0
+        return nonfull
 
     def commonWords(self):
         """Sorts words into self.wordlist by number of times used."""
@@ -258,7 +247,7 @@ class Logs(object):
         """Does a multitude of special functions."""
         words = self.returnWords(username, line)
         self.countWords(username, words, prefix)
-        self.countSwears(username, words)
+        self.countSwears(username, line)
         self.listLines(username, line, prefix)
         self.timeCount(time)
     
@@ -278,8 +267,8 @@ class Logs(object):
                 print "Cleaning up..."
             self.fixListLines()
             if swearcount:
-                self.fixNumswears()
-            self.fixUactions()
+                self.numswears = self.fillNonfull(self.numswears)
+            self.uactions = self.fillNonfull(self.uactions)
             if self.printprogress:
                 print "Choosing random lines..."
             self.randLines()
