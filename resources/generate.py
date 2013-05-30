@@ -24,6 +24,12 @@ pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matc
 pattern_action_line =   startops.pattern_action_line    ##
 pattern_time        =   startops.pattern_time           ##
 
+if not [x for x in swears if x != 'swear1' and x != 'swear2']:
+    print swears
+    swearcount = False
+else:
+    swearcount = True
+
 ## ------------------------------------------------ ##
 
 import re       ## Needed for matching count objects.
@@ -271,7 +277,8 @@ class Logs(object):
             if self.printprogress:
                 print "Cleaning up..."
             self.fixListLines()
-            self.fixNumswears()
+            if swearcount:
+                self.fixNumswears()
             self.fixUactions()
             if self.printprogress:
                 print "Choosing random lines..."

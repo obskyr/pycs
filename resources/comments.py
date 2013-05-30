@@ -39,7 +39,8 @@ print_progress_comment  ="""## Print progress:
 ##  the console. This can be useful if you're scheduling PYCS."""
 swears_comment          ="""## Swears:
 ##  Enter a comma-separated list of swears after the '[l]' - PYCS will count
-##  those words as swears. Use '*' as joker character."""
+##  those words as swears. Use '*' as joker character. Leave the field empty
+##  after the '[l]' to not coutnt swears."""
 detailed_users_comment  ="""## Detailed users:
 ##  Enter the number of users you'd like to see detailed in the output.
 ##  By default, the top 10 are shown."""

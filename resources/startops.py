@@ -41,7 +41,7 @@ except IOError: ## Creating config file
                 ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
                 ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
                 ('Path override', []                                        ),
-                 '\n\n## Customization\n'                                      ,
+                 '\n\n## Customization\n'                                    ,
                 ('Channel name', 'Channel'                                  ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),

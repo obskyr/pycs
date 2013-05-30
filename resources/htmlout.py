@@ -18,25 +18,25 @@ def outputLogHTML(check, x):
     y = time.time()
     time1, time2, time3, time4 = timePercents(check)
     timeimagestr = """<span class="timewrap">
-	<img src='resources/images/time/dawn.png' class='left' width='10px'><img src='resources/images/time/dawn.png' class='time' width='""" + str(int(time1 * 0.8)).encode('utf-8') + """%'>
+	<img src='resources/images/time/dawn.png' class='left' alt='&lt;' width='10px'><img src='resources/images/time/dawn.png' class='time' alt='dawn' width='""" + str(int(time1 * 0.8)).encode('utf-8') + """%'>
 	<span class="hovertime dawn">
 		0 - 6: """ + str(time1).encode('utf-8') + """%
 	</span>
 </span>
 <span class="timewrap">
-	<img src='resources/images/time/morning.png' class='time' width='1px'><img src='resources/images/time/morning.png' class='time' width='""" + str(int(time2 * 0.8)).encode('utf-8') + """%'>
+	<img src='resources/images/time/morning.png' class='time' alt='' width='1px'><img src='resources/images/time/morning.png' class='time' alt='morning' width='""" + str(int(time2 * 0.8)).encode('utf-8') + """%'>
 	<span class="hovertime morning">
 		6 - 12: """ + str(time2).encode('utf-8') + """%
 	</span>
 </span>
 <span class="timewrap">
-	<img src='resources/images/time/day.png' class="time" width='1px'><img src='resources/images/time/day.png' class="time" width='""" + str(int(time3 * 0.8)).encode('utf-8') + """%'>
+	<img src='resources/images/time/day.png' alt='' class="time" width='1px'><img src='resources/images/time/day.png' class="time" alt='day' width='""" + str(int(time3 * 0.8)).encode('utf-8') + """%'>
 	<span class="hovertime day">
 		12 - 18: """ + str(time3).encode('utf-8') + """%
 	</span>
 </span>
 <span class="timewrap">
-	<img src='resources/images/time/night.png' class='time' width='""" + str(int(time4 * 0.8)).encode('utf-8') + """%'><img src='resources/images/time/night.png' class='right' width='10px'>
+	<img src='resources/images/time/night.png' class='time' alt='night' width='""" + str(int(time4 * 0.8)).encode('utf-8') + """%'><img src='resources/images/time/night.png' class='right' alt='&gt;' width='10px'>
 	<span class="hovertime night">
 		18 - 0: """ + str(time4).encode('utf-8') + """%
 	</span>
@@ -53,8 +53,9 @@ def outputLogHTML(check, x):
     superfile = open(pycspath + '\\output\\index.html', 'w')
     superfile.write("""
 <!DOCTYPE HTML>
-<link rel="stylesheet" type="text/css" href="resources/stylesheet.css">
 <head>
+    <link rel="stylesheet" type="text/css" href="resources/stylesheet.css">
+    <meta charset="utf-8">
     <title>
         """ + channelname + """ statistics
     </title>
@@ -63,14 +64,16 @@ def outputLogHTML(check, x):
     <div style="width: 100%;">
         <div class="left">
             <h1>
-                User statistics <img src="resources/images/stat.png" class="icon">
-            </h1>
-            <p>""")
+                User statistics <img src="resources/images/stat.png" alt="" class="icon">
+            </h1>""")
     for user, lines in check.linenums_top[:detailusers]:
-        superfile.write('\n\t\t\t<div class="semibold">' + user.encode('utf-8') + '</div>\n\t\t\t<div class="smallBR"></div>\n\t\t\t<div class="stat">\n\t\t\t' + \
+        swearstr = ''
+        if swearcount:
+            swearstr = ' &middot; ' + str(check.numswears[user]).encode('utf-8') + ' swears'
+        superfile.write('\n\t\t\t<div class="semibold">\n\t\t\t\t' + user.encode('utf-8') + '\n\t\t\t</div>\n\t\t\t<div class="smallBR"></div>\n\t\t\t<div class="stat">\n\t\t\t\t' + \
         str(lines).encode('utf-8') + ' lines &middot; ' + str(check.uactions[user]).encode('utf-8') +    \
-        ' actions &middot; ' + str(check.numswears[user]).encode('utf-8') + ' swears\n<br>' +    \
-        '"' + check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;').encode('utf-8') + '"</div>\n\t\t\t<br>')
+        ' actions' + swearstr + '\n\t\t\t\t<br>\n' +    \
+        '\t\t\t\t"' + check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;').encode('utf-8') + '"\n\t\t\t</div>\n\t\t\t<br>')
     if len(check.linenums_top[detailusers:]) > 0:
         superfile.write("""
             <div class="allusers-head">
@@ -87,10 +90,10 @@ def outputLogHTML(check, x):
         </div>
         <div class="right">
             <h1>
-                <img src="resources/images/quote.png" class="icon"> Specifics
+                <img src="resources/images/quote.png" alt="" class="icon"> Specifics
             </h1>
             <br>
-            <center>
+            <div class="center">
                 <span class="comment">
                     Lines by time posted
                 </span>
@@ -121,7 +124,7 @@ def outputLogHTML(check, x):
                 <div class="right commonwords">
                     """ + commonwordsright.encode('utf-8') + """
                 </div>
-            </center>
+            </div>
         </div>
         
 <!-- HERE BEGINS FOOTER -->
@@ -129,13 +132,13 @@ def outputLogHTML(check, x):
         <div style="clear:both;"></div>
         <br>
         <div class="footer">
-            <center>
+            <div class="center">
                 These statistics were generated in """ + str(round(y - x, 2)).encode('utf-8') + """ seconds.
                 <br>
                 <a href="https://github.com/LpSamuelm/pycs">
                     PYCS
                 </a>
-            </center>
+            </div>
         </div>
     </div>
 </body>""")

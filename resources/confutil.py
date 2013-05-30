@@ -17,7 +17,7 @@ def cVars(confile):
         if not value.strip()[0:3] == '[l]':
             cf[key.strip()] = value.strip()
         else:
-            value = [e.strip() for e in value.strip()[3:].split(',')]
+            value = [e.strip() for e in value.strip()[3:].split(',') if e.strip()]
             cf[key.strip()] = value
     configs.close()
     return cf

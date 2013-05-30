@@ -29,9 +29,17 @@ body {
 	word-wrap:break-word;
 }
 
-h1 {font-family: OpenSans-Semibold;}
+a:link		{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
+a:visited	{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
+a:hover		{font-family: OpenSans-Semibold; text-decoration: none;}
+a:active	{font-family: OpenSans-Semibold; text-decoration: none;}
 
-.comment {font-family: OpenSans-Light; color: #c6d3f2; font-size: 12px;}
+.semibold	{font-family: OpenSans-Semibold;}
+.center		{text-align: center;}
+.smallBR	{margin: 0px; padding:0px; clear: both; height: 6px;}
+
+h1 {font-family: OpenSans-Semibold;}
+div.footer	{font-size: 0.5em, font-family: OpenSans-Light; font-size: 80%;}
 
 div.wrap	{width: 100%;}
 
@@ -54,9 +62,9 @@ div.right	{
 
 .commonwords	{text-align: center;}
 
-div.footer	{font-size: 0.5em, font-family: OpenSans-Light; font-size: 80%;}
 div.stat	{font-family: OpenSans-Light;}
-.semibold	{font-family: OpenSans-Semibold;}
+.allusers-head	{font-family: OpenSans-Semibold; font-size: 12px}
+.allusers	{font-family: OpenSans-Light; font-size: 12px; text-align: justify;}
 
 .totallines	{font-family: OpenSans-Bold; font-size: 2em; vertical-align: -0.14em;}
 
@@ -65,6 +73,11 @@ img.time, img.left, img.right {height: 20px}
 img.left{border-radius: 10px 0px 0px 10px;}
 img.right{border-radius: 0px 10px 10px 0px;}
 
+.comment {
+	font-family: OpenSans-Light;
+	color: #c6d3f2;
+	font-size: 12px;
+}
 .timewrap {
   position: relative;
   height: 100%;
@@ -84,20 +97,13 @@ img.right{border-radius: 0px 10px 10px 0px;}
   	visibility: hidden;
   	opacity: 0;
 }
-.hovertime.dawn{color: #ffa34a}
-.hovertime.morning{color: #f4ee62}
-.hovertime.day{color: #79a0da}
-.hovertime.night{color: #3e638a}
+
+.hovertime.dawn		{color: #ffa34a}
+.hovertime.morning	{color: #f4ee62}
+.hovertime.day		{color: #79a0da}
+.hovertime.night	{color: #3e638a}
+
 .timewrap:hover .hovertime {
   visibility: visible;
   opacity: 1;
 }
-
-.smallBR	{margin: 0px; padding:0px; clear: both; height: 6px;}
-.allusers-head	{font-family: OpenSans-Semibold; font-size: 12px}
-.allusers	{font-family: OpenSans-Light; font-size: 12px; text-align: justify;}
-
-a:link		{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
-a:visited	{font-family: OpenSans-Bold; text-decoration: none; color: #373945;}
-a:hover		{font-family: OpenSans-Semibold; text-decoration: none;}
-a:active	{font-family: OpenSans-Semibold; text-decoration: none;}
