@@ -31,8 +31,7 @@ try:            ## Setting config variables from config file
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
 
-    for n, swear in enumerate(swears):
-        swears[n] = swear.lower().replace(r'*', r'.*') ## Allows joker characters
+    swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
 except IOError: ## Creating config file
     config = (   comments.settings_comment                                   ,
@@ -66,8 +65,7 @@ except IOError: ## Creating config file
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
 
-    for n, swear in enumerate(swears):
-        swears[n] = swear.lower().replace(r'*', r'.*') ## Allows joker characters
+    swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
 try:            ## Loading aliases from alias file
     aliases = confutil.cVars(pycspath + '\\settings\\aliases.cfg')

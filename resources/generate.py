@@ -30,7 +30,7 @@ if not [x for x in swears if x != 'swear1' and x != 'swear2']:
     swearcount = False
 else:
     swearcount = True
-    swearsre = re.compile('|'.join(swears), re.IGNORECASE)
+    swearsre = re.compile('|'.join(swears), re.IGNORECASE | re.UNICODE)
 
 ## ------------------------------------------------ ##
 
