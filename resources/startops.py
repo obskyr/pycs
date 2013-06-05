@@ -30,6 +30,7 @@ try:            ## Setting config variables from config file
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
+    template        = config['Theme'                    ]
 
     swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
@@ -42,6 +43,7 @@ except IOError: ## Creating config file
                 ('Path override', []                                        ),
                  '\n\n## Customization\n'                                    ,
                 ('Channel name', 'Channel'                                  ),
+                ('Theme', 'default'                                         ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),
                 ('Minimum word length', 4,                                  ),
@@ -64,6 +66,7 @@ except IOError: ## Creating config file
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
+    template        = config['Theme'                    ]
 
     swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 

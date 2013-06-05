@@ -13,41 +13,77 @@ aliascomment = """## To add aliases for a nickname:
 settings_comment        ="""## Edit this file to customize how PYCS works.
 ## For help with each option, read settings_help.txt.\n"""
 
-channel_name_comment    ="""## Channel name:
-##  Enter the name of the channel you're analyzing (eg. "#Channel")."""
-ignored_nicks_comment   ="""## Ignored nicks:
-##  Add every nickname you want to ignore in stats after the '[l]' separated by commas."""
-ignored_words_comment   ="""## Ignored words:
-##  Add every word you don't want to count after the '[l]' separated by commas."""
-minimum_length_comment  ="""## Minimum word length:
-##  The minimum number of letters in a word to be counted for stats."""
-log_format_comment      ="""## Log format:
-##  The name of the program you're using for IRC in lowercase letters.
-##  Valid formats can be found in [your PYCS directory]/resources/formats."""
-path_override_comment   ="""## Path override:
-##  If you fill this in after the '[l]', PYCS will ignore any path conventions it
-##  has and use the comma-separated list of directories you supplied as the
-##  directory to look for logs. It is not uncommon to use this option."""
-logs_parent_comment     ="""## Logs parent directories:
-##  The name of the directories with your logs directory in it (eg. HexChat, mIRC).
-##  Enter as comma-separated list after '[l]'. Will be overridden by Path override."""
-logs_comment            ="""## Logs:
-##  Enter the file names of the logs you want to analyze after the '[l]'.
-##  PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in."""
-print_progress_comment  ="""## Print progress:
-##  Set it to True or False. If it's False, PYCS won't print its progress to
-##  the console. This can be useful if you're scheduling PYCS."""
-swears_comment          ="""## Swears:
-##  Enter a comma-separated list of swears after the '[l]' - PYCS will count
-##  those words as swears. Use '*' as joker character. Leave the field empty
-##  after the '[l]' to not coutnt swears."""
-detailed_users_comment  ="""## Detailed users:
-##  Enter the number of users you'd like to see detailed in the output.
-##  By default, the top 10 are shown."""
-settings_comments = (channel_name_comment  + '\n',
-                     ignored_nicks_comment + '\n', ignored_words_comment + '\n',
-                     minimum_length_comment+ '\n', log_format_comment    + '\n',
-                     path_override_comment + '\n', logs_parent_comment   + '\n',
-                     logs_comment          + '\n', print_progress_comment+ '\n',
-                     swears_comment        + '\n', detailed_users_comment+ '\n'
-                     )
+log_specifics_cat       ="""
+
+--- Log specifics ---
+"""
+customization_cat       ="""
+
+--- Customization ---
+"""
+
+channel_name_comment    ="""
+Channel name:
+ Enter the name of the channel you're analyzing (eg. "#Channel")."""
+ignored_nicks_comment   ="""
+Ignored nicks:
+ Add every nickname you want to ignore in stats after the '[l]' separated by commas."""
+ignored_words_comment   ="""
+Ignored words:
+ Add every word you don't want to count after the '[l]' separated by commas."""
+minimum_length_comment  ="""
+Minimum word length:
+ The minimum number of letters in a word to be counted for stats."""
+log_format_comment      ="""
+Log format:
+ The name of the program you're using for IRC in lowercase letters.
+ Valid formats can be found in [your PYCS directory]/resources/formats."""
+path_override_comment   ="""
+Path override:
+ If you fill this in after the '[l]', PYCS will ignore any path conventions it
+ has and use the comma-separated list of directories you supplied as the
+ directory to look for logs. It is not uncommon to use this option."""
+logs_parent_comment     ="""
+Logs parent directories:
+ The name of the directories with your logs directory in it (eg. HexChat, mIRC).
+ Enter as comma-separated list after '[l]'. Will be overridden by Path override."""
+logs_comment            ="""
+Logs:
+ Enter the file names of the logs you want to analyze after the '[l]'.
+ PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in."""
+print_progress_comment  ="""
+Print progress:
+ Set it to True or False. If it's False, PYCS won't print its progress to
+ the console. This can be useful if you're scheduling PYCS."""
+swears_comment          ="""
+Swears:
+ Enter a comma-separated list of swears after the '[l]' - PYCS will count
+ those words as swears. Use '*' as joker character. Leave the field empty
+ after the '[l]' to not coutnt swears."""
+detailed_users_comment  ="""
+Detailed users:
+ Enter the number of users you'd like to see detailed in the output.
+ By default, the top 10 are shown."""
+theme_comment           ="""
+Theme:
+ Enter the name of the theme you wish to use. Valid theme names are
+ all of the folders in \resources\templates."""
+settings_comments = (
+    log_specifics_cat,
+    
+    log_format_comment,
+    logs_parent_comment,
+    logs_comment,
+    path_override_comment,
+
+    customization_cat,
+
+    channel_name_comment,
+    theme_comment,
+    ignored_nicks_comment,
+    ignored_words_comment,
+    minimum_length_comment,
+    swears_comment,
+    detailed_users_comment,
+    print_progress_comment
+    )

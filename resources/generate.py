@@ -20,6 +20,7 @@ printprogress   =   startops.printprogress  ##
 channelname     =   startops.channelname    ##
 pycspath        =   startops.pycspath       ##
 detailusers     =   startops.detailusers    ##
+template        =   startops.template       ##
 
 pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matching
 pattern_action_line =   startops.pattern_action_line    ##

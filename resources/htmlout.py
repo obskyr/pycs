@@ -4,6 +4,56 @@ import sys
 import os
 from generate import *
 import time
+import distutils.core
+from filecmp import dircmp
+import re
+
+
+##
+
+usernumberre    = re.compile("%usernumber%" )
+usernamere      = re.compile("%username%"   )
+linenumsre      = re.compile("%linenums%"   )
+actionnumsre    = re.compile("%actionnums%" )
+randomlinere    = re.compile("%randomline%" )
+
+channelnamere   = re.compile("%channelname%")
+gentimere       = re.compile("%gentime%"    )
+
+dawnpre         = re.compile("%dawnpercent%")
+morningpre      = re.compile("%morningpercent%"     )
+daypre          = re.compile("%daypercent%"         )
+nightpre        = re.compile("%nightpercent%"       )
+
+dawnp80re       = re.compile("%dawnpercent-80%"     )
+morningp80re    = re.compile("%morningpercent-80%"  )
+dayp80re        = re.compile("%daypercent-80%"      )
+nightp80re      = re.compile("%nightpercent-80%"    )
+
+totallinesre    = re.compile("%totallines%" )
+swearnumre      = re.compile("%swears%"  )
+
+userstatsre     = re.compile("\[userstats\](.*)\[/userstats\]", re.DOTALL)
+swearsre        = re.compile("\[swears\].*\[/swears\]", re.DOTALL)
+allusersre      = re.compile("\[allusers\](.*)\[/allusers\]", re.DOTALL)
+allusersSre     = re.compile("\[allusers-section\](.*)\[/allusers-section\]", re.DOTALL)
+alluserslastre  = re.compile("\[allusers-last\](.*)\[/allusers-last\]", re.DOTALL)
+alluserslasttagre = re.compile("\[/?allusers-last\]")
+allusersStagre  = re.compile("\[/?allusers-section\]")
+swearstagre     = re.compile("\[/?swears\]" )
+
+cwre            = re.compile("\[commonwords\](.*)\[/commonwords\]", re.DOTALL)
+cwoddre         = re.compile("\[commonwords-odd\](.*)\[/commonwords-odd\]", re.DOTALL)
+cwevenre        = re.compile("\[commonwords-even\](.*)\[/commonwords-even\]", re.DOTALL)
+
+cwlastre        = re.compile("\[commonwords-last\](.*)\[/commonwords-last\]", re.DOTALL)
+cwoddlastre     = re.compile("\[commonwords-odd-last\](.*)\[/commonwords-odd-last\]", re.DOTALL)
+cwevenlastre    = re.compile("\[commonwords-even-last\](.*)\[/commonwords-even-last\]", re.DOTALL)
+
+wordre          = re.compile("%word%"       )
+usesre          = re.compile("%uses%"       )
+
+##
 
 def timePercents(check):
     totaltimelines = float(sum(check.times.values()))
@@ -13,137 +63,147 @@ def timePercents(check):
     time4 = (sum((x[1] for x in check.times_ordered[18:])) / totaltimelines) * 100
     return round(time1, 1), round(time2, 1), round(time3, 1), round(time4, 1)
 
-def outputLogHTML(check, x):
-    
+def subSection(s, t):
+    """Returns string 's' with all items in list 't' being re.sub'd - first element is pattern, second is replacement."""
+    for pattern, replacement in t:
+        s = re.sub(pattern, replacement, s)
+    return s
+
+def generateHTML(html, check, starttime):
     y = time.time()
+
     time1, time2, time3, time4 = timePercents(check)
-    timeimagestr = """<span class="timewrap">
-	<img src='resources/images/time/dawn.png' class='left' alt='&lt;' width='10px'><img src='resources/images/time/dawn.png' class='time' alt='dawn' width='""" + str(int(time1 * 0.8)).encode('utf-8') + """%'>
-	<span class="hovertime dawn">
-		0 - 6: """ + str(time1).encode('utf-8') + """%
-	</span>
-</span>
-<span class="timewrap">
-	<img src='resources/images/time/morning.png' class='time' alt='' width='1px'><img src='resources/images/time/morning.png' class='time' alt='morning' width='""" + str(int(time2 * 0.8)).encode('utf-8') + """%'>
-	<span class="hovertime morning">
-		6 - 12: """ + str(time2).encode('utf-8') + """%
-	</span>
-</span>
-<span class="timewrap">
-	<img src='resources/images/time/day.png' alt='' class="time" width='1px'><img src='resources/images/time/day.png' class="time" alt='day' width='""" + str(int(time3 * 0.8)).encode('utf-8') + """%'>
-	<span class="hovertime day">
-		12 - 18: """ + str(time3).encode('utf-8') + """%
-	</span>
-</span>
-<span class="timewrap">
-	<img src='resources/images/time/night.png' class='time' alt='night' width='""" + str(int(time4 * 0.8)).encode('utf-8') + """%'><img src='resources/images/time/night.png' class='right' alt='&gt;' width='10px'>
-	<span class="hovertime night">
-		18 - 0: """ + str(time4).encode('utf-8') + """%
-	</span>
-</span>"""
+    dawnpercent, morningpercent, daypercent, nightpercent = [str(x) for x in (time1, time2, time3, time4)]
+    dawnpercent80, morningpercent80, daypercent80, nightpercent80 = [str(x) for x in ( int(time1 * 0.8), int(time2 * 0.8), int(time3 * 0.8), int(time4 * 0.8))]
 
-    commonwordsleft = []
-    commonwordsright= []
-    for word, uses in check.wordlist[:10:2]:
-        commonwordsleft.append(word.encode('utf-8') + ': ' + str(uses).encode('utf-8') + ' uses')
-    for word, uses in check.wordlist[1:10:2]:
-        commonwordsright.append(word.encode('utf-8') + ': ' + str(uses).encode('utf-8') + ' uses')
-    commonwordsleft = '\n\t\t\t\t<div class="smallBR"></div>\n\t\t\t\t'.join(commonwordsleft)
-    commonwordsright= '\n\t\t\t\t<div class="smallBR"></div>\n\t\t\t\t'.join(commonwordsright)
+    html = re.sub(channelnamere     , channelname   , html)
+    html = re.sub(gentimere         , str(round(y - starttime, 2)), html)
+
+    html = re.sub(dawnpre           , dawnpercent   , html)
+    html = re.sub(morningpre        , morningpercent, html)
+    html = re.sub(daypre            , daypercent    , html)
+    html = re.sub(nightpre          , nightpercent  , html)
+
+    html = re.sub(dawnp80re         , dawnpercent80     , html)
+    html = re.sub(morningp80re      , morningpercent80  , html)
+    html = re.sub(dayp80re          , daypercent80      , html)
+    html = re.sub(nightp80re        , nightpercent80    , html)
+
+    html = re.sub(totallinesre, str(check.totallines), html)
+
+    if not swearcount:
+        html = re.sub(swearsre, "", html)
+        html = re.sub(swearre, "", html)
+    lasty = ""
+    if re.search(userstatsre, html):
+        userstats = re.search(userstatsre, html).group(1)
+        userstatsstr = []
+        for number, pair in enumerate(check.linenums_top[:detailusers]):
+            user = pair[0]
+
+            sublist = ((usernumberre, str(number)),
+                       (usernamere, user),
+                       (linenumsre, str(pair[1])),
+                       (actionnumsre, str(check.uactions[user])),
+                       (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                       (swearnumre, str(check.numswears[user])),
+                       (swearstagre, "")
+                       )
+            userstatstemp = userstats
+            userstatstemp = subSection(userstatstemp, sublist)
+            userstatsstr.append(userstatstemp)
+        userstatsstr = u''.join(userstatsstr).encode('utf-8')
+    else:
+        userstatsstr = ''
+    html = re.sub(userstatsre, userstatsstr, html)
+    if re.search(allusersre, html):
+        endl = -1 if (re.search(alluserslasttagre, html)) else len(check.linenums_top)
+        allusersstr = []
+        allusers = re.search(allusersre, html).group(1)
+        for number, pair in enumerate(check.linenums_top[detailusers:endl]):
+            user = pair[0]
+            sublist =     ((usernumberre, str(number)),
+                           (usernamere, user),
+                           (linenumsre, str(pair[1])),
+                           (actionnumsre, str(check.uactions[user])),
+                           (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;'))
+                          )
+            alluserstemp = allusers
+            alluserstemp = subSection(alluserstemp, sublist)
+            allusersstr.append(alluserstemp)
+        if not check.linenums_top[detailusers:]:
+            html = re.sub(allusersSre, "", html)
+            html = re.sub(allusersre, "", html)
+            allusersstr = ""
+        elif endl == -1:
+            alluserstemp = re.search(alluserslastre, html).group(1)
+            user = check.linenums_top[-1][0]
+            sublist =   ((usernumberre, str(number)),
+                         (usernamere, user),
+                         (linenumsre, str(check.linenums[user])),
+                         (actionnumsre, str(check.uactions[user])),
+                         (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;'))
+                        )
+            alluserstemp = subSection(alluserstemp, sublist)
+            lasty = alluserstemp.encode('utf-8')
+        allusersstr = u''.join(allusersstr).encode('utf-8')
+    else:
+        allusersstr = ''
+    html = re.sub(allusersre, allusersstr, html)
+    html = re.sub(allusersStagre, "", html)
+    html = re.sub(alluserslastre, lasty, html)
+
+    cws = []
+    cwshelp = []
+
+    if re.search(cwre, html):
+        cws.append((re.search(cwre, html).group(1), [0, 10, 1], cwre))
+    if re.search(cwoddre, html):
+        cws.append((re.search(cwoddre, html).group(1), [0, 10, 2], cwoddre))
+    if re.search(cwevenre, html):
+        cws.append((re.search(cwevenre, html).group(1), [1, 10, 2], cwevenre))
+    if re.search(cwlastre, html):
+        cws.append((re.search(cwlastre, html).group(1), [-1], cwlastre))
+        cwshelp.append([0, 10, 1])
+    if re.search(cwoddlastre, html):
+        cws.append((re.search(cwoddlastre, html).group(1), [-1], cwoddlastre))
+        cwshelp.append([0, 10, 2])
+    if re.search(cwevenlastre, html):
+        cws.append((re.search(cwevenlastre, html).group(1), [-1], cwevenlastre))
+        cwshelp.append([1, 10, 2])
+    if cws:
+        for commonwords, sss, tags in cws:
+            commonwordsstr = []
+            if sss in cwshelp:
+                sss[1] = len(check.wordlist[:10]) - 1
+            if len(sss) == 1:
+                allthewords = enumerate(check.wordlist[:10][sss[0]:sss[0]])
+            else:
+                allthewords = enumerate(check.wordlist[:10][sss[0]:sss[1]:sss[2]])
+            for number, pair in allthewords:
+                word = pair[0]
+                sublist =     ((wordre, str(word)),
+                               (usesre, str(pair[1]))
+                              )
+                commonwordstemp = commonwords
+                commonwordstemp = subSection(commonwordstemp, sublist)
+                commonwordsstr.append(commonwordstemp)
+            commonwordsstr = u''.join(commonwordsstr).encode('utf-8')
+            html = re.sub(tags, commonwordsstr, html)
+    return html
+
+def outputLogHTML(check, starttime):
+    with open(pycspath + '\\resources\\themes\\' + template + '\\index.html', 'r') as infile:
+        html = infile.read()
+
+    html = generateHTML(html, check, starttime)
+
     superfile = open(pycspath + '\\output\\index.html', 'w')
-    superfile.write("""
-<!DOCTYPE HTML>
-<head>
-    <link rel="stylesheet" type="text/css" href="resources/stylesheet.css">
-    <meta charset="utf-8">
-    <title>
-        """ + channelname + """ statistics
-    </title>
-</head>
-<body>
-    <div style="width: 100%;">
-        <div class="left">
-            <h1>
-                User statistics <img src="resources/images/stat.png" alt="" class="icon">
-            </h1>""")
-    for user, lines in check.linenums_top[:detailusers]:
-        swearstr = ''
-        if swearcount:
-            swearstr = ' &middot; ' + str(check.numswears[user]).encode('utf-8') + ' swears'
-        superfile.write('\n\t\t\t<div class="semibold">\n\t\t\t\t' + user.encode('utf-8') + '\n\t\t\t</div>\n\t\t\t<div class="smallBR"></div>\n\t\t\t<div class="stat">\n\t\t\t\t' + \
-        str(lines).encode('utf-8') + ' lines &middot; ' + str(check.uactions[user]).encode('utf-8') +    \
-        ' actions' + swearstr + '\n\t\t\t\t<br>\n' +    \
-        '\t\t\t\t"' + check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;').encode('utf-8') + '"\n\t\t\t</div>\n\t\t\t<br>')
-    if len(check.linenums_top[detailusers:]) > 0:
-        superfile.write("""
-            <div class="allusers-head">
-                These users didn't speak that much:
-            </div>
-            <div class="allusers">
-                """)
-        for user, lines in check.linenums_top[detailusers:-1]:
-            superfile.write(user.encode('utf-8') + ' - ' + str(lines).encode('utf-8') + ' &middot; ')
-        superfile.write(check.linenums_top[-1][0].encode('utf-8') + ' - ' + str(check.linenums_top[-1][1]).encode('utf-8') + '\n\t\t\t</div>')
-        superfile.write("""
-            </div>""")
-    superfile.write("""
-        </div>
-        <div class="right">
-            <h1>
-                <img src="resources/images/quote.png" alt="" class="icon"> Specifics
-            </h1>
-            <br>
-            <div class="center">
-                <span class="comment">
-                    Lines by time posted
-                </span>
-                <br>
-                <br>
-                """ + timeimagestr.encode('utf-8') + """
-                <br>
-                <br>
-                <span class="comment">
-                    Mouseover for details
-                </span>
-                <br>
-                <br>
-                Total number of lines in """ + channelname.encode('utf-8') + """:
-                <span class="totallines">
-                    """ + str(check.totallines).encode('utf-8') + """
-                </span>
-                <br>
-                <br>
-                <div class="smallBR"></div>
-                <div class="semibold">
-                    Most common words:
-                </div>
-                <br>
-                <div class="left commonwords">
-                    """ + commonwordsleft.encode('utf-8') + """
-                </div>
-                <div class="right commonwords">
-                    """ + commonwordsright.encode('utf-8') + """
-                </div>
-            </div>
-        </div>
-        
-<!-- HERE BEGINS FOOTER -->
-
-        <div style="clear:both;"></div>
-        <br>
-        <div class="footer">
-            <div class="center">
-                These statistics were generated in """ + str(round(y - x, 2)).encode('utf-8') + """ seconds.
-                <br>
-                <a href="https://github.com/LpSamuelm/pycs">
-                    PYCS
-                </a>
-            </div>
-        </div>
-    </div>
-</body>""")
+    superfile.write(html)
     superfile.close()
-
+    resourcecomparison = dircmp(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
+    if resourcecomparison.left_only + resourcecomparison.right_only:
+        distutils.dir_util.copy_tree(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
 if __name__ == '__main__':
     x = time.time()
     outputLogHTML(Logs(pycspath + "\\", ["testlog.log"], printprogress), x)
