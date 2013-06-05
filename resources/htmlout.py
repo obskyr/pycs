@@ -203,6 +203,7 @@ def outputLogHTML(check, starttime):
     superfile.close()
     resourcecomparison = dircmp(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
     if resourcecomparison.left_only + resourcecomparison.right_only:
+        distutils.dir_util.remove_tree(pycspath + '\\output\\resources')
         distutils.dir_util.copy_tree(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
 if __name__ == '__main__':
     x = time.time()
