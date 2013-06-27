@@ -20,7 +20,7 @@ randomlinere    = re.compile("%randomline%" )
 channelnamere   = re.compile("%channelname%")
 gentimere       = re.compile("%gentime%"    )
 
-dawnpre         = re.compile("%dawnpercent%")
+dawnpre         = re.compile("%dawnpercent%"        )
 morningpre      = re.compile("%morningpercent%"     )
 daypre          = re.compile("%daypercent%"         )
 nightpre        = re.compile("%nightpercent%"       )
@@ -31,24 +31,25 @@ dayp80re        = re.compile("%daypercent-80%"      )
 nightp80re      = re.compile("%nightpercent-80%"    )
 
 totallinesre    = re.compile("%totallines%" )
-swearnumre      = re.compile("%swears%"  )
+swearnumre      = re.compile("%swears%"     )
 
-userstatsre     = re.compile("\[userstats\](.*)\[/userstats\]", re.DOTALL)
-swearsre        = re.compile("\[swears\].*\[/swears\]", re.DOTALL)
-allusersre      = re.compile("\[allusers\](.*)\[/allusers\]", re.DOTALL)
-allusersSre     = re.compile("\[allusers-section\](.*)\[/allusers-section\]", re.DOTALL)
-alluserslastre  = re.compile("\[allusers-last\](.*)\[/allusers-last\]", re.DOTALL)
-alluserslasttagre = re.compile("\[/?allusers-last\]")
-allusersStagre  = re.compile("\[/?allusers-section\]")
-swearstagre     = re.compile("\[/?swears\]" )
+userstatsre     = re.compile("\[userstats\](.*)\[/userstats\]", re.DOTALL               )
+userstatslastre = re.compile("\[userstats-last\](.*)\[/userstats-last\]", re.DOTALL        )
+swearsre        = re.compile("\[swears\].*\[/swears\]", re.DOTALL                       )
+allusersre      = re.compile("\[allusers\](.*)\[/allusers\]", re.DOTALL                 )
+allusersSre     = re.compile("\[allusers-section\](.*)\[/allusers-section\]", re.DOTALL )
+alluserslastre  = re.compile("\[allusers-last\](.*)\[/allusers-last\]", re.DOTALL       )
+alluserslasttagre = re.compile("\[/?allusers-last\]"                                    )
+allusersStagre  = re.compile("\[/?allusers-section\]"                                   )
+swearstagre     = re.compile("\[/?swears\]"                                             )
 
-cwre            = re.compile("\[commonwords\](.*)\[/commonwords\]", re.DOTALL)
-cwoddre         = re.compile("\[commonwords-odd\](.*)\[/commonwords-odd\]", re.DOTALL)
-cwevenre        = re.compile("\[commonwords-even\](.*)\[/commonwords-even\]", re.DOTALL)
+cwre            = re.compile("\[commonwords\](.*)\[/commonwords\]", re.DOTALL           )
+cwoddre         = re.compile("\[commonwords-odd\](.*)\[/commonwords-odd\]", re.DOTALL   )
+cwevenre        = re.compile("\[commonwords-even\](.*)\[/commonwords-even\]", re.DOTALL )
 
-cwlastre        = re.compile("\[commonwords-last\](.*)\[/commonwords-last\]", re.DOTALL)
-cwoddlastre     = re.compile("\[commonwords-odd-last\](.*)\[/commonwords-odd-last\]", re.DOTALL)
-cwevenlastre    = re.compile("\[commonwords-even-last\](.*)\[/commonwords-even-last\]", re.DOTALL)
+cwlastre        = re.compile("\[commonwords-last\](.*)\[/commonwords-last\]", re.DOTALL )
+cwoddlastre     = re.compile("\[commonwords-odd-last\](.*)\[/commonwords-odd-last\]", re.DOTALL     )
+cwevenlastre    = re.compile("\[commonwords-even-last\](.*)\[/commonwords-even-last\]", re.DOTALL   )
 
 wordre          = re.compile("%word%"       )
 usesre          = re.compile("%uses%"       )
@@ -91,14 +92,17 @@ def generateHTML(html, check, starttime):
 
     html = re.sub(totallinesre, str(check.totallines), html)
 
+    usertop = list(enumerate(check.linenums_top))
+
     if not swearcount:
         html = re.sub(swearsre, "", html)
         html = re.sub(swearre, "", html)
     lasty = ""
     if re.search(userstatsre, html):
+        endl = -1 if (re.search(userstatslastre, html)) else detailusers
         userstats = re.search(userstatsre, html).group(1)
         userstatsstr = []
-        for number, pair in enumerate(check.linenums_top[:detailusers]):
+        for number, pair in usertop[:detailusers][:endl]:
             user = pair[0]
 
             sublist = ((usernumberre, str(number)),
@@ -112,6 +116,20 @@ def generateHTML(html, check, starttime):
             userstatstemp = userstats
             userstatstemp = subSection(userstatstemp, sublist)
             userstatsstr.append(userstatstemp)
+        if endl == -1:
+            userstatslast = re.search(userstatslastre, html).group(1)
+            user, number = usertop[:detailusers][endl][1][0], usertop[:detailusers][endl][0]
+            sublist = ((usernumberre, str(number)),
+                       (usernamere, user),
+                       (linenumsre, str(pair[1])),
+                       (actionnumsre, str(check.uactions[user])),
+                       (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                       (swearnumre, str(check.numswears[user])),
+                       (swearstagre, "")
+                       )
+            userstatstemp = userstatslast
+            userstatstemp = subSection(userstatstemp, sublist)
+            html = re.sub(userstatslastre, userstatstemp.encode('utf-8'), html)         
         userstatsstr = u''.join(userstatsstr).encode('utf-8')
     else:
         userstatsstr = ''
@@ -120,13 +138,15 @@ def generateHTML(html, check, starttime):
         endl = -1 if (re.search(alluserslasttagre, html)) else len(check.linenums_top)
         allusersstr = []
         allusers = re.search(allusersre, html).group(1)
-        for number, pair in enumerate(check.linenums_top[detailusers:endl]):
+        for number, pair in usertop[detailusers:endl]:
             user = pair[0]
             sublist =     ((usernumberre, str(number)),
                            (usernamere, user),
                            (linenumsre, str(pair[1])),
                            (actionnumsre, str(check.uactions[user])),
-                           (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;'))
+                           (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                              (swearnumre, str(check.numswears[user])),
+                             (swearstagre, "")
                           )
             alluserstemp = allusers
             alluserstemp = subSection(alluserstemp, sublist)
@@ -138,11 +158,14 @@ def generateHTML(html, check, starttime):
         elif endl == -1:
             alluserstemp = re.search(alluserslastre, html).group(1)
             user = check.linenums_top[-1][0]
+            number = usertop[-1][0]
             sublist =   ((usernumberre, str(number)),
                          (usernamere, user),
                          (linenumsre, str(check.linenums[user])),
                          (actionnumsre, str(check.uactions[user])),
-                         (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;'))
+                         (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                           (swearnumre, str(check.numswears[user])),
+                           (swearstagre, "")
                         )
             alluserstemp = subSection(alluserstemp, sublist)
             lasty = alluserstemp.encode('utf-8')

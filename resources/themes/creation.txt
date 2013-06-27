@@ -1,0 +1,162 @@
+
+ ################################
+## Creating your own PYCS themes ##
+ ################################
+
+Creating a PYCS theme is not all too hard, as long as you know a bit of HTML. Really, that's all the knowledge you'll need! Following the rest of these instructions, everything should be clear in a bit. This tutorial will be using the default theme (/resources/themes/default) as an example.
+
+PYCS works by copying the theme directory (in this example case, 'default') and putting it in place of the 'output' directory which is generated when you run the program successfully. Here is a list of what needs to be in your theme directory (which should, by the way, have the name of your theme as the directory name):
+
+--
+
+¥ index.html
+
+--
+
+That's it. With an index.html in the directory, PYCS will run properly and output properly. You can, of course, also add in other things that would make any other webpage work:
+
+--
+
+¥ Images
+¥ Custom CSS
+¥ Fonts
+
+--
+
+Really - anything you can put in a normal web page, you can put in the directory of your theme - it will all be copied.
+
+Now - what can actually be in your index.html that will tell PYCS where to put different statistics? It's not a huge deviation from normal HTML, really. PYCS will substitute certain 'tags' (like %channelname% or %gentime%, for example) with the statistics it has generated, and will repeat or delete certain bits of code (in HTML-like tags, except with square brackets) as needed for lists and such.
+
+####
+
+IMPORTANT:
+
+If you do make your own theme and you're interested in making it a part of the default PYCS theme collection, please contact me either at powpowd@gmail.com or @LpSamuelm on Twitter. I'll be happy to include it!
+
+####
+
+
+  ###########
+## PYCS tags #
+  ###########
+
+In order to see these tags in action, it is advisable to read the code for the 'index.html' file in the 'default' theme folder. Note that no tag is required - a theme can choose to contain only certain statistics!
+
+## Standalone tags ##
+
+These tags will be substituted no matter where they are in the code.
+
+-- %channelname% --
+All instances of this tag will be replaced with the name of the channel, as provided in the 'channel' parameter in the settings file.
+
+-- %gentime% --
+All instances of this tag will be replaced with the time the statistics were generated in, with an accuracy of a hundredth of a second.
+
+-- %totallines% --
+All instances of this tag will be replaced by the total number of lines in the log files being scanned.
+
+-- %dawnpercent% --
+All instances of this tag will be replaced by the percent of lines posted between 0 and 6.
+
+-- %dawnpercent-80% --
+All instances of this tag will be replaced by the percent times 0.8 of lines posted between 0 and 6. Useful for making meters and such that do not span the entirety of the block.
+
+-- %morningpercent% --
+All instances of this tag will be replaced by the percent of lines posted between 6 and 12.
+
+-- %morningpercent-80% --
+All instances of this tag will be replaced by the percent times 0.8 of lines posted between 6 and 12. Useful for making meters and such that do not span the entirety of the block.
+
+-- %daypercent% --
+All instances of this tag will be replaced by the percent of lines posted between 12 and 18.
+
+-- %daypercent-80% --
+All instances of this tag will be replaced by the percent times 0.8 of lines posted between 12 and 18. Useful for making meters and such that do not span the entirety of the block.
+
+-- %nightpercent% --
+All instances of this tag will be replaced by the percent of lines posted between 18 and 0.
+
+-- %nightpercent-80% --
+All instances of this tag will be replaced by the percent times 0.8 of lines posted between 18 and 0. Useful for making meters and such that do not span the entirety of the block.
+
+## Section tags ##
+
+The tags in square brackets should envelop the piece of code to be repeated for every entry in the list specific to the tag. For example:
+
+[userstats]
+	<div class="semibold">
+		%username%
+	</div>
+	<br>
+	<div class="stat">
+		%linenums% lines &middot; %actionnums% actions[swears] &middot; %swears% swears[/swears]
+		<br>
+		"%randomline%"
+	</div>
+	<br>
+[/userstats]
+
+The whitespace is there for readability and is absolutely not needed.
+
+== [userstats][/userstats] ==
+The code surrounded by [userstats] tags will be repeated for each user in the top/detailed users - as many as specified in 'settings.txt'. Possible tags inside [userstats]:
+
+-- %username% --
+Will be replaced by the user's name.
+
+-- %usernumber% --
+Will be replaced by the number of the user in the "top list".
+
+-- %linenums% --
+Will be replaced by the user's number of lines.
+
+-- %actionnums% --
+Will be replaced by the user's number of actions.
+
+-- %randomline% --
+Will be replaced by the user's randomly chosen line.
+
+-- [swears][/swears] --
+This part of code will be deleted if swear counting is turned off.
+
+-- %swears% --
+Will be replaced by the user's number of swears. Will be deleted if swear counting is turned off.
+
+
+== [userstats-last][/userstats-last] ==
+Exactly like [userstats], but will be used for the last entry in the list if included. Useful if there are dividers in your [userstats].
+
+== [allusers-section][/allusers-section] ==
+The code surrounded by [allusers-section] tags will be deleted if there are no users beyond the top.
+
+== [allusers][/allusers] ==
+The code surrounded by [allusers] tags will be repeated for all users not in the top (which is in [userstats] tags). The possible tags inside [allusers] are the same as in [userstats].
+
+== [allusers-last][/allusers-last] ==
+Exactly like [allusers], but will be used for the last entry in the list if included. Useful if there are dividers in your [allusers].
+
+== [commonwords][/commonwords] ==
+The code surrounded by [commonwords] tags will be repeated for each entry in the list of top common words. Possible tags inside [commonwords]:
+
+-- %word% --
+Will be replaced by the word.
+
+-- %uses% --
+Will be replaces by the word's number of uses.
+
+
+== [commonwords-last][/commonwords-last] ==
+Exactly like [commonwords], but will be used for the last entry in the list of common words if included. Useful if dividers are used in your [commonwords].
+
+== [commonwords-odd][/commonwords-odd] and [commonwords-even][/commonwords-even] ==
+Exactly like [commonwords], but will use odd and even entries, respectively.
+
+== [commonwords-odd-last][/commonwords-odd-last] and [commonwords-even][/commonwords-even-last] ==
+Exactly like [commonwords-last], but will use the last entries in the lists of odd and even entries, respectively.
+
+
+  ############
+## Questions? ##
+  ############
+
+If anything is unclear after reading through this guide, consider skimming the index.html in the 'default' theme folder to get a whim of how it works. If it's still gibberish to you, don't be afraid to ask me! Again - either at powpowd@gmail.com, @LpSamuelm on Twitter or @LpSamuelm on GitHub. As previously mentioned, Twitter is your best bet.

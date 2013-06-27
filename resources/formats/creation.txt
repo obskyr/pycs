@@ -3,12 +3,11 @@
 ## How to make PYCS compatible with your log format ##
  ####################################################
 
-
 It is quite easy to create a new log format for PYCS - it does require some knowledge, though.
 
 Create a file named "[your IRC program name].cfg" (eg. "xchat.cfg", "mirc.cfg"), all lowercase and without brackets or quotes. In this file, each line should contain the name of the pattern, an equals sign and the Python compliant regex pattern with a named group around the particular parts to match - nothing else.
 
-A named group is formatted as parentheses around the paricular part to match, with the first characters inside the parentheses being a '?', a 'P' and the name of the group in <>s.
+A named group is formatted as parentheses around the particular part to match, with the first characters inside the parentheses being a '?', a 'P' and the name of the group in <>s.
 
 For example:
 
@@ -16,7 +15,7 @@ For example:
 
 Example of a line:
 
-said line	=	^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s<(?P<username>[A-Za-z_-\|]+)>\s(?P<username>.+)
+said line	=	^[a-zA-Z]+\s[0-9]+\s[0-9:]{8}\s<(?P<username>[A-Za-z_-\|]+)>\s(?P<words>.+)
 
 (The tabs are there for readability, whitespace is irrelevant)
 
