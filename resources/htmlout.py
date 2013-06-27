@@ -221,13 +221,13 @@ def outputLogHTML(check, starttime):
 
     html = generateHTML(html, check, starttime)
 
+    resourcecomparison = dircmp(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
+    if resourcecomparison.left_only or resourcecomparison.right_only:
+        distutils.dir_util.remove_tree(os.path.join(pycspath, 'output'))
+        distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
     superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
     superfile.write(html)
     superfile.close()
-    resourcecomparison = dircmp(os.path.join(pycspath, 'resources', 'themes', template, 'resources'), os.path.join(pycspath, 'output', 'resources'))
-    if resourcecomparison.left_only or resourcecomparison.right_only:
-        distutils.dir_util.remove_tree(os.path.join(pycspath, 'output', 'resources'))
-        distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template, 'resources'), os.path.join(pycspath, 'output', 'resources'))
 if __name__ == '__main__':
     x = time.time()
     outputLogHTML(Logs(pycspath, ["testlog.log"], printprogress), x)
