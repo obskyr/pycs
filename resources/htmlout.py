@@ -193,18 +193,18 @@ def generateHTML(html, check, starttime):
     return html
 
 def outputLogHTML(check, starttime):
-    with open(pycspath + '\\resources\\themes\\' + template + '\\index.html', 'r') as infile:
+    with open(os.path.join(pycspath, 'resources', 'themes', template, 'index.html'), 'r') as infile:
         html = infile.read()
 
     html = generateHTML(html, check, starttime)
 
-    superfile = open(pycspath + '\\output\\index.html', 'w')
+    superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
     superfile.write(html)
     superfile.close()
-    resourcecomparison = dircmp(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
-    if resourcecomparison.left_only + resourcecomparison.right_only:
-        distutils.dir_util.remove_tree(pycspath + '\\output\\resources')
-        distutils.dir_util.copy_tree(pycspath + '\\resources\\themes\\' + template + '\\resources', pycspath + '\\output\\resources')
+    resourcecomparison = dircmp(os.path.join(pycspath, 'resources', 'themes', template, 'resources'), os.path.join(pycspath, 'output', 'resources'))
+    if resourcecomparison.left_only or resourcecomparison.right_only:
+        distutils.dir_util.remove_tree(os.path.join(pycspath, 'output', 'resources'))
+        distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template, 'resources'), os.path.join(pycspath, 'output', 'resources'))
 if __name__ == '__main__':
     x = time.time()
-    outputLogHTML(Logs(pycspath + "\\", ["testlog.log"], printprogress), x)
+    outputLogHTML(Logs(pycspath, ["testlog.log"], printprogress), x)

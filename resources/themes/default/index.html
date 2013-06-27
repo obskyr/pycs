@@ -1,0 +1,118 @@
+
+<!DOCTYPE HTML>
+<head>
+	<link rel="stylesheet" type="text/css" href="resources/stylesheet.css">
+	<meta charset="utf-8">
+	<title>
+		%channelname% statistics
+	</title>
+</head>
+<body>
+	<div style="width: 100%;">
+		<div class="left">
+			<h1>
+				User statistics <img src="resources/images/stat.png" alt="" class="icon">
+			</h1>
+[userstats]			<div class="semibold">
+				%username%
+			</div>
+			<div class="smallBR"></div>
+			<div class="stat">
+				%linenums% lines &middot; %actionnums% actions[swears] &middot; %swears% swears[/swears]
+				<br>
+				"%randomline%"
+			</div>
+			<br>
+[/userstats]
+[allusers-section]			<br>
+			<div class="allusers-head">
+			These users didn't speak that much:
+			</div>
+			<div class="allusers">
+				[allusers]%username% - %linenums% &middot; [/allusers][allusers-last]%username% - %linenums%[/allusers-last]
+			</div>[/allusers-section]
+		</div>
+		<div class="right">
+			<h1>
+				<img src="resources/images/quote.png" alt="" class="icon"> Specifics
+			</h1>
+			<br>
+			<div class="center">
+				<span class="comment">
+					Lines by time posted
+				</span>
+				<br>
+				<br>
+				<span class="timewrap">
+					<img src='resources/images/time/dawn.png' class='left' alt='&lt;' width='10px'><img src='resources/images/time/dawn.png' class='time' alt='dawn' width='%dawnpercent-80%%'>
+					<span class="hovertime dawn">
+						0 - 6: %dawnpercent%
+					</span>
+				</span>
+				<span class="timewrap">
+					<img src='resources/images/time/morning.png' class='time' alt='' width='1px'><img src='resources/images/time/morning.png' class='time' alt='morning' width='%morningpercent-80%%'>
+					<span class="hovertime morning">
+						6 - 12: %morningpercent%%
+					</span>
+				</span>
+				<span class="timewrap">
+					<img src='resources/images/time/day.png' alt='' class="time" width='1px'><img src='resources/images/time/day.png' class="time" alt='day' width='%daypercent-80%%'>
+					<span class="hovertime day">
+						12 - 18: %daypercent%%
+					</span>
+				</span>
+				<span class="timewrap">
+					<img src='resources/images/time/night.png' class='time' alt='night' width='%nightpercent-80%%'><img src='resources/images/time/night.png' class='right' alt='&gt;' width='10px'>
+					<span class="hovertime night">
+						18 - 0: %nightpercent%%
+					</span>
+				</span>
+				<br>
+				<br>
+				<span class="comment">
+					Mouseover for details
+				</span>
+				<br>
+				<br>
+				Total number of lines in #7mi:
+				<span class="totallines">
+					%totallines%
+				</span>
+				<br>
+				<br>
+				<div class="smallBR"></div>
+				<div class="semibold">
+					Most common words:
+				</div>
+				<br>
+				<div class="left commonwords">
+[commonwords-odd]				%word%: %uses% uses
+				<div class="smallBR"></div>
+[/commonwords-odd]
+[commonwords-odd-last]				%word%: %uses% uses[/commonwords-odd-last]
+				</div>
+				<div class="right commonwords">
+[commonwords-even]				%word%: %uses% uses
+				<div class="smallBR"></div>
+[/commonwords-even]
+[commonwords-even-last]				%word%: %uses% uses
+[/commonwords-even-last]
+				</div>
+			</div>
+		</div>
+		
+<!-- HERE BEGINS FOOTER -->
+
+		<div style="clear:both;"></div>
+		<br>
+		<div class="footer">
+			<div class="center">
+				These statistics were generated in %gentime% seconds.
+				<br>
+				<a href="https://github.com/LpSamuelm/pycs">
+					PYCS
+				</a>
+			</div>
+		</div>
+	</div>
+</body>

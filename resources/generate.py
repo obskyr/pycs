@@ -93,9 +93,9 @@ class Logs(object):
         self.directory = directory
         self.logs = logs
         if type(logs) == list: ## Adds some freedom/error handling to the config
-            self.paths = [directory + log for log in self.logs]
+            self.paths = [os.path.join(directory, log) for log in self.logs]
         else:
-            self.paths = [directory + log]
+            self.paths = [os.path.join(directory, log)]
         self.printprogress = printprogress
         self.genEverything()
 

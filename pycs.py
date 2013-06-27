@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.getcwd() + r"\resources")
+sys.path.insert(0, os.path.join(os.getcwd(), 'resources'))
 
 import confutil
 from generate import *
@@ -22,20 +22,20 @@ if os.name == 'nt':
 if not [x for x in pathoverride if x.strip()]:
     for directory in logdirs:
         for ptest in logpaths:
-            if os.path.exists(appdpath + "\\" + directory + "\\" + ptest):
+            if os.path.exists(os.path.join(appdpath, directory, ptest)):
                 lpath = ptest
                 break
         else:
             print "No log directories found. Try using path override."
         for log in lognames:
-            if os.path.exists(appdpath + "\\" + directory + "\\" + lpath + "\\" + log):
-                checklogs.append(appdpath + "\\" + directory + "\\" + lpath + "\\" + log)
+            if os.path.exists(os.path.join(appdpath, directory, lpath, log)):
+                checklogs.append(os.path.join(appdpath, directory, lpath, log))
 else:
     try:
         for directory in pathoverride:
             for logname in lognames:
-                if os.path.exists(directory + "\\" + logname):
-                    checklogs.append(directory + "\\" + logname)
+                if os.path.exists(os.path.join(directory, logname)):
+                    checklogs.append(os.path.join(directory, logname))
         if not len(checklogs):
             print "No logs found in specified directories."
     except IOError:

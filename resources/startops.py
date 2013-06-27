@@ -8,16 +8,16 @@ try:
 except NameError:
     pycspath = os.path.dirname(os.getcwd())
 
-if not os.path.exists(pycspath + '\\settings'): ## Create needed directories
-    os.makedirs(pycspath + '\\settings')
-if not os.path.exists(pycspath + '\\settings\\settings_help.txt'): ## Creates help file
-    settings_help = open(pycspath + '\\settings\\settings_help.txt', 'w')
+if not os.path.exists(os.path.join(pycspath, 'settings')): ## Create needed directories
+    os.makedirs(os.path.join(pycspath, 'settings'))
+if not os.path.exists(os.path.join(pycspath, 'settings', 'settings_help.txt')): ## Creates help file
+    settings_help = open(os.path.join(pycspath, 'settings', 'settings_help.txt',), 'w')
     for comment in comments.settings_comments:
         settings_help.write(comment + '\n')
     settings_help.close()
 
 try:            ## Setting config variables from config file
-    config = confutil.cVars(pycspath + '\\settings\\settings.cfg') 
+    config = confutil.cVars(os.path.join(pycspath, 'settings', 'settings.cfg')) 
 
     ignore          = config['Ignored nicks'            ]
     ignored_words   = config['Ignored words'            ]
@@ -46,14 +46,14 @@ except IOError: ## Creating config file
                 ('Theme', 'default'                                         ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),
-                ('Minimum word length', 4,                                  ),
+                ('Minimum word length', 5,                                  ),
                 ('Swears', ['swear1', 'swear2']                             ),
-                ('Detailed users', 10                                       ),
+                ('Detailed users', 5                                        ),
                 ('Print progress', "True"                                   )
               )
 
-    confutil.createConfig(config, pycspath + '\\settings\\settings.cfg')
-    config = confutil.cVars(pycspath + '\\settings\\settings.cfg')
+    confutil.createConfig(config, os.path.join(pycspath, 'settings', 'settings.cfg'))
+    config = confutil.cVars(os.path.join(pycspath, 'settings', 'settings.cfg'))
 
     ignore          = config['Ignored nicks'            ]
     ignored_words   = config['Ignored words'            ]
@@ -71,14 +71,14 @@ except IOError: ## Creating config file
     swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
 try:            ## Loading aliases from alias file
-    aliases = confutil.cVars(pycspath + '\\settings\\aliases.cfg')
+    aliases = confutil.cVars(os.path.join(pycspath, 'settings', 'aliases.cfg'))
 
 except IOError: ## Creating alias file
     aliases = {'SampleNick': ['alias1', 'alias2']}
-    confutil.createConfig(aliases, pycspath + '\\settings\\aliases.cfg', comments.aliascomment)
+    confutil.createConfig(aliases, os.path.join(pycspath, 'settings', 'aliases.cfg'))
 
 try:            ## Loading patterns dictionary
-    linepatterns        = confutil.cVars(pycspath + '\\resources\\formats\\' + logformat.lower() + '.cfg')
+    linepatterns        = confutil.cVars(os.path.join(pycspath, 'resources', 'formats', logformat.lower() + '.cfg'))
     try:
         for key in linepatterns: ## Allows for Unicode symbols to be used
             linepatterns[key] = unicode(linepatterns[key], 'utf-8')
