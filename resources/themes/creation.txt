@@ -147,6 +147,8 @@ Will be replaced by the word.
 -- %uses% --
 Will be replaces by the word's number of uses.
 
+-- %number% --
+Will be replaced by the word's place in the 'top list'.
 
 == [commonwords-last][/commonwords-last] ==
 Exactly like [commonwords], but will be used for the last entry in the list of common words if included. Useful if dividers are used in your [commonwords].

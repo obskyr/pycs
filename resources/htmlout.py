@@ -34,7 +34,7 @@ totallinesre    = re.compile("%totallines%" )
 swearnumre      = re.compile("%swears%"     )
 
 userstatsre     = re.compile("\[userstats\](.*)\[/userstats\]", re.DOTALL               )
-userstatslastre = re.compile("\[userstats-last\](.*)\[/userstats-last\]", re.DOTALL        )
+userstatslastre = re.compile("\[userstats-last\](.*)\[/userstats-last\]", re.DOTALL     )
 swearsre        = re.compile("\[swears\].*\[/swears\]", re.DOTALL                       )
 allusersre      = re.compile("\[allusers\](.*)\[/allusers\]", re.DOTALL                 )
 allusersSre     = re.compile("\[allusers-section\](.*)\[/allusers-section\]", re.DOTALL )
@@ -53,6 +53,7 @@ cwevenlastre    = re.compile("\[commonwords-even-last\](.*)\[/commonwords-even-l
 
 wordre          = re.compile("%word%"       )
 usesre          = re.compile("%uses%"       )
+numberre        = re.compile("%number%"     )
 
 ##
 
@@ -182,35 +183,40 @@ def generateHTML(html, check, starttime):
 
     cws = []
     cwshelp = []
+    
+    commonend = 11
+    oddmod, evenmod = (1, 0) if (commonend % 2 == 0) else (0, 1)
 
     if re.search(cwre, html):
-        cws.append((re.search(cwre, html).group(1), [0, 10, 1], cwre))
+        cws.append((re.search(cwre, html).group(1), [0, commonend, 1], cwre))
     if re.search(cwoddre, html):
-        cws.append((re.search(cwoddre, html).group(1), [0, 10, 2], cwoddre))
+        cws.append((re.search(cwoddre, html).group(1), [0, commonend - oddmod, 2], cwoddre))
     if re.search(cwevenre, html):
-        cws.append((re.search(cwevenre, html).group(1), [1, 10, 2], cwevenre))
+        cws.append((re.search(cwevenre, html).group(1), [1, commonend - evenmod, 2], cwevenre))
     if re.search(cwlastre, html):
-        cws.append((re.search(cwlastre, html).group(1), [-1], cwlastre))
-        cwshelp.append([0, 10, 1])
+        cws.append((re.search(cwlastre, html).group(1), [-1, 0], cwlastre))
+        cwshelp.append([0, commonend, 1])
     if re.search(cwoddlastre, html):
-        cws.append((re.search(cwoddlastre, html).group(1), [-1], cwoddlastre))
-        cwshelp.append([0, 10, 2])
+        cws.append((re.search(cwoddlastre, html).group(1), [-1, 1], cwoddlastre))
+        cwshelp.append([0, commonend - oddmod, 2])
     if re.search(cwevenlastre, html):
-        cws.append((re.search(cwevenlastre, html).group(1), [-1], cwevenlastre))
-        cwshelp.append([1, 10, 2])
+        cws.append((re.search(cwevenlastre, html).group(1), [-1, 0], cwevenlastre))
+        cwshelp.append([1, commonend - evenmod, 2])
     if cws:
+        wordtop = list(enumerate(check.wordlist))
         for commonwords, sss, tags in cws:
             commonwordsstr = []
             if sss in cwshelp:
-                sss[1] = len(check.wordlist[:10]) - 1
-            if len(sss) == 1:
-                allthewords = enumerate(check.wordlist[:10][sss[0]:sss[0]])
+                sss[1] = len(check.wordlist[:sss[1]]) - 1
+            if len(sss) == 2:
+                allthewords = wordtop[:commonend - sss[1]][sss[0]:]
             else:
-                allthewords = enumerate(check.wordlist[:10][sss[0]:sss[1]:sss[2]])
+                allthewords = wordtop[:commonend][sss[0]:sss[1]:sss[2]]
             for number, pair in allthewords:
                 word = pair[0]
                 sublist =     ((wordre, str(word)),
-                               (usesre, str(pair[1]))
+                               (usesre, str(pair[1])),
+                               (numberre, str(number + 1))
                               )
                 commonwordstemp = commonwords
                 commonwordstemp = subSection(commonwordstemp, sublist)
