@@ -14,6 +14,8 @@ Once you've successfully run PYCS, there will be a file named `index.html` in th
 
 ##Customization
 
+###Formats
+
 If your IRC program's log format isn't supported by PYCS, there is quite an easy way to create your own filter. Following the instructions in `\resources\formats\creation.txt`, create your own config file for your particular IRC log format.
 
 If you do make a new format, it would be incredibly nice of you to open an issue, make a pull request or otherwise contact me about your addition and I'll be more than happy to add it to the default formats!
@@ -21,6 +23,8 @@ If you do make a new format, it would be incredibly nice of you to open an issue
 ###Themes
 
 PYCS fully supports making your own themes (that means completely different page layouts, not just color schemes). For information on how to do this, refer to `creation.txt` in `/resources/themes`.
+
+As with the formats - if you do make a theme, it'd be extremely appreciated if you submitted a pull request, an issue or otherwise contacted me in order for the theme to be included in the repository.
 
 ##Contact
 
