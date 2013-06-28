@@ -64,6 +64,9 @@ detailed_users_comment  ="""
 Detailed users:
  Enter the number of users you'd like to see detailed in the output.
  By default, the top 10 are shown."""
+top_words_comment       ="""
+Top words:
+ Enter the number of words you'd like to appear in the "top list" of words."""
 theme_comment           ="""
 Theme:
  Enter the name of the theme you wish to use. Valid theme names are
@@ -85,5 +88,6 @@ settings_comments = (
     minimum_length_comment,
     swears_comment,
     detailed_users_comment,
+    top_words_comment,
     print_progress_comment
     )

@@ -184,24 +184,23 @@ def generateHTML(html, check, starttime):
     cws = []
     cwshelp = []
     
-    commonend = 11
-    oddmod, evenmod = (1, 0) if (commonend % 2 == 0) else (0, 1)
+    oddmod, evenmod = (1, 0) if (topwords % 2 == 0) else (0, 1)
 
     if re.search(cwre, html):
-        cws.append((re.search(cwre, html).group(1), [0, commonend, 1], cwre))
+        cws.append((re.search(cwre, html).group(1), [0, topwords, 1], cwre))
     if re.search(cwoddre, html):
-        cws.append((re.search(cwoddre, html).group(1), [0, commonend - oddmod, 2], cwoddre))
+        cws.append((re.search(cwoddre, html).group(1), [0, topwords - oddmod, 2], cwoddre))
     if re.search(cwevenre, html):
-        cws.append((re.search(cwevenre, html).group(1), [1, commonend - evenmod, 2], cwevenre))
+        cws.append((re.search(cwevenre, html).group(1), [1, topwords - evenmod, 2], cwevenre))
     if re.search(cwlastre, html):
         cws.append((re.search(cwlastre, html).group(1), [-1, 0], cwlastre))
-        cwshelp.append([0, commonend, 1])
+        cwshelp.append([0, topwords, 1])
     if re.search(cwoddlastre, html):
         cws.append((re.search(cwoddlastre, html).group(1), [-1, 1], cwoddlastre))
-        cwshelp.append([0, commonend - oddmod, 2])
+        cwshelp.append([0, topwords - oddmod, 2])
     if re.search(cwevenlastre, html):
         cws.append((re.search(cwevenlastre, html).group(1), [-1, 0], cwevenlastre))
-        cwshelp.append([1, commonend - evenmod, 2])
+        cwshelp.append([1, topwords - evenmod, 2])
     if cws:
         wordtop = list(enumerate(check.wordlist))
         for commonwords, sss, tags in cws:
@@ -209,9 +208,9 @@ def generateHTML(html, check, starttime):
             if sss in cwshelp:
                 sss[1] = len(check.wordlist[:sss[1]]) - 1
             if len(sss) == 2:
-                allthewords = wordtop[:commonend - sss[1]][sss[0]:]
+                allthewords = wordtop[:topwords - sss[1]][sss[0]:]
             else:
-                allthewords = wordtop[:commonend][sss[0]:sss[1]:sss[2]]
+                allthewords = wordtop[:topwords][sss[0]:sss[1]:sss[2]]
             for number, pair in allthewords:
                 word = pair[0]
                 sublist =     ((wordre, str(word)),
