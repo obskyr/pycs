@@ -25,10 +25,10 @@ morningpre      = re.compile("%morningpercent%"     )
 daypre          = re.compile("%daypercent%"         )
 nightpre        = re.compile("%nightpercent%"       )
 
-dawnp80re       = re.compile("%dawnpercent-80%"     )
-morningp80re    = re.compile("%morningpercent-80%"  )
-dayp80re        = re.compile("%daypercent-80%"      )
-nightp80re      = re.compile("%nightpercent-80%"    )
+dawnpnumre       = re.compile("%dawnpercent-([0-9]+)%"     )
+morningpnumre    = re.compile("%morningpercent-([0-9]+)%"  )
+daypnumre        = re.compile("%daypercent-([0-9]+)%"      )
+nightpnumre      = re.compile("%nightpercent-([0-9]+)%"    )
 
 totallinesre    = re.compile("%totallines%" )
 swearnumre      = re.compile("%swears%"     )
@@ -75,7 +75,6 @@ def generateHTML(html, check, starttime):
 
     time1, time2, time3, time4 = timePercents(check)
     dawnpercent, morningpercent, daypercent, nightpercent = [str(x) for x in (time1, time2, time3, time4)]
-    dawnpercent80, morningpercent80, daypercent80, nightpercent80 = [str(x) for x in ( int(time1 * 0.8), int(time2 * 0.8), int(time3 * 0.8), int(time4 * 0.8))]
 
     html = re.sub(channelnamere     , channelname   , html)
     html = re.sub(gentimere         , str(round(y - starttime, 2)), html)
@@ -85,10 +84,15 @@ def generateHTML(html, check, starttime):
     html = re.sub(daypre            , daypercent    , html)
     html = re.sub(nightpre          , nightpercent  , html)
 
-    html = re.sub(dawnp80re         , dawnpercent80     , html)
-    html = re.sub(morningp80re      , morningpercent80  , html)
-    html = re.sub(dayp80re          , daypercent80      , html)
-    html = re.sub(nightp80re        , nightpercent80    , html)
+    dawnf       = lambda x: str(round(time1 * (float(x.group(1)) / 100), 1))
+    morningf    = lambda x: str(round(time2 * (float(x.group(1)) / 100), 1))
+    dayf        = lambda x: str(round(time3 * (float(x.group(1)) / 100), 1))
+    nightf      = lambda x: str(round(time4 * (float(x.group(1)) / 100), 1))
+
+    html = re.sub(dawnpnumre         , dawnf    , html)
+    html = re.sub(morningpnumre      , morningf , html)
+    html = re.sub(daypnumre          , dayf     , html)
+    html = re.sub(nightpnumre        , nightf   , html)
 
     html = re.sub(totallinesre, str(check.totallines), html)
 

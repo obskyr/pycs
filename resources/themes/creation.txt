@@ -58,26 +58,29 @@ All instances of this tag will be replaced by the total number of lines in the l
 -- %dawnpercent% --
 All instances of this tag will be replaced by the percent of lines posted between 0 and 6.
 
--- %dawnpercent-80% --
-All instances of this tag will be replaced by the percent times 0.8 of lines posted between 0 and 6. Useful for making meters and such that do not span the entirety of the block.
-
 -- %morningpercent% --
 All instances of this tag will be replaced by the percent of lines posted between 6 and 12.
-
--- %morningpercent-80% --
-All instances of this tag will be replaced by the percent times 0.8 of lines posted between 6 and 12. Useful for making meters and such that do not span the entirety of the block.
 
 -- %daypercent% --
 All instances of this tag will be replaced by the percent of lines posted between 12 and 18.
 
--- %daypercent-80% --
-All instances of this tag will be replaced by the percent times 0.8 of lines posted between 12 and 18. Useful for making meters and such that do not span the entirety of the block.
-
 -- %nightpercent% --
 All instances of this tag will be replaced by the percent of lines posted between 18 and 0.
 
--- %nightpercent-80% --
-All instances of this tag will be replaced by the percent times 0.8 of lines posted between 18 and 0. Useful for making meters and such that do not span the entirety of the block.
+-- %dawnpercent-[number]% --
+All instances of this tag will be replaced by the appropriate fraction of the number provided (e.g. %dawnpercent-80% for fractions of 80 instead of percent) of lines posted between 0 and 6.
+
+-- %morningpercent-[number]% --
+All instances of this tag will be replaced by the appropriate fraction of the number provided of lines posted between 6 and 12.
+
+-- %daypercent-[number]% --
+All instances of this tag will be replaced by the appropriate fraction of the number provided of lines posted between 12 and 18.
+
+-- %nightpercent-[number]% --
+All instances of this tag will be replaced by the appropriate fraction of the number provided of lines posted between 18 and 0.
+
+== Note ==
+All 'percent' tags have an accuracy of one decimal.
 
 ## Section tags ##
 
