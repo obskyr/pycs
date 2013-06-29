@@ -1,0 +1,181 @@
+
+<!DOCTYPE HTML>
+<head>
+    <link rel="stylesheet" type="text/css" href="resources/stylesheet.css">
+    <meta charset="utf-8">
+    <title>
+        PYCS, the Python IRC statistics generator
+    </title>
+</head>
+<html>
+    <body>
+        <div class="content">
+            <a href="https://github.com/LpSamuelm/pycs">
+                <img style="position: absolute; top: 0; right: 10%; border: 0;" src="resources/images/githubribbon.png" alt="Do things with PYCS on GitHub!">
+            </a>
+            <h1 class="pycsh">
+                <img src="resources/images/logo.png" class="pycslogo" alt="PYCS - the Python Chat Statistics Generator! It's pretty cool...!" />
+                <br>
+            </h1>
+            <div style="text-align:center;">
+                <div class=tagline>
+                    &emsp;&lt;LpSamuelm&gt; An IRC statistics generator written in Python.&emsp;
+                </div>
+            </div>
+            <br>
+            <br>
+            <h2>
+                What is PYCS?
+                <div class="smallBR"></div>
+                <div class="smallBR"></div>
+                <div class="hr"></div>
+            </h2>
+            <p>
+                <span class="semibold">PYCS</span> is a very small (and fast!) IRC statistics generator written in Python. It takes your IRC log files, processes them for a short while, and outputs a nice HTML page that you can easily share on your web server, or just have a look at locally. Have an example!
+            </p>
+            <br>
+            <div class="left">
+                <div style="text-align: center; font-family: OpenSans-Semibold;">
+                    PYCS turns this...
+                </div>
+                <div class="smallBR"></div>
+                <div class="chatlog">
+                    &lt;mcdruid&gt; it doesnt fit in there<br>
+                    &lt;hunter2&gt; Dude.<br>
+                    &lt;hunter2&gt; If force doesn't work, use more force.<br>
+                    &lt;xXmanbroXx&gt; hey uh hunter?? my comptuer haas a virst<br>
+                    &lt;mcdruid&gt; why did we even let this guy in<br>
+                    &lt;xXmanbroXx&gt; hehe gotu nothings wrong.<br>
+                    &lt;mcdruid&gt; oh my FREAKIN GOD SHUT UP<br>
+                    &lt;Hatman&gt; Sorry toi nterrupt but anyone seen my dog<br>
+                    &lt;xXmanbroXx&gt; nope<br>
+                    &lt;hunter2&gt; Uh.<br>
+                    &lt;hunter2&gt; Nobody here knows you IRL.<br>
+                    &lt;hunter2&gt; So no, probably not<br>
+                    &lt;Hatman&gt; Oh wrong channel, should have posted in #friendsofhatman.<br>
+                    &lt;mcdruid&gt; you have your own channel?<br>
+                    &lt;mcdruid&gt; full of people?<br>
+                    &lt;xXmanbroXx&gt; gz<br>
+                    &lt;mcdruid&gt; nvm just checked it out<br>
+                    &lt;mcdruid&gt; no one there but hatman.<br>
+                    * Hatman has left<br>
+                    &lt;hunter2&gt; That's kind of sad.<br>
+                    &lt;mcdruid&gt; oh come on can we drop this charade?<br>
+                    &lt;mcdruid&gt; no one has this large a browser window.<br>
+                    &lt;mcdruid&gt; this isn't even a real chat log.<br>
+                    &lt;hunter2&gt; Now that you mention it...<br>
+                    &lt;hunter2&gt; I've just written 23 lines of dialogue between people that don't exist.<br>
+                    * hunter2 sighs<br>
+                    &lt;mcdruid&gt; great<br>
+                    &lt;xXmanbroXx&gt; gg<br>
+                    &lt;hunter2&gt; And why/how are you even reading this!?<br>
+                </div>
+            </div>
+            <div class="right nowrap">
+                <div style="text-align: center; font-family: OpenSans-Semibold;">
+                    ...into this (albeit more and larger).
+                </div>
+                <div class="smallBR"></div>
+                <div class="chatstats">
+                    <br>
+                    <div class="semibold">
+                        hunter2
+                    </div>
+                    <div class="stat">
+                        8538 lines &middot; 96 actions &middot; 983 swears
+                        <br>
+                        "It's a simple question of weight ratios."
+                    </div>
+                    <div class="semibold">
+                        mcdruid
+                    </div>
+                    <div class="stat">
+                        7830 lines &middot; 143 actions &middot; 72 swears
+                        <br>
+                        "do it batman style"
+                    </div>
+                    <br>
+                    <div class="smallBR"></div>
+                    <div class="center">
+                        Total number of lines in #pycs:
+				        <span class="totallines">
+					       25379
+				        </span>
+				        <div class="smallBR"></div>
+                        <span class="comment">
+                            Lines by time posted
+                        </span>
+                        <br>
+                        <span class="timewrap">
+                            <img src='resources/images/time/dawn.png' class='left' alt='&lt;' width='10px'><img src='resources/images/time/dawn.png' class='time' alt='dawn' width='22%'>
+                            <span class="hovertime dawn">
+                                0 - 6: 28.3
+                            </span>
+                        </span>
+                        <span class="timewrap">
+                            <img src='resources/images/time/morning.png' class='time' alt='' width='1px'><img src='resources/images/time/morning.png' class='time' alt='morning' width='6%'>
+                            <span class="hovertime morning">
+                                6 - 12: 8.7%
+                            </span>
+                        </span>
+                        <span class="timewrap">
+                            <img src='resources/images/time/day.png' alt='' class="time" width='1px'><img src='resources/images/time/day.png' class="time" alt='day' width='22%'>
+                            <span class="hovertime day">
+                                12 - 18: 27.8%
+                            </span>
+                        </span>
+                        <span class="timewrap">
+                            <img src='resources/images/time/night.png' class='time' alt='night' width='28%'><img src='resources/images/time/night.png' class='right' alt='&gt;' width='10px'>
+                            <span class="hovertime night">
+                                18 - 0: 35.2%
+                            </span>
+                        </span>
+                        <br>
+                        <div class="smallBR"></div>
+                        <div class="smallBR"></div>
+                        <span class="comment">
+                            Mouseover for details
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="smallBR"></div>
+            <br>
+            Oh man! If that side-by-side comparison didn't get you hot and bothered, I don't know what will! You must be eager for the downloads by now.
+            <div class="smallBR"></div>
+            <br>
+            <br>
+            <div class="center nowrap">
+                <a href="https://github.com/LpSamuelm/pycs/archive/master.zip"><img class="dl" src="resources/images/download-left.png" alt="Download PYCS"></a><img class="ds" src="resources/images/download-sep.png" alt=""><a href="https://github.com/LpSamuelm/pycs"><img class="dr" src="resources/images/download-right.png" alt="PYCS on GitHub"></a>
+            </div>
+            <br>
+            <br>
+            <h2>
+                How do I use it?
+                <div class="smallBR"></div>
+                <div class="smallBR"></div>
+                <div class="hr"></div>
+            </h2>
+            There are quite a few documents that will aid you in using (and adding to) PYCS. The most useful one is the readme that is shipped with PYCS, and you can read it <a href="https://github.com/LpSamuelm/PYCS">on GitHub too</a>.
+            <br>
+            <br>
+            Besides all of the functionality in creating chat statistics, you can help create, too!
+            <div class="smallBR"></div>
+            If you happen to have an IRC log format that is not yet supported by PYCS, it is incredibly easy to create your own! Refer to the readme for details.
+            <div class="smallBR"></div>
+            For the more artistically inclined, it is not only possible, but not even all that hard to create your own themes for PYCS. Again, refer to the readme for details.
+            <br>
+            <br>
+            Have fun!
+            <br>
+            <br>
+            <div class="rightmost">
+                <a href="http://twitter.com/LpSamuelm" class="light">
+                    <img src="resources/images/twitter-bird.png" style="height: 25px; margin-bottom: -0.42em;" alt="">
+                    @LpSamuelm
+                </a>
+            </div>
+            <br>
+        </div>
+    </body>
+</html>
