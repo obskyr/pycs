@@ -27,7 +27,7 @@ pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matc
 pattern_action_line =   startops.pattern_action_line    ##
 pattern_time        =   startops.pattern_time           ##
 
-if not [x for x in swears if x != 'swear1' and x != 'swear2']:
+if not [x for x in swears if x not in ('swear1', 'swear2')]:
     print swears
     swearcount = False
 else:
@@ -241,7 +241,7 @@ class Logs(object):
 
     def returnWords(self, username, line):
         """Gets a list of the words used in 'line'."""
-        return re.split(u"[\\;:\(\)@\.\s\!\?\",/*=><]+", line)             ## Splits at any non-letter/number or mid-word delimiter
+        return re.split(u"[\\;:\(\)@\.\s\!\?\",/*=><~]+", line)             ## Splits at any non-letter/number or mid-word delimiter
 
     def specialFuncs(self, username, line, prefix, time):
         """Does a multitude of special functions."""
