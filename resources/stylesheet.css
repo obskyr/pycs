@@ -98,11 +98,13 @@ div.hr {
 }
 
 img.pycslogo {
-    font-size: 95px;
-    font-family: OpenSans-Bold;
+    color: white;
+    font-size: 180px;
+    font-family: Slukoni;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    line-height: 0.8em;
 }
 
 .tagline {
