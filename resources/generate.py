@@ -241,9 +241,7 @@ class Logs(object):
 
     def returnWords(self, username, line):
         """Gets a list of the words used in 'line'."""
-        if line[:len(username)].lower() != username.lower(): ## Doesn't count actions' first words - the usernames
-            return re.split("[;:\(\)@\.\s\!\?\",]+", line)              ## Splits at any non-letter
-        return re.split("[;:\(\)@\.\s\!\?\",]+", line[len(username):])  ## ... or mid-word delimiter
+        return re.split(u"[\\;:\(\)@\.\s\!\?\",/*=><]+", line)             ## Splits at any non-letter/number or mid-word delimiter
 
     def specialFuncs(self, username, line, prefix, time):
         """Does a multitude of special functions."""
