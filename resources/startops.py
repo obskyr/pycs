@@ -30,6 +30,8 @@ try:            ## Setting config variables from config file
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
+    allusersbool    = confutil.stringToBool(config['Show brief users'])
+    allusersnum     = abs(int(config['Brief users'])    )
     topwords        = abs(int(config['Top words'])      )
     template        = config['Theme'                    ]
 
@@ -47,11 +49,13 @@ except IOError: ## Creating config file
                 ('Theme', 'default'                                         ),
                 ('Ignored nicks', ['example?1', 'example?2']                ),
                 ('Ignored words', ['ignorethis', 'andthis']                 ),
+                ('Detailed users', 5                                        ),
+                ('Show brief users', True                                   ),
+                ('Brief users', 0                                           ),
                 ('Top words', 10                                            ),
                 ('Minimum word length', 5                                   ),
                 ('Swears', ['swear1', 'swear2']                             ),
-                ('Detailed users', 5                                        ),
-                ('Print progress', "True"                                   )
+                ('Print progress', True                                     )
               )
 
     confutil.createConfig(config, os.path.join(pycspath, 'settings', 'settings.cfg'))
@@ -68,6 +72,8 @@ except IOError: ## Creating config file
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
+    allusersbool    = confutil.stringToBool(config['Show brief users'])
+    allusersnum     = abs(int(config['Brief users'])    )
     topwords        = abs(int(config['Top words'])      )
     template        = config['Theme'                    ]
 

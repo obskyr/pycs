@@ -37,7 +37,7 @@ If you do make your own theme and you're interested in making it a part of the d
 
 
   ###########
-## PYCS tags #
+## PYCS tags ##
   ###########
 
 In order to see these tags in action, it is advisable to read the code for the 'index.html' file in the 'default' theme folder. Note that no tag is required - a theme can choose to contain only certain statistics!

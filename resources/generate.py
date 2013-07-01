@@ -22,6 +22,8 @@ pycspath        =   startops.pycspath       ##
 detailusers     =   startops.detailusers    ##
 topwords        =   startops.topwords       ##
 template        =   startops.template       ##
+allusersbool    =   startops.allusersbool   ##
+allusersnum     =   startops.allusersnum    ##
 
 pattern_said_line   =   startops.pattern_said_line      ## Regexes for line matching
 pattern_action_line =   startops.pattern_action_line    ##

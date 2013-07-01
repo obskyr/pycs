@@ -55,7 +55,6 @@ div.left, div.right {
 
 div.right	{
 	float:right;
-	width: 50%;
 	padding-right: 3em;
 	padding-left: 0em;
 }

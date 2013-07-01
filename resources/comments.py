@@ -70,7 +70,14 @@ Top words:
 theme_comment           ="""
 Theme:
  Enter the name of the theme you wish to use. Valid theme names are
- all of the folders in \resources\templates."""
+ all of the folders in /resources/templates."""
+show_brief_users_comment     ="""
+Show brief users:
+ Set to True or False. If false, PYCS will not show stats for any users beyond "Detailed users"."""
+brief_users_comment ="""
+Brief users:
+ If "Show brief users" is set to True, this will dictate up to which number to show brief users.
+ Set to 0 to show all. If less than "Detailed users", none will be shown."""
 settings_comments = (
     log_specifics_cat,
     
@@ -85,9 +92,11 @@ settings_comments = (
     theme_comment,
     ignored_nicks_comment,
     ignored_words_comment,
-    minimum_length_comment,
-    swears_comment,
     detailed_users_comment,
+    show_brief_users_comment,
+    brief_users_comment,
+    minimum_length_comment,
     top_words_comment,
+    swears_comment,
     print_progress_comment
     )

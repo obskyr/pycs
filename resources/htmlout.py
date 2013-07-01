@@ -111,7 +111,6 @@ def generateHTML(html, check, starttime, endtime=None):
         html = re.sub(swearsre, "", html)
         html = re.sub(swearre, "", html)
 
-    lasty = "" ## Needed dummy variable
     if re.search(userstatsre, html): ## Top users
         endl = -1 if (re.search(userstatslastre, html)) else detailusers ## Sets end index for usertop
         userstats = re.search(userstatsre, html).group(1) ## Sets HTML to be repeated for each user
@@ -149,31 +148,32 @@ def generateHTML(html, check, starttime, endtime=None):
         userstatsstr = u''.join(userstatsstr).encode('utf-8')
     else:
         userstatsstr = ''
+        html = re.sub(userstatslastre, "", html)
     html = re.sub(userstatsre, userstatsstr, html)
-    if re.search(allusersre, html): ## Same thing as previous block, except different tags
-        endl = -1 if (re.search(alluserslasttagre, html)) else len(check.linenums_top)
+    
+    alluserstotal = len(check.linenums_top) if not (allusersnum) else allusersnum
+    lasty = "" ## Needed dummy variable
+    
+    if allusersbool and re.search(allusersre, html) and check.linenums_top[detailusers:alluserstotal]: ## Same thing as previous block, except different tags
+        endl = 1 if (re.search(alluserslasttagre, html)) else 0
         allusersstr = []
         allusers = re.search(allusersre, html).group(1)
-        for number, pair in usertop[detailusers:endl]:
+        for number, pair in usertop[detailusers:alluserstotal - endl]:
             user = pair[0]
             sublist =     ((usernumberre, str(number)),
                            (usernamere, user),
                            (linenumsre, str(pair[1])),
                            (actionnumsre, str(check.uactions[user])),
                            (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
-                              (swearnumre, str(check.numswears[user])),
-                             (swearstagre, "")
+                            (swearnumre, str(check.numswears[user])),
+                            (swearstagre, "")
                           )
             alluserstemp = allusers
             alluserstemp = subSeveral(alluserstemp, sublist)
             allusersstr.append(alluserstemp)
-        if not check.linenums_top[detailusers:]: ## Removes allusers sections if no users beyond top
-            html = re.sub(allusersSre, "", html)
-            html = re.sub(allusersre, "", html)
-            allusersstr = ""
-        elif endl == -1:
+        if endl == 1:
             alluserstemp = re.search(alluserslastre, html).group(1)
-            user = check.linenums_top[-1][0]
+            user = check.linenums_top[alluserstotal - endl][0]
             number = usertop[-1][0]
             sublist =   ((usernumberre, str(number)),
                          (usernamere, user),
@@ -188,6 +188,7 @@ def generateHTML(html, check, starttime, endtime=None):
         allusersstr = u''.join(allusersstr).encode('utf-8')
     else:
         allusersstr = ''
+        html = re.sub(allusersSre, "", html)
     html = re.sub(allusersre, allusersstr, html)
     html = re.sub(allusersStagre, "", html)
     html = re.sub(alluserslastre, lasty, html)
