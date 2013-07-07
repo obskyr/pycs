@@ -79,8 +79,13 @@ All instances of this tag will be replaced by the appropriate fraction of the nu
 -- %nightpercent-[number]% --
 All instances of this tag will be replaced by the appropriate fraction of the number provided of lines posted between 18 and 0.
 
+-- %timefraction-[start]-[end]-[fraction of]% --
+This tag provides an a bit more flexible alternative to the 'percent' tags. Enter the hour you'd like to start with in place of '[start]', the hour you'd like to end in place of '[end]' and the number you'd like the result to be a fraction of in place of '[fraction of]'.
+
+In short, will result in the fraction (of your provided [fraction of]) of lines posted between [start] and [end] - e.g. %timefraction-22-4-100%, which will result in the percentage of lines between 22 and 4.
+
 == Note ==
-All 'percent' tags have an accuracy of one decimal.
+All time fraction tags have an accuracy of one decimal.
 
 ## Section tags ##
 

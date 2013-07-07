@@ -24,10 +24,12 @@ morningpre      = re.compile("%morningpercent%"     )
 daypre          = re.compile("%daypercent%"         )
 nightpre        = re.compile("%nightpercent%"       )
 
-dawnpnumre       = re.compile("%dawnpercent-([0-9]+)%"     )
-morningpnumre    = re.compile("%morningpercent-([0-9]+)%"  )
-daypnumre        = re.compile("%daypercent-([0-9]+)%"      )
-nightpnumre      = re.compile("%nightpercent-([0-9]+)%"    )
+dawnpnumre      = re.compile("%dawnpercent-([0-9]+)%"     )
+morningpnumre   = re.compile("%morningpercent-([0-9]+)%"  )
+daypnumre       = re.compile("%daypercent-([0-9]+)%"      )
+nightpnumre     = re.compile("%nightpercent-([0-9]+)%"    )
+
+timere          = re.compile("%timefraction-(?P<starttime>[0-9]{1,2})-(?P<endtime>[0-9]{1,2})-(?P<fractionof>[0-9]+)%")
 
 totallinesre    = re.compile("%totallines%" )
 swearnumre      = re.compile("%swears%"     )
@@ -78,6 +80,8 @@ def generateHTML(html, check, starttime, endtime=None):
     time1, time2, time3, time4 = timePercents(check)
     dawnpercent, morningpercent, daypercent, nightpercent = [str(x) for x in (time1, time2, time3, time4)] ## String versions with slightly more reader-friendly names
     
+    totaltimelines = float(sum(check.times.values()))
+    
     ## Replaces "global" tags ##
     
     html = re.sub(channelnamere     , channelname   , html)
@@ -99,7 +103,14 @@ def generateHTML(html, check, starttime, endtime=None):
     html = re.sub(morningpnumre , morningf , html)
     html = re.sub(daypnumre     , dayf     , html)
     html = re.sub(nightpnumre   , nightf   , html)
+    ##
+    
+    def timeFractions(tag):
+        offset = 24 if (int(tag.group('endtime')) <= int(tag.group('starttime'))) else 0
+        return str(round((sum([x[1] for x in (check.times_ordered * 2)[int(tag.group('starttime')):int(tag.group('endtime')) + offset]]) / totaltimelines) * int(tag.group('fractionof')), 1))
 
+    html = re.sub(timere        , timeFractions, html)
+    
     html = re.sub(totallinesre, str(check.totallines), html)
 
     ##
