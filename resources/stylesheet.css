@@ -138,7 +138,7 @@ a:visited	{font-family: OpenSans-Semibold; text-decoration: none; color: #373945
 a:hover		{font-family: OpenSans; text-decoration: none;}
 a:active	{font-family: OpenSans; text-decoration: none;}
 
-a.light:link		{color: #f0f7ff; font-family: OpenSans-Semibold}
+a.light:link, a.light:visited		{color: #f0f7ff; font-family: OpenSans-Semibold}
 
 .semibold	{font-family: OpenSans-Semibold;}
 .center		{text-align: center;}
