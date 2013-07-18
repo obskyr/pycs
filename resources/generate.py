@@ -98,7 +98,7 @@ class Logs(object):
         if type(logs) == list: ## Adds some freedom/error handling to the config
             self.paths = [os.path.join(directory, log) for log in self.logs]
         else:
-            self.paths = [os.path.join(directory, log)]
+            self.paths = [os.path.join(directory, logs)]
         self.printprogress = printprogress
         self.genEverything()
 
@@ -182,7 +182,7 @@ class Logs(object):
                 else: ## Makes sure no ChanServs or such make it into the stats
                     self.actionsonly[comparison] = self.uactions.pop(comparison, {'NotWorking': 1})
 
-    def __repr__(self):
+    def __repr__(self): ## Mostly useful for testing
         return "Logs: " + str(self.paths) +                                 \
         '\nTotal number of lines: ' + str(self.totallines) +                \
         '\nTotal number of actions: ' + str(sum(self.uactions.values())) +  \
