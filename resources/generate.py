@@ -182,6 +182,12 @@ class Logs(object):
                 else: ## Makes sure no ChanServs or such make it into the stats
                     self.actionsonly[comparison] = self.uactions.pop(comparison, {'NotWorking': 1})
 
+    def __repr__(self):
+        return "Logs: " + str(self.paths) +                                 \
+        '\nTotal number of lines: ' + str(self.totallines) +                \
+        '\nTotal number of actions: ' + str(sum(self.uactions.values())) +  \
+        '\nTotal number of swears: ' + str(sum(self.numswears.values()))
+
     def listLines(self, username, line, t): ## Could theoretically merge this with addUn
         """Assigns every user a list of every line they've said."""
         line = line.strip() ## No newlines or unnecessary whitespace
