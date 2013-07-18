@@ -1,0 +1,7 @@
+# Nothing more complicated than not including compiled files, output and settings.
+*.pyc
+output/
+settings/
+
+# ...And test files.
+/*.log
