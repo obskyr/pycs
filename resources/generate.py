@@ -187,6 +187,9 @@ class Logs(object):
         '\nTotal number of lines: ' + str(self.totallines) +                \
         '\nTotal number of actions: ' + str(sum(self.uactions.values())) +  \
         '\nTotal number of swears: ' + str(sum(self.numswears.values()))
+    
+    def __len__(self):
+        return self.totallines
 
     def listLines(self, username, line, t): ## Could theoretically merge this with addUn
         """Assigns every user a list of every line they've said."""
