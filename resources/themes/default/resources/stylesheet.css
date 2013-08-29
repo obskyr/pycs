@@ -74,7 +74,7 @@ img.right{border-radius: 0px 10px 10px 0px;}
 
 .comment {
 	font-family: OpenSans-Light;
-	color: #c6d3f2;
+	color: #a1b8ef;
 	font-size: 12px;
 }
 .timewrap {
@@ -98,9 +98,11 @@ img.right{border-radius: 0px 10px 10px 0px;}
 }
 
 .hovertime.dawn		{color: #ffa34a}
-.hovertime.morning	{color: #f4ee62}
+.hovertime.morning	{color: #ffa34a}
 .hovertime.day		{color: #79a0da}
 .hovertime.night	{color: #3e638a}
+
+.hovertime.dawn_old	{color: #dea2fa}
 
 .timewrap:hover .hovertime {
   visibility: visible;
