@@ -212,7 +212,7 @@ def generateHTML(html, check, starttime, endtime=None):
     ## ...What do I know, it works.
     
     ## Okay, after much thinking. HERE'S HOW/WHY IT WORKS.
-    ## oddmod and evenmod are subtracetd from the "stop" index in the next part.
+    ## oddmod and evenmod are subtracted from the "stop" index in the next part.
     ## Note that cwoddre and cwevenre are substituted with even and odd indices of the top words list, respectively. This makes things a bit confusing.
     ## If a "last" tag is present, we want to make sure that the last entry isn't included in the substitute for the normal tag.
     ## This means that we have to subtract one entry at the end.
@@ -277,16 +277,26 @@ def outputLogHTML(check, starttime):
     with open(os.path.join(pycspath, 'resources', 'themes', template, 'index.html'), 'r') as infile:
         html = infile.read()
 
+    if printprogress:
+        print "Generating page..."
+        
     html = generateHTML(html, check, starttime)
 
     resourcecomparison = dircmp(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
     if resourcecomparison.left_only or resourcecomparison.right_only or [x for x in resourcecomparison.diff_files if x not in ('index.html', '.DS_Store')]:
         ## Copies theme resources if not already in output directory
+
+        if printprogress:
+            print "Copying theme files..."
+
         distutils.dir_util.remove_tree(os.path.join(pycspath, 'output'))
         distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
     superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
     superfile.write(html)
     superfile.close()
+
+    if printprogress:
+        print "Done!"
     
 if __name__ == '__main__':
     ## Testing code!

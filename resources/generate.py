@@ -289,6 +289,6 @@ class Logs(object):
             self.uactions_top = self.topUsers(self.uactions)
             self.times_ordered = sorted(self.times.iteritems())
             if self.printprogress:
-                print "Done!"
+                print "Statistics generation complete!"
         else:
             print "No logs."
