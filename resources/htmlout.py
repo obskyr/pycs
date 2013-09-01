@@ -261,7 +261,7 @@ def generateHTML(html, check, starttime, endtime=None):
                 allthewords = wordtop[:topwords][sss[0]:sss[1]:sss[2]]
             for number, pair in allthewords:
                 word = pair[0]
-                sublist =     ((wordre, str(word)),
+                sublist =     ((wordre, unicode(word)),
                                (usesre, str(pair[1])),
                                (numberre, str(number + 1))
                               )

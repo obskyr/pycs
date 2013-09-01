@@ -1,5 +1,5 @@
+# -*- encoding: UTF-8 -*-
 
-import os           ## Needed to get parent directory, create directories and load logs
 import confutil     ## Needed for loading and creating config
 import comments     ## Needed for adding comments to config files.
 
