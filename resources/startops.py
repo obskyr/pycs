@@ -2,6 +2,7 @@
 
 import confutil     ## Needed for loading and creating config
 import comments     ## Needed for adding comments to config files.
+import os           ## Needed to get cwd
 
 try:
     pycspath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))

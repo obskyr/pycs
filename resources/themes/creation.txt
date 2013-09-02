@@ -124,6 +124,9 @@ Will be replaced by the user's number of actions.
 -- %randomline% --
 Will be replaced by the user's randomly chosen line.
 
+-- %newrandom% --
+Will be replaced by a newly chosen random line, and will be generated on the spot for every time it occurs. Useful for having several lines for users.
+
 -- [swears][/swears] --
 This part of code will be deleted if swear counting is turned off.
 

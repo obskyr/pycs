@@ -6,7 +6,7 @@ import time                 ## Needed for timing the stat generation while testi
 import distutils.core       ## Needed for directory copying
 from filecmp import dircmp  ## Needed for directory comparison
 import re                   ## Needed for matching/replacing tags
-
+import random               ## Needed for choosing random lines
 
 ## Regular expressions for tags ##
 
@@ -15,6 +15,7 @@ usernamere      = re.compile("%username%"   )
 linenumsre      = re.compile("%linenums%"   )
 actionnumsre    = re.compile("%actionnums%" )
 randomlinere    = re.compile("%randomline%" )
+newrandomlinere = re.compile("%newrandom%"  )
 
 channelnamere   = re.compile("%channelname%")
 gentimere       = re.compile("%gentime%"    )
@@ -84,7 +85,7 @@ def generateHTML(html, check, starttime, endtime=None):
     
     ## Replaces "global" tags ##
     
-    html = re.sub(channelnamere     , channelname   , html)
+    html = re.sub(channelnamere     , channelname.encode('utf-8')   , html)
     html = re.sub(gentimere         , str(round(y - starttime, 2)), html)
 
     html = re.sub(dawnpre           , dawnpercent   , html)
@@ -134,6 +135,7 @@ def generateHTML(html, check, starttime, endtime=None):
                        (linenumsre, str(pair[1])),
                        (actionnumsre, str(check.uactions[user])),
                        (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                       (newrandomlinere, lambda x: random.choice(check.userlines[user]).replace('<', '&lt;').replace('>', '&gt;')),
                        (swearnumre, str(check.numswears[user])),
                        (swearstagre, "")
                        )
@@ -150,6 +152,7 @@ def generateHTML(html, check, starttime, endtime=None):
                        (linenumsre, str(pair[1])),
                        (actionnumsre, str(check.uactions[user])),
                        (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
+                       (newrandomlinere, lambda x: random.choice(check.userlines[user]).replace('<', '&lt;').replace('>', '&gt;')),
                        (swearnumre, str(check.numswears[user])),
                        (swearstagre, "")
                        )
@@ -160,7 +163,7 @@ def generateHTML(html, check, starttime, endtime=None):
     else:
         userstatsstr = ''
         html = re.sub(userstatslastre, "", html)
-    html = re.sub(userstatsre, unicode(userstatsstr, 'utf-8'), html)
+    html = re.sub(userstatsre, userstatsstr, html)
     
     alluserstotal = len(check.linenums_top) if not (allusersnum) else allusersnum
     lasty = "" ## Needed dummy variable
@@ -176,8 +179,9 @@ def generateHTML(html, check, starttime, endtime=None):
                            (linenumsre, str(pair[1])),
                            (actionnumsre, str(check.uactions[user])),
                            (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
-                            (swearnumre, str(check.numswears[user])),
-                            (swearstagre, "")
+                           (newrandomlinere, lambda x: random.choice(check.userlines[user]).replace('<', '&lt;').replace('>', '&gt;')),
+                           (swearnumre, str(check.numswears[user])),
+                           (swearstagre, "")
                           )
             alluserstemp = allusers
             alluserstemp = subSeveral(alluserstemp, sublist)
@@ -191,8 +195,9 @@ def generateHTML(html, check, starttime, endtime=None):
                          (linenumsre, str(check.linenums[user])),
                          (actionnumsre, str(check.uactions[user])),
                          (randomlinere, check.randomlines[user].replace('<', '&lt;').replace('>', '&gt;')),
-                           (swearnumre, str(check.numswears[user])),
-                           (swearstagre, "")
+                         (newrandomlinere, lambda x: random.choice(check.userlines[user]).replace('<', '&lt;').replace('>', '&gt;')),
+                         (swearnumre, str(check.numswears[user])),
+                         (swearstagre, "")
                         )
             alluserstemp = subSeveral(alluserstemp, sublist)
             lasty = alluserstemp.encode('utf-8')
@@ -269,7 +274,7 @@ def generateHTML(html, check, starttime, endtime=None):
                 commonwordstemp = subSeveral(commonwordstemp, sublist)
                 commonwordsstr.append(commonwordstemp)
             commonwordsstr = u''.join(commonwordsstr).encode('utf-8')
-            html = re.sub(tags, unicode(commonwordsstr, 'utf-8'), html)
+            html = re.sub(tags, commonwordsstr, html)
     return html ## Returns the page with everything substituted in
 
 def outputLogHTML(check, starttime):
@@ -292,7 +297,7 @@ def outputLogHTML(check, starttime):
         distutils.dir_util.remove_tree(os.path.join(pycspath, 'output'))
         distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
     superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
-    superfile.write(html.encode('utf-8'))
+    superfile.write(html)
     superfile.close()
 
     if printprogress:
