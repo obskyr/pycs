@@ -1,4 +1,4 @@
-# -*- encoding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 import confutil     ## Needed for loading and creating config
 import comments     ## Needed for adding comments to config files.

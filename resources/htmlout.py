@@ -160,7 +160,7 @@ def generateHTML(html, check, starttime, endtime=None):
     else:
         userstatsstr = ''
         html = re.sub(userstatslastre, "", html)
-    html = re.sub(userstatsre, userstatsstr, html)
+    html = re.sub(userstatsre, unicode(userstatsstr, 'utf-8'), html)
     
     alluserstotal = len(check.linenums_top) if not (allusersnum) else allusersnum
     lasty = "" ## Needed dummy variable
@@ -269,7 +269,7 @@ def generateHTML(html, check, starttime, endtime=None):
                 commonwordstemp = subSeveral(commonwordstemp, sublist)
                 commonwordsstr.append(commonwordstemp)
             commonwordsstr = u''.join(commonwordsstr).encode('utf-8')
-            html = re.sub(tags, commonwordsstr, html)
+            html = re.sub(tags, unicode(commonwordsstr, 'utf-8'), html)
     return html ## Returns the page with everything substituted in
 
 def outputLogHTML(check, starttime):
@@ -292,7 +292,7 @@ def outputLogHTML(check, starttime):
         distutils.dir_util.remove_tree(os.path.join(pycspath, 'output'))
         distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
     superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
-    superfile.write(html)
+    superfile.write(html.encode('utf-8'))
     superfile.close()
 
     if printprogress:
