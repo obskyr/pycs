@@ -6,9 +6,9 @@ It takes IRC log files and generates different interesting statistics based on t
 It does not require any specific input past setup, and is as such very easily scheduled.
 
 ##Usage
-After installing [Python](http://python.org/) and downloading PYCS, the first thing to do is run `startops.py`, which is located in the `/resources` directory. Once this is done, a folder named `settings` will be placed in your PYCS directory. Following the instructions in `settings_help.txt`, modify `settings.cfg` and `aliases.cfg` as you see fit.
+After installing [Python](http://python.org/) and downloading PYCS, the first thing to do is run `pycs.py`, the main program, once. Once this is done, a folder named `settings` will be placed in your PYCS directory. Following the instructions in `settings_help.txt`, modify `settings.cfg` and `aliases.cfg` as you see fit.
 
-Currently, the automatic path detection only works on Windows systems. PYCS is fully able to run on any system, however, by using `Path override` in `settings.cfg` to specify the exact folders where your logs are located - just make sure to enter correct filenames in the `Logs` option.
+In order to be able to run at all, PYCS needs to have files to work with. Under `Log paths` in `settings.cfg`, supply a comma-separated list of directories to look for logs in. PYCS will look for logs with the file names supplied in the `Log files` parameter.
 
 Once you've successfully run PYCS, there will be a file named `index.html` in the `output` directory. Put this file, together with the `/output/resources` directory, in whatever directory you'd like on any web server you have access to. The statistics page is now reachable, and can easily be linked from anywhere!
 

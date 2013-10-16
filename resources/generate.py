@@ -14,7 +14,6 @@ minlength       =   startops.minlength      ##
 ignored_words   =   startops.ignored_words  ##
 logformat       =   startops.logformat      ##
 pathoverride    =   startops.pathoverride   ##
-logdirs         =   startops.logdirs        ##
 lognames        =   startops.lognames       ##
 printprogress   =   startops.printprogress  ##
 channelname     =   startops.channelname    ##

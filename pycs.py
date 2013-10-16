@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import os
 import sys
 
@@ -16,31 +17,21 @@ if not os.path.exists('output'):
 
 checklogs = []
 
-if os.name == 'nt':
-    appdpath = os.environ['APPDATA']
+Arne = True
 
-if not [x for x in pathoverride if x.strip()]:
-    for directory in logdirs:
-        for ptest in logpaths:
-            if os.path.exists(os.path.join(appdpath, directory, ptest)):
-                lpath = ptest
-                break
-        else:
-            print "No log directories found. Try using path override."
-        for log in lognames:
-            if os.path.exists(os.path.join(appdpath, directory, lpath, log)):
-                checklogs.append(os.path.join(appdpath, directory, lpath, log))
-else:
-    try:
-        for directory in pathoverride:
-            for logname in lognames:
-                if os.path.exists(os.path.join(directory, logname)):
-                    checklogs.append(os.path.join(directory, logname))
-        if not len(checklogs):
-            print "No logs found in specified directories."
-    except IOError:
-        print "Please check your path override in settings.cfg."
-starttime = time.time()
-check = Logs('', checklogs, printprogress)
+try:
+    for directory in pathoverride:
+        for logname in lognames:
+            if os.path.exists(os.path.join(directory, logname)):
+                checklogs.append(os.path.join(directory, logname))
+    if not len(checklogs):
+        print "No logs found in specified directories."
+        Arne = False
+except IOError:
+    print "Please check your log files in settings.cfg."
 
-htmlout.outputLogHTML(check, starttime)
+if Arne:
+    starttime = time.time()
+    check = Logs('', checklogs, printprogress)
+
+    htmlout.outputLogHTML(check, starttime)

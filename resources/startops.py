@@ -25,9 +25,8 @@ try:            ## Setting config variables from config file
     minlength       = abs(int(config['Minimum word length']))
     swears          = config['Swears'                   ]
     logformat       = config['Log format'               ]
-    pathoverride    = config['Path override'            ]
-    logdirs         = config['Logs parent directories'  ]
-    lognames        = config['Logs'                     ]
+    pathoverride    = config['Log paths'                ]
+    lognames        = config['Log files'                ]
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )
@@ -42,9 +41,8 @@ except IOError: ## Creating config file
     config = (   comments.settings_comment                                   ,
                  '## Log specifics\n'                                        ,               
                 ('Log format', 'hexchat'                                    ),
-                ('Logs parent directories', ['HexChat', 'AnotherIRCdir'],   ),
-                ('Logs', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
-                ('Path override', []                                        ),
+                ('Log files', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
+                ('Log paths', []                                        ),
                  '\n\n## Customization\n'                                    ,
                 ('Channel name', 'Channel'                                  ),
                 ('Theme', 'default'                                         ),
@@ -67,9 +65,8 @@ except IOError: ## Creating config file
     minlength       = abs(int(config['Minimum word length']))
     swears          = config['Swears'                   ]
     logformat       = config['Log format'               ]
-    pathoverride    = config['Path override'            ]
-    logdirs         = config['Logs parent directories'  ]
-    lognames        = config['Logs'                     ]
+    pathoverride    = config['Log paths'                ]
+    lognames        = config['Log files'                ]
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
     channelname     = config['Channel name'             ]
     detailusers     = abs(int(config['Detailed users']) )

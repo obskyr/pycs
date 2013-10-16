@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-import codecs ## Encoding is a nightmare that never ends
+import codecs   ## Encoding is a nightmare that never ends
+import io       ## - || -
 
 def cVars(confile):
     """Returns a dictionary with the keys and values specified in a separate config file."""
@@ -35,31 +36,32 @@ def tabCount(key):
 
 def createConfig(config, filename):
     """Creates a config file 'filename' based on a dictionary or tuple/list."""
-    confile = open(filename, 'w') ##vpmgoöe
-    if type(config) == dict: ## Allows for a dictionary to be written to file, sorted alphabetically
-        for key in config.keys():
-            tabs = tabCount(key)
-            if not type(config[key]) == list:
-                confile.write(str(key) + tabs + '=\t' + str(config[key]) + '\n')
-            else:
-                confile.write(str(key) + tabs + '=\t[l] ' + ', '.join(config[key]).strip() + "\n")
-        lineSort(filename)
-    else:   ## Allows for tuples or lists to be written to config
-            ## Must be a tuple/list of tuples and/or lists. The second value
-            ## will be used as the value, the first one as the key
-        for pair in config:
-            if type(pair) == str or type(pair) == unicode: ## Allows for comments
-                confile.write(pair + '\n')
-            else: ## Writes cVars()-compatible files
-                key = str(pair[0])
-                if type(pair[1]) == list:
-                    value = str(', '.join(pair[1]))
-                    value = '[l] ' + value
-                else:
-                    value = str(pair[1])
+    with io.open(filename, 'w', encoding='utf-8-sig') as confile: ##vpmgoöe
+        if type(config) == dict: ## Allows for a dictionary to be written to file, sorted alphabetically
+            for key in config.keys():
                 tabs = tabCount(key)
-                confile.write(key + tabs + '=\t' + value + '\n')
-    confile.close() ## Took me way too long to add this
+                if not type(config[key]) == list:
+                    confile.write((str(key) + tabs + '=\t' + str(config[key]) + '\n').decode('utf-8'))
+                else:
+                    confile.write((str(key) + tabs + '=\t[l] ' + ', '.join(config[key]).strip() + "\n").decode('utf-8'))
+            lineSort(filename)
+        else:   ## Allows for tuples or lists to be written to config
+                ## Must be a tuple/list of tuples and/or lists. The second value
+                ## will be used as the value, the first one as the key
+            for pair in config:
+                if type(pair) == str or type(pair) == unicode: ## Allows for comments
+                    confile.write((pair + '\n').decode('utf-8'))
+                else: ## Writes cVars()-compatible files
+                    key = str(pair[0])
+                    if type(pair[1]) == list:
+                        value = str(', '.join(pair[1]))
+                        value = '[l] ' + value
+                    else:
+                        value = str(pair[1])
+                    tabs = tabCount(key)
+                    confile.write((key + tabs + '=\t' + value + '\n').decode('utf-8'))
+                
+    #confile.close() ## Took me way too long to add this
 
 def lineSort(filename):
     """Sorts the lines in file 'filename' alphabetically."""
@@ -68,7 +70,7 @@ def lineSort(filename):
     sortfile.close()
     nonempty = [line.rstrip() for line in lines if line.strip() and line.strip()[0:2] != '##']
     nonempty.sort()
-    sortfile = open(filename, 'w')
+    sortfile = io.open(filename, 'w', encoding='utf-8-sig')
     sortfile.write('\n'.join(nonempty) + '\n')
     sortfile.close()
 

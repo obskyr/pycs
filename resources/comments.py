@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 
 ## Comment for aliases.cfg
 aliascomment = """## To add aliases for a nickname:
@@ -39,16 +40,11 @@ Log format:
  The name of the program you're using for IRC in lowercase letters.
  Valid formats can be found in [your PYCS directory]/resources/formats."""
 path_override_comment   ="""
-Path override:
- If you fill this in after the '[l]', PYCS will ignore any path conventions it
- has and use the comma-separated list of directories you supplied as the
- directory to look for logs. It is not uncommon to use this option."""
-logs_parent_comment     ="""
-Logs parent directories:
- The name of the directories with your logs directory in it (eg. HexChat, mIRC).
- Enter as comma-separated list after '[l]'. Will be overridden by Path override."""
+Log paths:
+ Enter a comma-separated list of the paths to the directories your log files are in.
+ PYCS will look for your log files only in these directories."""
 logs_comment            ="""
-Logs:
+Log files:
  Enter the file names of the logs you want to analyze after the '[l]'.
  PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in."""
 print_progress_comment  ="""
@@ -82,7 +78,6 @@ settings_comments = (
     log_specifics_cat,
     
     log_format_comment,
-    logs_parent_comment,
     logs_comment,
     path_override_comment,
 
