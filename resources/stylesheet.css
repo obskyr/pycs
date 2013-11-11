@@ -145,7 +145,7 @@ a.light:link, a.light:visited		{color: #f0f7ff; font-family: OpenSans-Semibold}
 .center		{text-align: center;}
 .smallBR	{margin: 0px; padding:0px; clear: both; height: 6px;}
 .nowrap     {white-space: nowrap; overflow:hidden;}
-.light      {color: #f0f7ff; text-shadow: 1px 1px 1px black;}
+.light      {color: #f0f7ff; text-shadow: 1px 1px 2px black;}
 .rightmost  {text-align: right;}
 
 h1 {font-family: OpenSans-Semibold;}
