@@ -106,6 +106,10 @@ The tags in square brackets should envelop the piece of code to be repeated for 
 
 The whitespace is there for readability and is absolutely not needed.
 
+Note that all section tags can be put in HTML comments and will still work just as well - that is,
+<!-- [userstats] --> Blah blah blah <!-- [/userstats] -->
+will work exactly as if the tags hadn't been commented out. Each tag needs its own comment, however - "<!-- [/allusers] --><!-- [allusers-last] -->" is correct, while "<!-- [/allusers][allusers-last] -->" will not.
+
 == [userstats][/userstats] ==
 The code surrounded by [userstats] tags will be repeated for each user in the top/detailed users - as many as specified in 'settings.txt'. Possible tags inside [userstats]:
 
