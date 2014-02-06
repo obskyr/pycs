@@ -28,6 +28,6 @@ As with the formats - if you do make a theme, it'd be extremely appreciated if y
 
 ##Contact
 
-If you have any questions, or anything to say, I can be reached at either [powpowd@gmail.com](mailto:powpowd@gmail.com) or [@LpSamuelm](http://twitter.com/LpSamuelm) on Twitter. To get a fast answer, Twitter is your best bet!
+If you have any questions, or anything to say, I can be reached at either [powpowd@gmail.com](mailto:powpowd@gmail.com) or [@obskyr](http://twitter.com/obskyr) on Twitter. To get a fast answer, Twitter is your best bet!
 
 If you have any inquiries about or problems with PYCS, opening an issue here on GitHub is a great way to reach through about that.
