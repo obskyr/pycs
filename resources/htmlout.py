@@ -296,9 +296,8 @@ def outputLogHTML(check, starttime):
 
         distutils.dir_util.remove_tree(os.path.join(pycspath, 'output'))
         distutils.dir_util.copy_tree(os.path.join(pycspath, 'resources', 'themes', template), os.path.join(pycspath, 'output'))
-    superfile = open(os.path.join(pycspath, 'output', 'index.html'), 'w')
-    superfile.write(html)
-    superfile.close()
+    with open(os.path.join(pycspath, 'output', 'index.html'), 'w') as superfile:
+        superfile.write(html)
 
     if printprogress:
         print "Done!"

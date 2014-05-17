@@ -41,10 +41,6 @@ import confutil ## Needed for saving configs and such.
 import random   ## Needed for randomly chosen lines, etc.
 
 
-def nofunc(*args): ## Here as a placeholder function
-    """Does absolutely nothing."""
-    pass
-
 def compareNames(poster, linenums):
     """Matches usernames regardless of case."""
     if poster in linenums:
@@ -111,12 +107,7 @@ class Logs(object):
     wordnums    = {}
     swears      = {}
     numswears   = {}
-    times       = {
-                     0: 0,  1: 0,  2: 0,  3: 0,  4: 0,  5: 0,
-                     6: 0,  7: 0,  8: 0,  9: 0, 10: 0, 11: 0,
-                    12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0,
-                    18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0
-                  }
+    times       = {hour: 0 for hour in range(24)}
     times_ordered = []
     wordlist    = [[None, 0]]
     linenums_top= [[None, 0]]
@@ -129,7 +120,7 @@ class Logs(object):
     find_action_line    =   re.compile(pattern_action_line  ) ##
     find_time           =   re.compile(pattern_time         ) ##
 
-    def countLines(self, special=nofunc):
+    def countLines(self, special=lambda *args: None):
         """Generates stats for number of lines per user, and executes 'special' while it's at it."""
         for log in self.paths: ## Counts things in every supplied log
             infile = open(log, 'r')
