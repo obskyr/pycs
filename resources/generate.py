@@ -4,6 +4,7 @@ import sys      ## Needed for importing remote modules
 import os       ## Needed for creating directories and loading logs.
 import re       ## Needed for matching count objects.
 import startops ## Initializing program with variables and such
+from collections import Counter, defaultdict
 
 ## -- The next few lines sets startops variables -- ##
 
@@ -41,10 +42,6 @@ import confutil ## Needed for saving configs and such.
 import random   ## Needed for randomly chosen lines, etc.
 
 
-def nofunc(*args): ## Here as a placeholder function
-    """Does absolutely nothing."""
-    pass
-
 def compareNames(poster, linenums):
     """Matches usernames regardless of case."""
     if poster in linenums:
@@ -73,21 +70,13 @@ def compareAndAlias(poster, linenums):
 
 def addUn(poster, linenums, check=False):
     """Returns 'linenums' with the appropriate key for 'poster' updated."""
-    try:
-        linenums[poster] += 1 ## Poster already exists in linenums
-    except KeyError:
-        if check:
-            comparison = compareAndAlias(poster, linenums) ## Checks for aliases
-            if comparison:
-                try:
-                    linenums[comparison] += 1 ## Comparison exists
-                except KeyError:
-                    linenums[comparison] =  1 ## Comparison does not exist
-            else:
-                linenums[poster] = 1 ## Poster has no alias and is new to linenums    return linenums
-        else:
-            linenums[poster] = 1
+    if not check:
+        linenums[poster] += 1
+    else:
+        poster = compareAndAlias(poster, linenums) or poster
+        linenums[poster] += 1
     return linenums
+
 
 class Logs(object):
     """Handles IRC logs, and the generation of Python-friendly statistics based on them."""
@@ -103,20 +92,15 @@ class Logs(object):
 
     ## --- Dummy variable section
     
-    linenums    = {}
-    uactions    = {}
+    linenums    = Counter()
+    uactions    = Counter()
     actionsonly = {}
-    userlines   = {}
+    userlines   = defaultdict(list)
     randomlines = {}
-    wordnums    = {}
+    wordnums    = Counter()
     swears      = {}
-    numswears   = {}
-    times       = {
-                     0: 0,  1: 0,  2: 0,  3: 0,  4: 0,  5: 0,
-                     6: 0,  7: 0,  8: 0,  9: 0, 10: 0, 11: 0,
-                    12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0,
-                    18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0
-                  }
+    numswears   = Counter()
+    times       = {hour: 0 for hour in range(24)}
     times_ordered = []
     wordlist    = [[None, 0]]
     linenums_top= [[None, 0]]
@@ -129,7 +113,7 @@ class Logs(object):
     find_action_line    =   re.compile(pattern_action_line  ) ##
     find_time           =   re.compile(pattern_time         ) ##
 
-    def countLines(self, special=nofunc):
+    def countLines(self, special=lambda *args: None):
         """Generates stats for number of lines per user, and executes 'special' while it's at it."""
         for log in self.paths: ## Counts things in every supplied log
             infile = open(log, 'r')
@@ -190,18 +174,8 @@ class Logs(object):
     def listLines(self, username, line, t): ## Could theoretically merge this with addUn
         """Assigns every user a list of every line they've said."""
         line = line.strip() ## No newlines or unnecessary whitespace
-        try:
-            self.userlines[username].append(t + line)
-            return
-        except KeyError:
-            c = compareAndAlias(username, self.linenums)
-            if c:
-                try:
-                    self.userlines[c].append(t +line)
-                except KeyError:
-                    self.userlines[c] = [t + line]
-            else:
-                self.userlines[username] = [t + line]
+        username = compareAndAlias(username, self.linenums) or username
+        self.userlines[username].append(t + line)
 
     def fixListLines(self): ## Prevents ChanServ-like bots from getting into the statistics
         """Makes sure action-only users don't get line lists."""
@@ -217,10 +191,7 @@ class Logs(object):
             w.lower() not in [word.lower() for word in ignored_words] and\
             username.lower() not in [un.lower() for un in ignore] and\
             not t:
-                try:
-                    self.wordnums[w.lower()] += 1
-                except KeyError:
-                    self.wordnums[w.lower()] = 1
+                self.wordnums[w.lower()] += 1
 
     def topUsers(self, linenums=linenums):
         """Sorts linenums by number of lines per user."""
@@ -228,10 +199,7 @@ class Logs(object):
 
     def countSwears(self, username, line):
         """Counts swears and assigns number to user."""
-        try:
-            self.numswears[username] += len(re.findall(swearsre, line))
-        except KeyError:
-            self.numswears[username]  = len(re.findall(swearsre, line))
+        self.numswears[username] += len(re.findall(swearsre, line))
 
     def fillNonfull(self, nonfull):
         for user in [u for u in self.linenums if u not in nonfull]:
