@@ -190,7 +190,20 @@ img.left{border-radius: 10px 0px 0px 10px;}
 img.right{border-radius: 0px 10px 10px 0px;}
 img.dl{border-radius: 3px 0px 0px 3px; -webkit-border-radius: 3px 0px 0px 3px; -moz-border-radius: 3px 0px 0px 3px; height: 150px;}
 img.dr{border-radius: 0px 3px 3px 0px; -webkit-border-radius: 0px 3px 3px 0px; border-radius: 0px 3px 3px 0px; height: 150px;}
-img.ds{height:150px;}
+
+.ds{
+    display: inline-block;;
+    width: 1px;
+    height: 150px;
+    background-color: #CCCCCC;
+}
+
+.required {
+    margin-top: 5px;
+    color: #90A9C8;
+    font-size: 14px;
+    text-align: center;
+}
 
 .comment {
 	font-family: OpenSans-Light;
