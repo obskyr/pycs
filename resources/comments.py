@@ -42,11 +42,11 @@ Log format:
 path_override_comment   ="""
 Log paths:
  Enter a comma-separated list of the paths to the directories your log files are in.
- PYCS will look for your log files only in these directories."""
+ PYCS will look for your log files only in these directories. Supports wildcards."""
 logs_comment            ="""
 Log files:
  Enter the file names of the logs you want to analyze after the '[l]'.
- PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in."""
+ PYCS will look for these in either the "Path override" directory or the directory it thinks your logs are in. Supports wildcards."""
 print_progress_comment  ="""
 Print progress:
  Set it to True or False. If it's False, PYCS won't print its progress to
