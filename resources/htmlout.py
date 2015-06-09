@@ -62,6 +62,9 @@ numberre        = re.compile("%number%"     )
 def timePercents(check):
     """Returns a tuple of the percentages of lines posted between 0 and 6, 6 and 12, 12 and 18, and 18 and 0, respectively."""
     totaltimelines = float(sum(check.times.values()))
+    
+    if totaltimelines == 0: return 0.0, 0.0, 0.0, 0.0; # Avoid division by zero below
+    
     time1 = (sum((x[1] for x in check.times_ordered[:6])) / totaltimelines) * 100
     time2 = (sum((x[1] for x in check.times_ordered[6:12])) / totaltimelines) * 100
     time3 = (sum((x[1] for x in check.times_ordered[12:18])) / totaltimelines) * 100
