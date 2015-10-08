@@ -71,7 +71,7 @@ def lineSort(filename):
     nonempty = [line.rstrip() for line in lines if line.strip() and line.strip()[0:2] != '##']
     nonempty.sort()
     sortfile = io.open(filename, 'w', encoding='utf-8-sig')
-    sortfile.write('\n'.join(nonempty) + '\n')
+    sortfile.write(('\n'.join(nonempty) + '\n').decode('utf-8'))
     sortfile.close()
 
 def stringToBool(s):
