@@ -10,52 +10,52 @@ import random               ## Needed for choosing random lines
 
 ## Regular expressions for tags ##
 
-usernumberre    = re.compile("%usernumber%" )
-usernamere      = re.compile("%username%"   )
-linenumsre      = re.compile("%linenums%"   )
-actionnumsre    = re.compile("%actionnums%" )
-randomlinere    = re.compile("%randomline%" )
-newrandomlinere = re.compile("%newrandom%"  )
+usernumberre    = re.compile("%usernumber%")
+usernamere      = re.compile("%username%")
+linenumsre      = re.compile("%linenums%")
+actionnumsre    = re.compile("%actionnums%")
+randomlinere    = re.compile("%randomline%")
+newrandomlinere = re.compile("%newrandom%")
 
 channelnamere   = re.compile("%channelname%")
-gentimere       = re.compile("%gentime%"    )
+gentimere       = re.compile("%gentime%")
 
-dawnpre         = re.compile("%dawnpercent%"        )
-morningpre      = re.compile("%morningpercent%"     )
-daypre          = re.compile("%daypercent%"         )
-nightpre        = re.compile("%nightpercent%"       )
+dawnpre         = re.compile("%dawnpercent%")
+morningpre      = re.compile("%morningpercent%")
+daypre          = re.compile("%daypercent%")
+nightpre        = re.compile("%nightpercent%")
 
-dawnpnumre      = re.compile("%dawnpercent-([0-9]+)%"     )
-morningpnumre   = re.compile("%morningpercent-([0-9]+)%"  )
-daypnumre       = re.compile("%daypercent-([0-9]+)%"      )
-nightpnumre     = re.compile("%nightpercent-([0-9]+)%"    )
+dawnpnumre      = re.compile("%dawnpercent-([0-9]+)%")
+morningpnumre   = re.compile("%morningpercent-([0-9]+)%")
+daypnumre       = re.compile("%daypercent-([0-9]+)%")
+nightpnumre     = re.compile("%nightpercent-([0-9]+)%")
 
 timere          = re.compile("%timefraction-(?P<starttime>[0-9]{1,2})-(?P<endtime>[0-9]{1,2})-(?P<fractionof>[0-9]+)%")
 
-totallinesre    = re.compile("%totallines%" )
-swearnumre      = re.compile("%swears%"     )
+totallinesre    = re.compile("%totallines%")
+swearnumre      = re.compile("%swears%")
 
-userstatsre     = re.compile("(?:<!--\s*)?\[userstats\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/userstats\](?:\s*-->)?", re.DOTALL               )
-userstatslastre = re.compile("(?:<!--\s*)?\[userstats-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/userstats-last\](?:\s*-->)?", re.DOTALL     )
-swearsre        = re.compile("(?:<!--\s*)?\[swears\].*\[/swears\](?:\s*-->)?", re.DOTALL                       )
-allusersre      = re.compile("(?:<!--\s*)?\[allusers\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/allusers\](?:\s*-->)?", re.DOTALL                 )
+userstatsre     = re.compile("(?:<!--\s*)?\[userstats\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/userstats\](?:\s*-->)?", re.DOTALL)
+userstatslastre = re.compile("(?:<!--\s*)?\[userstats-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/userstats-last\](?:\s*-->)?", re.DOTALL)
+swearsre        = re.compile("(?:<!--\s*)?\[swears\].*\[/swears\](?:\s*-->)?", re.DOTALL)
+allusersre      = re.compile("(?:<!--\s*)?\[allusers\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/allusers\](?:\s*-->)?", re.DOTALL)
 allusersSre     = re.compile("(?:<!--\s*)?\[allusers-section\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/allusers-section\](?:\s*-->)?", re.DOTALL )
-alluserslastre  = re.compile("(?:<!--\s*)?\[allusers-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/allusers-last\](?:\s*-->)?", re.DOTALL       )
-alluserslasttagre = re.compile("(?:<!--\s*)?\[/?allusers-last\](?:\s*-->)?"                                    )
-allusersStagre  = re.compile("(?:<!--\s*)?\[/?allusers-section\](?:\s*-->)?"                                   )
-swearstagre     = re.compile("(?:<!--\s*)?\[/?swears\](?:\s*-->)?"                                             )
+alluserslastre  = re.compile("(?:<!--\s*)?\[allusers-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/allusers-last\](?:\s*-->)?", re.DOTALL)
+alluserslasttagre = re.compile("(?:<!--\s*)?\[/?allusers-last\](?:\s*-->)?")
+allusersStagre  = re.compile("(?:<!--\s*)?\[/?allusers-section\](?:\s*-->)?")
+swearstagre     = re.compile("(?:<!--\s*)?\[/?swears\](?:\s*-->)?")
 
-cwre            = re.compile("(?:<!--\s*)?\[commonwords\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords\](?:\s*-->)?", re.DOTALL           )
-cwoddre         = re.compile("(?:<!--\s*)?\[commonwords-odd\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-odd\](?:\s*-->)?", re.DOTALL   )
-cwevenre        = re.compile("(?:<!--\s*)?\[commonwords-even\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-even\](?:\s*-->)?", re.DOTALL )
+cwre            = re.compile("(?:<!--\s*)?\[commonwords\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords\](?:\s*-->)?", re.DOTALL)
+cwoddre         = re.compile("(?:<!--\s*)?\[commonwords-odd\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-odd\](?:\s*-->)?", re.DOTALL)
+cwevenre        = re.compile("(?:<!--\s*)?\[commonwords-even\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-even\](?:\s*-->)?", re.DOTALL)
 
-cwlastre        = re.compile("(?:<!--\s*)?\[commonwords-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-last\](?:\s*-->)?", re.DOTALL )
-cwoddlastre     = re.compile("(?:<!--\s*)?\[commonwords-odd-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-odd-last\](?:\s*-->)?", re.DOTALL     )
-cwevenlastre    = re.compile("(?:<!--\s*)?\[commonwords-even-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-even-last\](?:\s*-->)?", re.DOTALL   )
+cwlastre        = re.compile("(?:<!--\s*)?\[commonwords-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-last\](?:\s*-->)?", re.DOTALL)
+cwoddlastre     = re.compile("(?:<!--\s*)?\[commonwords-odd-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-odd-last\](?:\s*-->)?", re.DOTALL)
+cwevenlastre    = re.compile("(?:<!--\s*)?\[commonwords-even-last\](?:\s*-->)?(.*?)(?:<!--\s*)?\[/commonwords-even-last\](?:\s*-->)?", re.DOTALL)
 
-wordre          = re.compile("%word%"       )
-usesre          = re.compile("%uses%"       )
-numberre        = re.compile("%number%"     )
+wordre          = re.compile("%word%")
+usesre          = re.compile("%uses%")
+numberre        = re.compile("%number%")
 
 ##
 
@@ -88,13 +88,13 @@ def generateHTML(html, check, starttime, endtime=None):
     
     ## Replaces "global" tags ##
     
-    html = re.sub(channelnamere     , channelname.encode('utf-8')   , html)
-    html = re.sub(gentimere         , str(round(y - starttime, 2)), html)
+    html = re.sub(channelnamere, channelname.encode('utf-8')   , html)
+    html = re.sub(gentimere, str(round(y - starttime, 2)), html)
 
-    html = re.sub(dawnpre           , dawnpercent   , html)
-    html = re.sub(morningpre        , morningpercent, html)
-    html = re.sub(daypre            , daypercent    , html)
-    html = re.sub(nightpre          , nightpercent  , html)
+    html = re.sub(dawnpre, dawnpercent, html)
+    html = re.sub(morningpre, morningpercent, html)
+    html = re.sub(daypre, daypercent, html)
+    html = re.sub(nightpre, nightpercent, html)
 
     ## These functions take number from template, multiplies percentages to get fractions of whatever number template supplied.
     dawnf       = lambda x: str(round(time1 * (float(x.group(1)) / 100), 1)) ##
@@ -103,17 +103,17 @@ def generateHTML(html, check, starttime, endtime=None):
     nightf      = lambda x: str(round(time4 * (float(x.group(1)) / 100), 1)) ##
 
     ## Using previous functions, replaces everything with correct fractions
-    html = re.sub(dawnpnumre    , dawnf    , html)
-    html = re.sub(morningpnumre , morningf , html)
-    html = re.sub(daypnumre     , dayf     , html)
-    html = re.sub(nightpnumre   , nightf   , html)
+    html = re.sub(dawnpnumre, dawnf, html)
+    html = re.sub(morningpnumre, morningf, html)
+    html = re.sub(daypnumre, dayf, html)
+    html = re.sub(nightpnumre, nightf, html)
     ##
     
     def timeFractions(tag):
         offset = 24 if (int(tag.group('endtime')) <= int(tag.group('starttime'))) else 0
         return str(round((sum([x[1] for x in (check.times_ordered * 2)[int(tag.group('starttime')):int(tag.group('endtime')) + offset]]) / totaltimelines) * int(tag.group('fractionof')), 1))
 
-    html = re.sub(timere        , timeFractions, html)
+    html = re.sub(timere, timeFractions, html)
     
     html = re.sub(totallinesre, str(check.totallines), html)
 

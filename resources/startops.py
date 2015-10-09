@@ -20,60 +20,60 @@ if not os.path.exists(os.path.join(pycspath, 'settings', 'settings_help.txt')): 
 try:            ## Setting config variables from config file
     config = confutil.cVars(os.path.join(pycspath, 'settings', 'settings.cfg')) 
 
-    ignore          = config['Ignored nicks'            ]
-    ignored_words   = config['Ignored words'            ]
+    ignore          = config['Ignored nicks']
+    ignored_words   = config['Ignored words']
     minlength       = abs(int(config['Minimum word length']))
-    swears          = config['Swears'                   ]
-    logformat       = config['Log format'               ]
-    pathoverride    = config['Log paths'                ]
-    lognames        = config['Log files'                ]
+    swears          = config['Swears']
+    logformat       = config['Log format']
+    pathoverride    = config['Log paths']
+    lognames        = config['Log files']
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
-    channelname     = config['Channel name'             ]
+    channelname     = config['Channel name']
     detailusers     = abs(int(config['Detailed users']) )
     allusersbool    = confutil.stringToBool(config['Show brief users'])
-    allusersnum     = abs(int(config['Brief users'])    )
-    topwords        = abs(int(config['Top words'])      )
-    template        = config['Theme'                    ]
+    allusersnum     = abs(int(config['Brief users']))
+    topwords        = abs(int(config['Top words']))
+    template        = config['Theme']
 
     swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
 except IOError: ## Creating config file
-    config = (   comments.settings_comment                                   ,
-                 '## Log specifics\n'                                        ,               
-                ('Log format', 'hexchat'                                    ),
-                ('Log files', ['Network-#Channel.log', 'Another-#Sample.log'],   ),
-                ('Log paths', []                                        ),
-                 '\n\n## Customization\n'                                    ,
-                ('Channel name', 'Channel'                                  ),
-                ('Theme', 'default'                                         ),
-                ('Ignored nicks', ['example?1', 'example?2']                ),
-                ('Ignored words', ['ignorethis', 'andthis']                 ),
-                ('Detailed users', 5                                        ),
-                ('Show brief users', True                                   ),
-                ('Brief users', 0                                           ),
-                ('Top words', 10                                            ),
-                ('Minimum word length', 5                                   ),
-                ('Swears', ['swear1', 'swear2']                             ),
-                ('Print progress', True                                     )
+    config = (   comments.settings_comment,
+                 '## Log specifics\n',               
+                ('Log format', 'hexchat'),
+                ('Log files', ['Network-#Channel.log', 'Another-#Sample.log'],),
+                ('Log paths', []),
+                 '\n\n## Customization\n',
+                ('Channel name', 'Channel'),
+                ('Theme', 'default'),
+                ('Ignored nicks', ['example?1', 'example?2']),
+                ('Ignored words', ['ignorethis', 'andthis']),
+                ('Detailed users', 5),
+                ('Show brief users', True),
+                ('Brief users', 0),
+                ('Top words', 10),
+                ('Minimum word length', 5),
+                ('Swears', ['swear1', 'swear2']),
+                ('Print progress', True)
               )
 
     confutil.createConfig(config, os.path.join(pycspath, 'settings', 'settings.cfg'))
     config = confutil.cVars(os.path.join(pycspath, 'settings', 'settings.cfg'))
 
-    ignore          = config['Ignored nicks'            ]
-    ignored_words   = config['Ignored words'            ]
+    ignore          = config['Ignored nicks']
+    ignored_words   = config['Ignored words']
     minlength       = abs(int(config['Minimum word length']))
-    swears          = config['Swears'                   ]
-    logformat       = config['Log format'               ]
-    pathoverride    = config['Log paths'                ]
-    lognames        = config['Log files'                ]
+    swears          = config['Swears']
+    logformat       = config['Log format']
+    pathoverride    = config['Log paths']
+    lognames        = config['Log files']
     printprogress   = confutil.stringToBool(config['Print progress']) ## Don't move parenthesis
-    channelname     = config['Channel name'             ]
-    detailusers     = abs(int(config['Detailed users']) )
+    channelname     = config['Channel name']
+    detailusers     = abs(int(config['Detailed users']))
     allusersbool    = confutil.stringToBool(config['Show brief users'])
-    allusersnum     = abs(int(config['Brief users'])    )
-    topwords        = abs(int(config['Top words'])      )
-    template        = config['Theme'                    ]
+    allusersnum     = abs(int(config['Brief users']))
+    topwords        = abs(int(config['Top words']))
+    template        = config['Theme']
 
     swears = [r'\b' + swear.lower().replace(r'*', r'\w*') + r'\b' for swear in swears] ## Allows joker characters
 
@@ -85,15 +85,15 @@ except IOError: ## Creating alias file
     confutil.createConfig(aliases, os.path.join(pycspath, 'settings', 'aliases.cfg'))
 
 try:            ## Loading patterns dictionary
-    linepatterns        = confutil.cVars(os.path.join(pycspath, 'resources', 'formats', logformat.lower() + '.cfg'))
+    linepatterns = confutil.cVars(os.path.join(pycspath, 'resources', 'formats', logformat.lower() + '.cfg'))
     try:
         for key in linepatterns: ## Allows for Unicode symbols to be used
             linepatterns[key] = unicode(linepatterns[key], 'utf-8')
     except TypeError:
         pass
-    pattern_said_line   = linepatterns['said line'      ]
-    pattern_action_line = linepatterns['action line'    ]
-    pattern_time        = linepatterns['time'           ]
+    pattern_said_line = linepatterns['said line']
+    pattern_action_line = linepatterns['action line']
+    pattern_time = linepatterns['time']
 
 except (IOError, ValueError): ## Plain error invoked by incorrect settings/filter file
     print "Invalid format file. Using defaults."
